@@ -35,7 +35,10 @@
         <activity
             android:name=".Lokalen"
             android:label="@string/title_activity_lokalen"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Overzicht"
+            android:label="@string/title_activity_overzicht"></activity>
     </application>
 
 </manifest>
