@@ -10,11 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Meldingen"
@@ -38,7 +34,14 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Overzicht"
-            android:label="@string/title_activity_overzicht"></activity>
+            android:label="@string/title_activity_overzicht">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"

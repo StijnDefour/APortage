@@ -24,7 +24,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="#8162985b" />
+            app:srcCompat="@color/wetenschapentechniek" />
 
         <TextView
             android:id="@+id/tv-campus-titel"
