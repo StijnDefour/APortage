@@ -2,6 +2,12 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#ff4081</color>
     <color name="wit">#ffffff</color>
+    <color name="gezondheidenwelzijn">#50a0b0</color>
+    <color name="managementencommunicatie">#de9700</color>
+    <color name="onderwijsentraining">#950074</color>
+    <color name="wetenschapentechniek">#62985b</color>
+    <color name="kaska">#000000</color>
+    <color name="ap">#e60005</color>
 </resources>

@@ -2,7 +2,7 @@
     <string name="app_name">Aportage</string>
     <string name="title_activity_meldingen">Meldingen</string>
     <string name="title_activity_melding">Melding</string>
-    <string name="title_activity_campussen">Campussen</string>
+    <string name="title_activity_campussen">Kies een campus</string>
     <string name="title_activity_verdiepingen">Verdiepingen</string>
     <string name="title_activity_lokalen">Lokalen</string>
     <string name="title_activity_overzicht">Overzicht</string>

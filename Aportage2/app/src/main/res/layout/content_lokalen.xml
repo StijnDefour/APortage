@@ -8,4 +8,41 @@
     tools:context=".Lokalen"
     tools:showIn="@layout/activity_lokalen">
 
+    <Button
+        android:id="@+id/btn-campus"
+        style="@style/Widget.MaterialComponents.BottomNavigationView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/wetenschapentechniek"
+        android:fontFamily="sans-serif"
+        android:text="Button"
+        android:textColor="@color/wit"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/btn-verdiep"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn-verdiep"
+        style="@style/Widget.MaterialComponents.BottomNavigationView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#8362985b"
+        android:fontFamily="sans-serif"
+        android:text="Button"
+        android:textColor="@color/wit"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn-campus"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="368dp"
+        android:layout_height="447dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn-campus"
+        tools:listitem="@layout/listitem_lokaal" />
+
 </android.support.constraint.ConstraintLayout>
