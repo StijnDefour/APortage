@@ -23,7 +23,7 @@ public class Campussen extends AppCompatActivity {
 
         //initialisatie properties voor recyclerview van campussen
         this.mijnCampussenRV = (RecyclerView) findViewById(R.id.rv_campussen);
-        this.mijnGridLM = new GridLayoutManager(getApplicationContext(), 3, LinearLayoutManager.HORIZONTAL,false);
+        this.mijnGridLM = new GridLayoutManager(getApplicationContext(), 2 /*, LinearLayoutManager.HORIZONTAL,false*/);
         this.mijnCampussenRV.setLayoutManager(this.mijnGridLM);
 
 

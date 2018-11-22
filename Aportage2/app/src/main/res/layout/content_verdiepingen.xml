@@ -8,4 +8,29 @@
     tools:context=".Verdiepingen"
     tools:showIn="@layout/activity_verdiepingen">
 
+    <Button
+        android:id="@+id/btn-nav-campus"
+        style="@style/Widget.MaterialComponents.NavigationView"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@color/wetenschapentechniek"
+        android:fontFamily="@font/montserrat"
+        android:paddingLeft="8dp"
+        android:text="@string/nav_campus_naam"
+        android:textAlignment="viewStart"
+        android:textColor="@color/wit"
+        android:textSize="20sp "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv-verdiepingen"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn-nav-campus"
+        tools:listitem="@layout/cv_verdiep_item" />
 </android.support.constraint.ConstraintLayout>

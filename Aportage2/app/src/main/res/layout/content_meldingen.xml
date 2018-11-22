@@ -2,27 +2,27 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Meldingen"
     tools:showIn="@layout/activity_meldingen">
 
+    <include layout="@layout/cl_nav_campus_verdiep_lokaal" />
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/cl-rv-meldingen"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="8dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl-navigatie-buttons">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv-meldingen"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="200dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -32,61 +32,6 @@
             tools:listitem="@layout/cv_melding_item">
 
         </android.support.v7.widget.RecyclerView>
-    </android.support.constraint.ConstraintLayout>
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/cl-navigatie-buttons"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            android:id="@+id/btn-campus2"
-            style="@style/Widget.MaterialComponents.BottomNavigationView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/wetenschapentechniek"
-            android:fontFamily="sans-serif"
-            android:text="ELL"
-            android:textColor="@color/wit"
-            android:textSize="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn-verdiep2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/btn-verdiep2"
-            style="@style/Widget.MaterialComponents.BottomNavigationView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="#8362985b"
-            android:fontFamily="sans-serif"
-            android:text="Verdiep 00"
-            android:textColor="@color/wit"
-            android:textSize="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn-melding-lokaal"
-            app:layout_constraintStart_toEndOf="@+id/btn-campus2"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <Button
-            android:id="@+id/btn-melding-lokaal"
-            style="@style/Widget.MaterialComponents.NavigationView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/wit"
-            android:fontFamily="sans-serif"
-            android:text="00.000"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btn-verdiep2"
-            app:layout_constraintTop_toTopOf="parent" />
-
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

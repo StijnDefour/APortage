@@ -11,4 +11,9 @@
     <color name="kaska">#000000</color>
     <color name="ap">#e60005</color>
     <color name="status_behandeling">#ff7700</color>
+    <color name="status_inbehandeling">#ffc800</color>
+    <color name="ap_rood">#c40009</color>
+    <color name="ap_donkerrood">#97000c</color>
+    <color name="ap_grijs">#68676c</color>
+
 </resources>
