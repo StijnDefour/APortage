@@ -101,26 +101,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv-melding-omschrijving" />
 
-    <Button
-        android:id="@+id/btn-melding-ok"
-        style="@style/Widget.MaterialComponents.NavigationView"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:background="@color/ok"
-        android:text="@string/scan_melding_label_btn_ok"
-        android:textColor="@color/wit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn-melding-annuleren"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btn-melding-annuleren"
-        style="@style/Widget.MaterialComponents.NavigationView"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:background="@color/ap"
-        android:text="@string/scan_melding_btn_label_annuleren"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn-melding-ok" />
+    <include layout="@layout/buttons_ok_cancel" />
 </android.support.constraint.ConstraintLayout>
