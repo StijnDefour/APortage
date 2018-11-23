@@ -14,5 +14,15 @@
     <string name="nav_campus_naam">Ellerman</string>
     <string name="verdiep_label">Verdieping</string>
     <string name="verdiep_nummer">00</string>
+<<<<<<< HEAD
     <string name="ocr_gescande_text">Gelezen tekst...</string>
+=======
+    <string name="label_locatie">Locatie:</string>
+    <string name="scan_melding_button_label" > Foto toevoegen </string>
+    <string name="label_scan_melding_titel">Titel:</string>
+    <string name="scan_melding_hint_titel">Titel voor de melding...</string>
+    <string name="scan_melding_label_omschrijving" >Omschrijving: </string>
+    <string name="scan_melding_label_btn_ok" >Ok</string>
+    <string name="scan_melding_btn_label_annuleren">Annuleer</string>
+>>>>>>> master
 </resources>
