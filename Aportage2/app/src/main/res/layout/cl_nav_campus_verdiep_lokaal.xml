@@ -50,6 +50,7 @@
         android:background="@color/wit"
         android:fontFamily="sans-serif"
         android:text="00.000"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
