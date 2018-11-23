@@ -8,10 +8,11 @@
     <string name="title_activity_overzicht">APortage</string>
     <string name="melding_melder_label">Gemeld door: </string>
     <string name="melding_melder">Karima</string>
-    <string name="melding_tijdstip_label" >op</string>
+    <string name="melding_tijdstip_label">op</string>
     <string name="melding_tijdstip">01/10/2018 14:34</string>
     <string name="melding_status">Ontvangen</string>
     <string name="nav_campus_naam">Ellerman</string>
     <string name="verdiep_label">Verdieping</string>
     <string name="verdiep_nummer">00</string>
+    <string name="ocr_gescande_text">Gelezen tekst...</string>
 </resources>
