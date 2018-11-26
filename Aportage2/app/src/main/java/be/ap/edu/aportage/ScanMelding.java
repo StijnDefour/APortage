@@ -10,8 +10,10 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,21 +24,42 @@ public class ScanMelding extends AppCompatActivity {
 
     static final int REQUEST_IMAGE_CAPTURE = 5;
     String mCurrentPhotoPath;
-    TextView locatie;
+    Button btnCampus;
+    Button btnVerdiep;
+    Button btnLokaal;
+    ImageView imageView;
+    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_melding);
 
-        locatie = findViewById(R.id.tv_label_locatie);
+        imageView = findViewById(R.id.imageView);
+        button = findViewById(R.id.button);
+        btnCampus = findViewById(R.id.btn_campus2);
+        btnVerdiep = findViewById(R.id.btn_verdiep2);
+        btnLokaal = findViewById(R.id.btn_melding_lokaal);
+
         Intent iin= getIntent();
         Bundle b = iin.getExtras();
         if(b!=null)
         {
-            String j =(String) b.get("lokaal_id");
-            locatie.setText(j);
+            String j = (String) b.get("lokaal_id");
+            j = j.replace(" ", ".");
+            Log.d("test", j);
+            String[] s = j.split("\\.");
+            btnCampus.setText(s[0]);
+            btnVerdiep.setText(s[1]);
+            btnLokaal.setText(s[2]);
         }
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TakePhoto(view);
+            }
+        });
     }
 
     @Override
@@ -46,7 +69,7 @@ public class ScanMelding extends AppCompatActivity {
             if(imgFile.exists()){
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
-                // imageView.setImageBitmap(myBitmap);
+                imageView.setImageBitmap(myBitmap);
             }
         }
     }
