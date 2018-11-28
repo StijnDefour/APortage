@@ -15,7 +15,7 @@ import be.ap.edu.aportage.Lokalen;
 
 public class DataManager {
 
-    private DatabaseReference mDatabase;
+    //private DatabaseReference mDatabase;
 
     private static DataManager singleInstance = null;
     private static ArrayList<Campus> campusList = new ArrayList<Campus>();
@@ -75,9 +75,10 @@ public class DataManager {
     }
 
     private ArrayList<Campus> getCampusList() {
+        /* todo: errorClusterfuck fixen voor firebase reference - OG code
         mDatabase = FirebaseDatabase.getInstance().getReference("Campussen");
 
-        /* Get data from database */
+        //Get data from database
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -103,6 +104,12 @@ public class DataManager {
             }
         });
 
+
         return campusList;
+
+        */
+        //temp code:
+
+        return new ArrayList<Campus>();
     }
 }
