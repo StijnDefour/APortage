@@ -10,14 +10,10 @@ public class Melding {
     String status;
     //Melder melder;
     LocalDateTime datum;
-
     public int getKleurInt() {
         //todo: switch om status tot kleur int
         int kleur = 0;
 
         return kleur;
     }
-
-
-
 }

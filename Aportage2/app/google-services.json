@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "195430160700",
+    "firebase_url": "https://aportage-474a5.firebaseio.com",
+    "project_id": "aportage-474a5",
+    "storage_bucket": "aportage-474a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:195430160700:android:17f1016d38710c05",
+        "android_client_info": {
+          "package_name": "be.ap.edu.aportage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "195430160700-bjb7tdtlcrk9inqnvjdhn28gm2mhihp0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZZrsQSw-GB0rvAPr_e_lvra60Tm7DYCs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
