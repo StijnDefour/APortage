@@ -12,7 +12,7 @@
     tools:showIn="@layout/content_meldingen">
 
     <Button
-        android:id="@+id/btn-campus2"
+        android:id="@+id/btn-campus-afk"
         style="@style/Widget.MaterialComponents.BottomNavigationView"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -22,12 +22,12 @@
         android:textColor="@color/wit"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn-verdiep2"
+        app:layout_constraintEnd_toStartOf="@+id/btn-verdiep-nr"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btn-verdiep2"
+        android:id="@+id/btn-verdiep-nr"
         style="@style/Widget.MaterialComponents.BottomNavigationView"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -37,13 +37,13 @@
         android:textColor="@color/wit"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn-melding-lokaal"
-        app:layout_constraintStart_toEndOf="@+id/btn-campus2"
+        app:layout_constraintEnd_toStartOf="@+id/btn-melding-lokaalnr"
+        app:layout_constraintStart_toEndOf="@+id/btn-campus-afk"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/btn-melding-lokaal"
+        android:id="@+id/btn-melding-lokaalnr"
         style="@style/Widget.MaterialComponents.NavigationView"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -54,7 +54,7 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn-verdiep2"
+        app:layout_constraintStart_toEndOf="@+id/btn-verdiep-nr"
         app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
