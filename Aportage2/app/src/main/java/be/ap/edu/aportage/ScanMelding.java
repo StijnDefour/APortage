@@ -1,5 +1,6 @@
 package be.ap.edu.aportage;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -30,6 +31,10 @@ public class ScanMelding extends AppCompatActivity {
     ImageView imageView;
     Button button;
 
+    String s_campus;
+    String s_verdieping;
+    String s_lokaal;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,19 +50,64 @@ public class ScanMelding extends AppCompatActivity {
         Bundle b = iin.getExtras();
         if(b!=null)
         {
-            String j = (String) b.get("lokaal_id");
-            j = j.replace(" ", ".");
-            Log.d("test", j);
-            String[] s = j.split("\\.");
-            btnCampus.setText(s[0]);
-            btnVerdiep.setText(s[1]);
-            btnLokaal.setText(s[2]);
+            String j = (String) b.get("lokaal_info");
+            Log.d("Test", j);
+
+            try {
+                j = j.replace(" ", "");
+                j = j.replace(".", "");
+                //String[] s = j.split("\\.");
+            } catch (NullPointerException e) {
+                Log.e("Error",e.toString());
+            }
+
+            try {
+                if (j == null) throw new AssertionError();
+                s_campus = j.substring(0,3);
+                j = j.substring(3, j.length());
+                s_lokaal = j.substring(j.length()-3,j.length());
+                j = j.substring(0,j.length()-3);
+                s_verdieping = j;
+                btnCampus.setText(s_campus);
+                btnVerdiep.setText(s_verdieping);
+                btnLokaal.setText(s_lokaal);
+            } catch (StringIndexOutOfBoundsException e) {
+                Log.e("Error",e.toString());
+                Intent intent = new Intent(this, Overzicht.class);
+                startActivity(intent);
+            }
         }
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 TakePhoto(view);
+            }
+        });
+
+        final Activity activity = this;
+        btnCampus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, Campussen.class);
+                intent.putExtra("campus_id", s_campus);
+                startActivity(intent);
+            }
+        });
+        btnVerdiep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity,Verdiepingen.class);
+                intent.putExtra("verdieping_id", s_verdieping);
+                startActivity(intent);
+            }
+        });
+        btnLokaal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, Lokalen.class);
+                intent.putExtra("lokaal_id", s_lokaal);
+                startActivity(intent);
             }
         });
     }
