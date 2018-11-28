@@ -23,7 +23,7 @@ public class Overzicht extends Activity {
         iv_scannen_bg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(activity, ScanForFoodActivity.class);
+                Intent intent = new Intent(activity, ScanLokaal.class);
                 startActivity(intent);
             }
         });

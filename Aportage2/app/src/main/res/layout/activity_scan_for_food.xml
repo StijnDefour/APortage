@@ -34,11 +34,14 @@ tools:context=".ScanForFoodActivity">
 
     <Button
         android:id="@+id/btn-ocr-ok"
+        style="@style/Base.TextAppearance.AppCompat.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
-        android:text="Button"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/scannen_label_btn_ok"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -48,7 +51,9 @@ tools:context=".ScanForFoodActivity">
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Button"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/scannen_label_btn_annuleren"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

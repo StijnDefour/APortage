@@ -24,5 +24,9 @@
     <string name="scan_melding_label_omschrijving" >Omschrijving: </string>
     <string name="scan_melding_label_btn_ok" >Ok</string>
     <string name="scan_melding_btn_label_annuleren">Annuleer</string>
+    <string name="overzicht_label_scannen">Scannen [ - ]</string>
+    <string name="overzicht_label_zoeken">Zoeken</string>
+    <string name="scannen_label_btn_ok">Doorsturen</string>
+    <string name="scannen_label_btn_annuleren">Annuleren</string>
 
 </resources>

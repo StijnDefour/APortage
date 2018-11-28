@@ -23,7 +23,7 @@ import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
-public class ScanForFoodActivity extends AppCompatActivity  implements SurfaceHolder.Callback, Detector.Processor  {
+public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Callback, Detector.Processor  {
 
     private SurfaceView cameraView;
     private TextView txtView;
@@ -59,7 +59,7 @@ public class ScanForFoodActivity extends AppCompatActivity  implements SurfaceHo
 
         TextRecognizer txtRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
         if (!txtRecognizer.isOperational()) {
-            Log.e("ScanForFoodActivity", "Detector dependencies are not yet available");
+            Log.e("ScanLokaal", "Detector dependencies are not yet available");
         } else {
             cameraSource = new CameraSource.Builder(getApplicationContext(), txtRecognizer)
                     .setFacing(CameraSource.CAMERA_FACING_BACK)
@@ -78,7 +78,7 @@ public class ScanForFoodActivity extends AppCompatActivity  implements SurfaceHo
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(activity, ScanMelding.class);
-                intent.putExtra("lokaal_id", gelezenTekst[0]);
+                intent.putExtra("lokaal_id", gelezenTekst[gelezenTekst.length - 1]);
                 startActivity(intent);
             }
         });
@@ -125,7 +125,7 @@ public class ScanForFoodActivity extends AppCompatActivity  implements SurfaceHo
     @Override
     public void receiveDetections(Detector.Detections detections) {
 
-//todo: strbuilder veranderen met een gewone arraylist
+
         SparseArray items = detections.getDetectedItems();
         final StringBuilder strBuilder = new StringBuilder();
         for (int i = 0; i < items.size(); i++)

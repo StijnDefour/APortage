@@ -64,7 +64,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".ScanForFoodActivity"></activity>
+        <activity android:name=".ScanLokaal"></activity>
         <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="ocr"/>
     </application>
 
