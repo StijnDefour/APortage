@@ -14,7 +14,7 @@ import java.util.List;
 
 import be.ap.edu.aportage.R;
 
-import static android.support.v4.graphics.drawable.IconCompat.getResources;
+//import static android.support.v4.graphics.drawable.IconCompat.getResources;
 
 
 public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecyclerAdapter.ViewHolder> {
@@ -44,7 +44,7 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
         Melding melding = this.meldingenList.get(i);
         viewHolder.meldingTitel.setText(melding.titel);
         viewHolder.meldingBeschrijving.setText(melding.omschrijving);
-        viewHolder.meldingStatus.setBackgroundColor(this.context.getResources().getInteger(melding.getKleurInt()));
+        //viewHolder.meldingStatus.setBackgroundColor(this.context.getResources().getInteger(melding.getKleurInt()));
 
 
     }
