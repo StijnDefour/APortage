@@ -60,11 +60,13 @@ public class DataManager {
                     Log.d("Campus ", substring[3]);
                     String[] lokalen = substring[3].split(";");
 
+
                     for (String lokaal: lokalen) {
                         lokalenLijst.add(Integer.parseInt(lokaal));
                     }
 
-                    Verdiep tmp = new Verdiep(Integer.parseInt(substring[0]) , lokalenLijst);
+                    //tijdelijk lokalenLijst aangepast naar een int[]
+                    Verdiep tmp = new Verdiep(Integer.parseInt(substring[0]) , new int[]{1, 2, 3, 4});
 
                     formatted.voegToeAanVerdiepingenlijst(tmp);
                     break;
