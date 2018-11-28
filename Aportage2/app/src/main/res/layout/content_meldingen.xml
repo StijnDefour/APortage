@@ -9,9 +9,10 @@
     tools:showIn="@layout/activity_meldingen">
 
     <include
+        android:id="@+id/include3"
         layout="@layout/cl_nav_campus_verdiep_lokaal"
         android:layout_height="51dp"
-        tools:layout_editor_absoluteY="-1dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/cl-rv-meldingen"
@@ -19,13 +20,14 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cl-navigatie-buttons">
+        app:layout_constraintTop_toBottomOf="@+id/include3">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv-meldingen"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

@@ -11,7 +11,9 @@ public class Campus {
     List<Verdiep> verdiepingen = new ArrayList<Verdiep>();
 
 
-
-
-
+    public Campus(String n, String afkorting, List<Verdiep> verd) {
+        this.naam = n;
+        this.afkorting = afkorting;
+        this.verdiepingen = verd;
+    }
 }

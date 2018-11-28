@@ -14,7 +14,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import be.ap.edu.aportage.models.Melding;
 import be.ap.edu.aportage.models.MeldingenRecyclerAdapter;
+import be.ap.edu.aportage.models.MockDataManager;
 
 public class Meldingen extends AppCompatActivity {
 
@@ -25,7 +30,9 @@ public class Meldingen extends AppCompatActivity {
     private CardView meldingCV;
     private LinearLayoutManager meldingenLM;
     private MeldingenRecyclerAdapter meldingenAdapter;
+    private List<Melding> meldingenLijst;
     private Intent incomingIntent;
+    private MockDataManager dataManager = MockDataManager.getInstance();
 
 
     @Override
@@ -40,11 +47,19 @@ public class Meldingen extends AppCompatActivity {
         this.meldingenLokaalBtn = (Button) findViewById(R.id.btn_melding_lokaalnr);
         this.meldingenRV = (RecyclerView) findViewById(R.id.rv_meldingen);
         this.meldingCV = (CardView) findViewById(R.id.cv_melding);
-        this.meldingenLM = new LinearLayoutManager(this);
+        this.meldingenLijst = dataManager.getMeldingenLijst();
         this.incomingIntent = getIntent();
+
+        this.meldingenLM = new LinearLayoutManager(this);
+        this.meldingenRV.setLayoutManager(this.meldingenLM);
+
+        this.meldingenAdapter = new MeldingenRecyclerAdapter(this, this.meldingenLijst);
+        this.meldingenRV.setAdapter(this.meldingenAdapter);
+
+
+
         Bundle b = this.incomingIntent.getExtras();
         checkBundleForData(b);
-
 
 
     }
@@ -62,7 +77,7 @@ public class Meldingen extends AppCompatActivity {
 
     private void lokaalButtonsOpvullen() {
 
-        //todo: nog data toevoegen dat uit de intents wordt gehaald
+        //todo: buttons aanvullen met data dat uit intent wordt gehaald, momenteel mock data
 
         this.meldingenCampusBtn.setText("LOL");
         this.meldingenVerdiepBtn.setText("V1");

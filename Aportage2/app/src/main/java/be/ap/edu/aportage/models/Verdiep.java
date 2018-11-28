@@ -7,7 +7,13 @@ import java.util.List;
 class Verdiep {
 
     int verdiepnr;
-    List<Integer> lokalen = new ArrayList<Integer>();
+    int[] lokalen;
+
+    public Verdiep(int verdiepnr, int[] lok) {
+        this.verdiepnr = verdiepnr;
+        this.lokalen = lok;
+    }
+
 
 
 }
