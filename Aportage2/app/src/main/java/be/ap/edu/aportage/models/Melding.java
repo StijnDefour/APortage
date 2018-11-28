@@ -10,7 +10,4 @@ public class Melding {
     String status;
     //Melder melder;
     LocalDateTime datum;
-
-
-
 }
