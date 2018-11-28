@@ -8,8 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import be.ap.edu.aportage.R;
@@ -17,12 +15,12 @@ import be.ap.edu.aportage.R;
 public class VerdiepingenRecyclerAdapter extends RecyclerView.Adapter<VerdiepingenRecyclerAdapter.ViewHolder>{
 
     private final Context context;
-    private final List<Verdiep> verdiepenList;
+    private final List<Verdiep> verdiepLijst;
     private final LayoutInflater layoutInflater;
 
-    public VerdiepingenRecyclerAdapter(Context context, List<Verdiep> verdiepenList) {
+    public VerdiepingenRecyclerAdapter(Context context, List<Verdiep> verdiepLijst) {
         this.context = context;
-        this.verdiepenList = verdiepenList;
+        this.verdiepLijst = verdiepLijst;
         this.layoutInflater = LayoutInflater.from(this.context);
     }
 
@@ -35,13 +33,13 @@ public class VerdiepingenRecyclerAdapter extends RecyclerView.Adapter<Verdieping
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        Verdiep verdiep = this.verdiepenList.get(i);
+        Verdiep verdiep = this.verdiepLijst.get(i);
         viewHolder.verdiepNummer.setText(String.format("%02d", verdiep.verdiepnr ));
     }
 
     @Override
     public int getItemCount() {
-        return this.verdiepenList.size();
+        return this.verdiepLijst.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

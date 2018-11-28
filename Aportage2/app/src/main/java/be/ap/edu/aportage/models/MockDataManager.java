@@ -37,5 +37,9 @@ public class MockDataManager {
         return list;
     }
 
+    public static List<Verdiep> getVerdiepLijst(int campusID) {
+        return getCampussenLijst().get(campusID).verdiepingen;
+    }
+
 
 }
