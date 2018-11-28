@@ -41,43 +41,17 @@ public class ScanMelding extends AppCompatActivity {
         setContentView(R.layout.activity_scan_melding);
 
         imageView = findViewById(R.id.imageView);
-        //button = findViewById(R.id.button);
-//        btnCampus = findViewById(R.id.btn_campus2);
-//        btnVerdiep = findViewById(R.id.btn_verdiep2);
-//        btnLokaal = findViewById(R.id.btn_melding_lokaal);
+        button = findViewById(R.id.button);
+        btnCampus = findViewById(R.id.btn_campus_afk);
+        btnVerdiep = findViewById(R.id.btn_verdiep_nr);
+        btnLokaal = findViewById(R.id.btn_melding_lokaalnr);
 
-        Intent iin= getIntent();
-        Bundle b = iin.getExtras();
-        if(b!=null)
-        {
-            String j = (String) b.get("lokaal_info");
-            Log.d("Test", j);
+        lokaalButtonsOpvullen();
+        buttonsAddClickEvents();
+    }
 
-            try {
-                j = j.replace(" ", "");
-                j = j.replace(".", "");
-                //String[] s = j.split("\\.");
-            } catch (NullPointerException e) {
-                Log.e("Error",e.toString());
-            }
 
-            try {
-                if (j == null) throw new AssertionError();
-                s_campus = j.substring(0,3);
-                j = j.substring(3, j.length());
-                s_lokaal = j.substring(j.length()-3,j.length());
-                j = j.substring(0,j.length()-3);
-                s_verdieping = j;
-                btnCampus.setText(s_campus);
-                btnVerdiep.setText(s_verdieping);
-                btnLokaal.setText(s_lokaal);
-            } catch (StringIndexOutOfBoundsException e) {
-                Log.e("Error",e.toString());
-                Intent intent = new Intent(this, Overzicht.class);
-                startActivity(intent);
-            }
-        }
-
+    private void buttonsAddClickEvents() {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,8 +87,36 @@ public class ScanMelding extends AppCompatActivity {
     }
 
     private void lokaalButtonsOpvullen() {
-        //todo: lokaalButtonsOpvullen
-        Log.v("todo", "hier komt de logica voor buttons op te vullen");
+        Intent iin= getIntent();
+        Bundle b = iin.getExtras();
+        if(b!=null)
+        {
+            String j = (String) b.get("lokaal_info");
+            Log.d("Test", j);
+
+            try {
+                j = j.replace(" ", "");
+                j = j.replace(".", "");
+            } catch (NullPointerException e) {
+                Log.e("Error",e.toString());
+            }
+
+            try {
+                if (j == null) throw new AssertionError();
+                s_campus = j.substring(0,3);
+                j = j.substring(3, j.length());
+                s_lokaal = j.substring(j.length()-3,j.length());
+                j = j.substring(0,j.length()-3);
+                s_verdieping = j;
+                btnCampus.setText(s_campus);
+                btnVerdiep.setText(s_verdieping);
+                btnLokaal.setText(s_lokaal);
+            } catch (StringIndexOutOfBoundsException e) {
+                Log.e("Error",e.toString());
+                Intent intent = new Intent(this, Overzicht.class);
+                startActivity(intent);
+            }
+        }
     }
 
     @Override
