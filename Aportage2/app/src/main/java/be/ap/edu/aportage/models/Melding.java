@@ -10,7 +10,7 @@ public class Melding {
     String locatie;
     String status;
     //Melder melder;
-<<<<<<< HEAD
+
     //todo: api call naar 26 vs 24 rechtzetten om localdatetime te kunnen gebruiken, of een andere date lib gebruiken
     //LocalDateTime datum;
 
@@ -22,16 +22,14 @@ public class Melding {
         this.status = sts;
         //this.datum = d;
     }
-=======
-    LocalDateTime datum;
->>>>>>> e88fd09f5822575a731a4beb7cbd4028f40e35fb
+
     public int getKleurInt() {
         //todo: switch om status tot kleur int
         int kleur = 0;
 
         return kleur;
     }
-<<<<<<< HEAD
+
 
 
     public void setId(){
@@ -41,6 +39,4 @@ public class Melding {
 
 
 
-=======
->>>>>>> e88fd09f5822575a731a4beb7cbd4028f40e35fb
 }

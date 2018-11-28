@@ -2,12 +2,15 @@ package be.ap.edu.aportage.models;
 
 import android.util.Log;
 
+/* firebase imports dat niet werken bij mij/karima
+
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+*/
 
 import java.util.ArrayList;
 
