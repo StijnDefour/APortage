@@ -77,7 +77,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(activity, ScanMelding.class);
+                Intent intent = new Intent(activity, Meldingen.class);
                 intent.putExtra("lokaal_id", gelezenTekst[gelezenTekst.length - 1]);
                 startActivity(intent);
             }

@@ -46,12 +46,8 @@ public class ScanMelding extends AppCompatActivity {
         if(b!=null)
         {
             String j = (String) b.get("lokaal_id");
-            j = j.replace(" ", ".");
-            Log.d("test", j);
-            String[] s = j.split("\\.");
-            btnCampus.setText(s[0]);
-            btnVerdiep.setText(s[1]);
-            btnLokaal.setText(s[2]);
+            lokaalButtonsOpvullen();
+            Log.v("ScanMelding", j.toString());
         }
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +56,11 @@ public class ScanMelding extends AppCompatActivity {
                 TakePhoto(view);
             }
         });
+    }
+
+    private void lokaalButtonsOpvullen() {
+        //todo: lokaalButtonsOpvullen
+        Log.v("todo", "hier komt de logica voor buttons op te vullen");
     }
 
     @Override
