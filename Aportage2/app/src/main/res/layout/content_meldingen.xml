@@ -8,7 +8,10 @@
     tools:context=".Meldingen"
     tools:showIn="@layout/activity_meldingen">
 
-    <include layout="@layout/cl_nav_campus_verdiep_lokaal" />
+    <include
+        layout="@layout/cl_nav_campus_verdiep_lokaal"
+        android:layout_height="51dp"
+        tools:layout_editor_absoluteY="-1dp" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/cl-rv-meldingen"

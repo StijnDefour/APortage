@@ -36,10 +36,10 @@ public class ScanMelding extends AppCompatActivity {
         setContentView(R.layout.activity_scan_melding);
 
         imageView = findViewById(R.id.imageView);
-        button = findViewById(R.id.button);
-        btnCampus = findViewById(R.id.btn_campus2);
-        btnVerdiep = findViewById(R.id.btn_verdiep2);
-        btnLokaal = findViewById(R.id.btn_melding_lokaal);
+        //button = findViewById(R.id.button);
+//        btnCampus = findViewById(R.id.btn_campus2);
+//        btnVerdiep = findViewById(R.id.btn_verdiep2);
+//        btnLokaal = findViewById(R.id.btn_melding_lokaal);
 
         Intent iin= getIntent();
         Bundle b = iin.getExtras();
