@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:showIn="@layout/activity_scan_melding">
+
+    <Button
+        android:id="@+id/btn-melding-ok"
+        style="@style/Widget.MaterialComponents.NavigationView"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@color/ok"
+        android:text="@string/scan_melding_label_btn_ok"
+        android:textColor="@color/wit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn-melding-annuleren"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn-melding-annuleren"
+        style="@style/Widget.MaterialComponents.NavigationView"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@color/ap"
+        android:text="@string/scan_melding_btn_label_annuleren"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn-melding-ok" />
+</merge>
