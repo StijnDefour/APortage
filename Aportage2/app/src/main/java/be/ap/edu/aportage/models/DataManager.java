@@ -35,16 +35,12 @@ public class DataManager {
 
     public Campus JsonToCampus(String json) {
         Campus formatted = new Campus("", "", new ArrayList<Verdiep>());
+        json = json.replaceAll("\\{|\\}|\\s", "");
         Log.d("Campus ", json);
-        json = json.replaceAll("\\{", "");
         String[] input = json.split(",");
 
         for (String item: input) {
             String[] substring = item.split("=");
-
-
-            Log.d("Campus ", substring[0]);
-
             switch (substring[0]) {
                 case "Naam":
                     formatted.setNaam(substring[1]);
