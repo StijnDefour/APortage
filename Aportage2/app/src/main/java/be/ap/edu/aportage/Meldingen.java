@@ -1,10 +1,12 @@
 package be.ap.edu.aportage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 public class Meldingen extends AppCompatActivity {
@@ -24,6 +26,20 @@ public class Meldingen extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        Intent iin= getIntent();
+        Bundle b = iin.getExtras();
+        if(b!=null)
+        {
+            String j = (String) b.get("lokaal_id");
+            lokaalButtonsOpvullen();
+            Log.v("ScanMelding", j.toString());
+        }
+
+    }
+
+    private void lokaalButtonsOpvullen() {
+
     }
 
 }
