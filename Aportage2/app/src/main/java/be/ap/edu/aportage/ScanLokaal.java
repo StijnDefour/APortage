@@ -41,7 +41,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
                     try {
                         cameraSource.start(cameraView.getHolder());
                     } catch (Exception e) {
-
+                        e.printStackTrace();
                     }
                 }
             }
@@ -77,9 +77,17 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(activity, Meldingen.class);
-                intent.putExtra("lokaal_id", gelezenTekst[gelezenTekst.length - 1]);
-                startActivity(intent);
+                String lokaalInfo = gelezenTekst[gelezenTekst.length-1].toUpperCase();
+                Log.d("testLokaalInfo", lokaalInfo);
+                if (!lokaalInfo.equals("")) {
+                    lokaalInfo = lokaalInfo.replace("LOKAAL ", "");
+
+                    if (checkLokaal(lokaalInfo)) {
+                        Intent intent = new Intent(activity, Meldingen.class);
+                        intent.putExtra("lokaalInfo", lokaalInfo);
+                        startActivity(intent);
+                    }
+                }
             }
         });
         btn_annuleren.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +97,12 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
                 startActivity(intent);
             }
         });
+    }
+
+
+    private Boolean checkLokaal(String lokaal_s) {
+        //todo Check of lokaal wel in database zit
+        return true;
     }
 
     @Override

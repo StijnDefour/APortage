@@ -34,7 +34,8 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         int lokaalNummer = this.lokalenList.get(i);
-        viewHolder.verdiepTitel.setText(lokaalNummer);
+        String lokaalNummerString = lokaalNummer+"";
+        viewHolder.verdiepTitel.setText(lokaalNummerString);
     }
 
     @Override

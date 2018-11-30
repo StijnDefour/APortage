@@ -10,10 +10,11 @@ public class Campus {
     String afkorting;
     List<Verdiep> verdiepingen = new ArrayList<Verdiep>();
 
-    public Campus(String naam, String afkorting, List<Verdiep> verdiepingList) {
-        this.naam = naam;
+
+    public Campus(String n, String afkorting, List<Verdiep> verd) {
+        this.naam = n;
         this.afkorting = afkorting;
-        this.verdiepingen = verdiepingList;
+        this.verdiepingen = verd;
     }
 
     public String getNaam() {
@@ -42,5 +43,6 @@ public class Campus {
 
     public void voegToeAanVerdiepingenlijst(Verdiep v) {
         this.verdiepingen.add(v);
+
     }
 }
