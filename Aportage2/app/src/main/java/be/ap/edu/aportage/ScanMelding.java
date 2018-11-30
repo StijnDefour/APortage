@@ -87,11 +87,11 @@ public class ScanMelding extends AppCompatActivity {
     }
 
     private void lokaalButtonsOpvullen() {
-        Intent iin= getIntent();
+        Intent iin = getIntent();
         Bundle b = iin.getExtras();
         if(b!=null)
         {
-            String j = (String) b.get("lokaal_info");
+            String j = (String) b.get("lokaalInfo");
             Log.d("Test", j);
 
             try {
