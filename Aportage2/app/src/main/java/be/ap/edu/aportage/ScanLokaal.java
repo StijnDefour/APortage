@@ -81,6 +81,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
                 Log.d("testLokaalInfo", lokaalInfo);
                 if (!lokaalInfo.equals("")) {
                     lokaalInfo = lokaalInfo.replace("LOKAAL ", "");
+                    lokaalInfo = lokaalInfo.replace(",", ".");
 
                     if (checkLokaal(lokaalInfo)) {
                         Intent intent = new Intent(activity, Meldingen.class);
@@ -146,7 +147,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
         {
             TextBlock item = (TextBlock)items.valueAt(i);
             strBuilder.append(item.getValue());
-            strBuilder.append("/");
+            /*strBuilder.append("/");
             // The following Process is used to show how to use lines & elements as well
             for (int j = 0; j < items.size(); j++) {
                 TextBlock textBlock = (TextBlock) items.valueAt(j);
@@ -165,7 +166,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
                     }
 
                 }
-            }
+            }*/
 
             //int indexText = (gelezenTekst.size() >= 0)  ? gelezenTekst.size() -1 : 0;
 
