@@ -35,10 +35,14 @@ public class DataManager {
 
     public Campus JsonToCampus(String json) {
         Campus formatted = new Campus("", "", new ArrayList<Verdiep>());
+        ArrayList<Integer> lokalenLijst;
+
+        //json opschonen van tekens
         json = json.replaceAll("\\{|\\}|\\s", "");
         Log.d("Campus ", json);
         String[] input = json.split(",");
 
+        //campus item opvullen
         for (String item: input) {
             String[] substring = item.split("=");
             switch (substring[0]) {
@@ -48,24 +52,36 @@ public class DataManager {
                 case "Afkorting":
                     formatted.setAfkorting(substring[1]);
                     break;
-                case "Verdiepingen":
-                    ArrayList<Integer> lokalenLijst = new ArrayList<Integer>();
-                    Log.d("Campus ", substring[3]);
-                    String[] lokalen = substring[3].split(";");
-
-                    for (String lokaal: lokalen) {
-                        lokalenLijst.add(Integer.parseInt(lokaal));
-                    }
-
-                    Verdiep tmp = new Verdiep(Integer.parseInt(substring[0]) , lokalenLijst);
-
-                    formatted.voegToeAanVerdiepingenlijst(tmp);
-                    break;
                 default:
+
+                    try {
+                        // index verdiepingnr
+                        int i = 0;
+
+                        // kijken of string begint met verdiepingen
+                        if ( substring[0].equals("Verdiepingen")) {
+                            i = 1;
+                        }
+
+                        lokalenLijst = new ArrayList<Integer>();
+                        Log.d("verdieping ", substring[i]);
+                        Log.d("lokalen ", substring[i+2]);
+                        String[] lokalen = substring[i+2].split(";");
+
+                        for (String lokaal: lokalen) {
+                            lokalenLijst.add(Integer.parseInt(lokaal));
+                        }
+
+                        Verdiep tmp = new Verdiep(Integer.parseInt(substring[i]) , lokalenLijst);
+
+                        formatted.voegToeAanVerdiepingenlijst(tmp);
+
+                    } catch (Exception e) {
+                        Log.d("Error", e.toString());
+                    }
                     break;
             }
         }
-
 
         return formatted;
     }
@@ -82,13 +98,6 @@ public class DataManager {
                 for (DataSnapshot campus : campusChildren) {
                     //Log.d("Campus ", campus.getValue().toString());
                     campusList.add(JsonToCampus(campus.getValue().toString()));
-
-                    //for (Campus c: campusList) {
-                    //    Log.d("Campus: ", c.getNaam());
-                    //}
-
-                    //Campus c = campus.getValue(Campus.class);
-                    //Log.d("Campus: ", c.getNaam());
                 }
             }
 
