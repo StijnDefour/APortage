@@ -31,8 +31,12 @@ public class Meldingen extends AppCompatActivity {
     private LinearLayoutManager meldingenLM;
     private MeldingenRecyclerAdapter meldingenAdapter;
     private List<Melding> meldingenLijst;
-    private Intent incomingIntent;
+    private Intent binnenkomendeIntent;
     private MockDataManager dataManager = MockDataManager.getInstance();
+
+    private String s_campus;
+    private String s_verdieping;
+    private String s_lokaal;
 
 
     @Override
@@ -48,7 +52,7 @@ public class Meldingen extends AppCompatActivity {
         this.meldingenRV = (RecyclerView) findViewById(R.id.rv_meldingen);
         this.meldingCV = (CardView) findViewById(R.id.cv_melding);
         this.meldingenLijst = dataManager.getMeldingenLijst();
-        this.incomingIntent = getIntent();
+        this.binnenkomendeIntent = getIntent();
 
         this.meldingenLM = new LinearLayoutManager(this);
         this.meldingenRV.setLayoutManager(this.meldingenLM);
@@ -58,7 +62,7 @@ public class Meldingen extends AppCompatActivity {
 
 
 
-        Bundle b = this.incomingIntent.getExtras();
+        Bundle b = this.binnenkomendeIntent.getExtras();
         checkBundleForData(b);
 
 
@@ -68,20 +72,36 @@ public class Meldingen extends AppCompatActivity {
 
         if(b!=null)
         {
-            String j = (String) b.get("lokaal_id");
-            lokaalButtonsOpvullen();
-            Log.v("Meldingen", j.toString());
+            String j = (String) b.get("lokaalInfo");
+            lokaalButtonsOpvullen(j);
+            Log.v("Meldingen", j);
         }
 
     }
 
-    private void lokaalButtonsOpvullen() {
+    private void lokaalButtonsOpvullen(String lokaalInfo) {
+            try {
+                lokaalInfo = lokaalInfo.replace(" ", "");
+                lokaalInfo = lokaalInfo.replace(".", "");
+            } catch (NullPointerException e) {
+                Log.e("Error",e.toString());
+            }
 
-        //todo: buttons aanvullen met data dat uit intent wordt gehaald, momenteel mock data
-
-        this.meldingenCampusBtn.setText("LOL");
-        this.meldingenVerdiepBtn.setText("V1");
-        this.meldingenLokaalBtn.setText("001");
-    }
+            try {
+                if (lokaalInfo == null) throw new AssertionError();
+                s_campus = lokaalInfo.substring(0,3);
+                lokaalInfo = lokaalInfo.substring(3, lokaalInfo.length());
+                s_lokaal = lokaalInfo.substring(lokaalInfo.length()-3,lokaalInfo.length());
+                lokaalInfo = lokaalInfo.substring(0,lokaalInfo.length()-3);
+                s_verdieping = lokaalInfo;
+                this.meldingenCampusBtn.setText(s_campus);
+                this.meldingenVerdiepBtn.setText(s_verdieping);
+                this.meldingenLokaalBtn.setText(s_lokaal);
+            } catch (StringIndexOutOfBoundsException e) {
+                Log.e("Error",e.toString());
+                Intent intent = new Intent(this, Overzicht.class);
+                startActivity(intent);
+            }
+        }
 
 }
