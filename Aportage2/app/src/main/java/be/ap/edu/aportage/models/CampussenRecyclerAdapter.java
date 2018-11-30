@@ -38,6 +38,7 @@ public class CampussenRecyclerAdapter extends RecyclerView.Adapter<CampussenRecy
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Campus campus = this.campussenList.get(i);
         viewHolder.campusTitel.setText(campus.getNaam());
+        viewHolder.campusAfk = campus.afkorting;
         //viewHolder.campusFoto.setImageURI(Uri.parse("https://www.ap.be/sites/default/files/2018-10/Meistraat.jpg"));
     }
 
@@ -49,6 +50,7 @@ public class CampussenRecyclerAdapter extends RecyclerView.Adapter<CampussenRecy
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView campusFoto;
         public TextView campusTitel;
+        public String campusAfk;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.campusFoto = (ImageView)itemView.findViewById(R.id.iv_campus_foto);
@@ -62,6 +64,7 @@ public class CampussenRecyclerAdapter extends RecyclerView.Adapter<CampussenRecy
                 public void onClick(View view) {
                     Intent intent = new Intent(context, be.ap.edu.aportage.Verdiepingen.class);
                     intent.putExtra("campus_titel", campusTitel.getText());
+                    intent.putExtra("campus_afk", campusAfk);
                     context.startActivity(intent);
                 }
             });

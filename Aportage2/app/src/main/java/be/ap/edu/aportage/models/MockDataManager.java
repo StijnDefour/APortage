@@ -37,5 +37,19 @@ public class MockDataManager {
         return list;
     }
 
+    public static List<Verdiep> getVerdiepenLijst(String naam) {
+
+        List<Verdiep> lijst = new ArrayList<>();
+
+        for(Campus c : getCampussenLijst()) {
+            if(c.naam == naam) {
+                lijst = c.verdiepingen;
+            }
+        }
+
+        return lijst;
+
+    }
+
 
 }

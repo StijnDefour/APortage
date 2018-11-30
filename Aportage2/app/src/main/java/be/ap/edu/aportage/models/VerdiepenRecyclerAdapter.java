@@ -20,11 +20,13 @@ public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecy
     private final Context context;
     private final LayoutInflater layoutInflater;
     private final List<Verdiep> verdiepenLijst;
+    private final String afkorting_campus;
 
-    public VerdiepenRecyclerAdapter(Context context, List<Verdiep> verdiepenLijst) {
+    public VerdiepenRecyclerAdapter(Context context, List<Verdiep> verdiepenLijst, String afk) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(this.context);
         this.verdiepenLijst = verdiepenLijst;
+        this.afkorting_campus = afk;
     }
 
     @NonNull
@@ -38,6 +40,7 @@ public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecy
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Verdiep verdiep = verdiepenLijst.get(i);
         viewHolder.verdiepNummer.setText(verdiep.getVerdiepNaam());
+        viewHolder.afk = this.afkorting_campus;
 
     }
 
@@ -48,6 +51,7 @@ public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecy
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView verdiepNummer;
+        private String afk;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             verdiepNummer = (TextView)itemView.findViewById(R.id.tv_verdiep_nummer);
@@ -60,6 +64,7 @@ public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecy
                 public void onClick(View view) {
                     Intent intent = new Intent(context, be.ap.edu.aportage.Lokalen.class);
                     intent.putExtra("verdiepnr", verdiepNummer.getText());
+                    intent.putExtra("campus_afk", afk);
                     context.startActivity(intent);
                 }
             });
