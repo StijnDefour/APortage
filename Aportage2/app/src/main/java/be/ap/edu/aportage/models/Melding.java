@@ -32,9 +32,9 @@ public class Melding {
 
 
 
-    public void setId(){
+    public void setId(int id){
         //todo: id setten op basis van aantal items in db
-        this._id = 1;
+        this._id = id;
     }
 
 
