@@ -13,4 +13,8 @@ class Verdiep {
         this.lokalen = lok;
     }
 
+    public String getVerdiepNaam(){
+        return String.format("%02d", verdiepnr);
+    }
+
 }

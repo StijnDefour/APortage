@@ -34,6 +34,7 @@ public class Meldingen extends AppCompatActivity {
     private List<Melding> meldingenLijst;
     private Intent binnenkomendeIntent;
     private MockDataManager dataManager = MockDataManager.getInstance();
+    private Intent uitgaandeIntent;
 
     Activity activity;
 
@@ -115,5 +116,47 @@ public class Meldingen extends AppCompatActivity {
                 startActivity(intent);
             }
         }
+
+    private void registreerButtonOnClicks(){
+        this.meldingenLokaalBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                gaNaarLokalen();
+            }
+        });
+        this.meldingenVerdiepBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                gaNaarVerdiepen();
+            }
+        });
+        this.meldingenCampusBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                gaNaarCampussen();
+            }
+        });
+    }
+
+    private void gaNaarLokalen() {
+
+        this.uitgaandeIntent = new Intent(this, Lokalen.class);
+        this.uitgaandeIntent.putExtra("verdiep", this.meldingenVerdiepBtn.getText());
+        this.uitgaandeIntent.putExtra("campus", this.meldingenCampusBtn.getText());
+        startActivity(this.uitgaandeIntent);
+
+    }
+
+    private void gaNaarVerdiepen(){
+
+        this.uitgaandeIntent = new Intent(this, Verdiepingen.class);
+        this.uitgaandeIntent.putExtra("campus", this.meldingenCampusBtn.getText());
+        startActivity(this.uitgaandeIntent);
+    }
+
+    private void gaNaarCampussen(){
+
+        this.uitgaandeIntent = new Intent(this, Campussen.class);
+        startActivity(this.uitgaandeIntent);
+    }
+
+
 
 }
