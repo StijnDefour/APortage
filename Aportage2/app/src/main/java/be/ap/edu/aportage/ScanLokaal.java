@@ -77,8 +77,8 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String lokaalInfo = gelezenTekst[0];
-                Log.d("", lokaalInfo);
+                String lokaalInfo = gelezenTekst[gelezenTekst.length-1].toUpperCase();
+                Log.d("testLokaalInfo", lokaalInfo);
                 if (!lokaalInfo.equals("")) {
                     lokaalInfo = lokaalInfo.replace("LOKAAL ", "");
 
@@ -102,7 +102,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
 
     private Boolean checkLokaal(String lokaal_s) {
         //todo Check of lokaal wel in database zit
-        return false;
+        return true;
     }
 
     @Override

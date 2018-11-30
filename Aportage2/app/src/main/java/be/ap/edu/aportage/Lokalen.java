@@ -1,5 +1,7 @@
 package be.ap.edu.aportage;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.card.MaterialCardView;
 import android.support.design.widget.FloatingActionButton;
@@ -25,7 +27,11 @@ public class Lokalen extends AppCompatActivity {
     private LinearLayoutManager lokaalLM;
     private List<Integer> lokalenLijst = new ArrayList<>();
 
+    Activity activity;
 
+    String s_campus;
+    String s_verdieping;
+    String s_lokaal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,20 +40,13 @@ public class Lokalen extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                
+        s_campus = "ELL";
+        s_verdieping = "01";
+        s_lokaal = "001";
 
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        this.lokalenLijst.add(00);
-        this.lokalenLijst.add(01);
-        this.lokalenLijst.add(02);
+        this.lokalenLijst.add(0);
+        this.lokalenLijst.add(1);
+        this.lokalenLijst.add(2);
         this.lokalenRV = (RecyclerView) findViewById(R.id.rv_lokalen);
         this.lokaalCV = (MaterialCardView) findViewById(R.id.matcv_lokaal);
         this.lokaalLM = new LinearLayoutManager(this);
@@ -55,6 +54,16 @@ public class Lokalen extends AppCompatActivity {
         this.lokalenAdapter = new LokalenRecyclerAdapter(this, this.lokalenLijst);
         this.lokalenRV.setAdapter(lokalenAdapter);
 
+        FloatingActionButton fab = findViewById(R.id.fab);
+        activity = this;
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, ScanMelding.class);
+                intent.putExtra("lokaalInfo", s_campus+s_verdieping+s_lokaal);
+                startActivity(intent);
+            }
+        });
     }
 
 }

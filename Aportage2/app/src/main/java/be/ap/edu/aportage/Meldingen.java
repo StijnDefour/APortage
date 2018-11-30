@@ -1,5 +1,6 @@
 package be.ap.edu.aportage;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -34,10 +35,11 @@ public class Meldingen extends AppCompatActivity {
     private Intent binnenkomendeIntent;
     private MockDataManager dataManager = MockDataManager.getInstance();
 
+    Activity activity;
+
     private String s_campus;
     private String s_verdieping;
     private String s_lokaal;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +67,16 @@ public class Meldingen extends AppCompatActivity {
         Bundle b = this.binnenkomendeIntent.getExtras();
         checkBundleForData(b);
 
-
+        FloatingActionButton fab = findViewById(R.id.fab);
+        activity = this;
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, ScanMelding.class);
+                intent.putExtra("lokaalInfo", s_campus+s_verdieping+s_lokaal);
+                startActivity(intent);
+            }
+        });
     }
 
     private void checkBundleForData(Bundle b) {
@@ -81,6 +92,7 @@ public class Meldingen extends AppCompatActivity {
 
     private void lokaalButtonsOpvullen(String lokaalInfo) {
             try {
+                lokaalInfo = lokaalInfo.replace("LOKAAL", "");
                 lokaalInfo = lokaalInfo.replace(" ", "");
                 lokaalInfo = lokaalInfo.replace(".", "");
             } catch (NullPointerException e) {
