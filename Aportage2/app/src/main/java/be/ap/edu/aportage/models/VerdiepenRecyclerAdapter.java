@@ -54,7 +54,7 @@ public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecy
         private String afk;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            verdiepNummer = (TextView)itemView.findViewById(R.id.tv_verdiep_nummer);
+            this.verdiepNummer = (TextView)itemView.findViewById(R.id.tv_verdiep_nummer);
             registreerOnClickListener(itemView);
         }
 

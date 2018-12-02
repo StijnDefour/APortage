@@ -3,7 +3,7 @@ package be.ap.edu.aportage.models;
 
 import java.util.ArrayList;
 
-class Verdiep {
+public class Verdiep {
 
     int verdiepnr;
     int[] lokalen;
@@ -15,7 +15,7 @@ class Verdiep {
     }
 
     public String getVerdiepNaam(){
-        return String.format("%02d", verdiepnr);
+        return String.format("%02d", this.verdiepnr);
     }
 
 }

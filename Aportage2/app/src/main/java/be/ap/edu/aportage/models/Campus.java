@@ -6,9 +6,9 @@ import java.util.Hashtable;
 import java.util.List;
 
 public class Campus {
-    String naam;
-    String afkorting;
-    List<Verdiep> verdiepingen = new ArrayList<Verdiep>();
+    public String naam;
+    public String afkorting;
+    public List<Verdiep> verdiepingen;
 
 
     public Campus(String n, String afkorting, List<Verdiep> verd) {
@@ -18,7 +18,7 @@ public class Campus {
     }
 
     public String getNaam() {
-        return naam;
+        return this.naam;
     }
 
     public void setNaam(String naam) {
@@ -26,7 +26,7 @@ public class Campus {
     }
 
     public String getAfkorting() {
-        return afkorting;
+        return this.afkorting;
     }
 
     public void setAfkorting(String afkorting) {
@@ -34,7 +34,7 @@ public class Campus {
     }
 
     public List<Verdiep> getVerdiepingen() {
-        return verdiepingen;
+        return this.verdiepingen;
     }
 
     public void setVerdiepingen(List<Verdiep> verdiepingen) {
