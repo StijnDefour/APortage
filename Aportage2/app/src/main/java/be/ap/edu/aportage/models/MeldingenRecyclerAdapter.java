@@ -59,11 +59,11 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView meldingFoto;
-        public TextView meldingTitel;
-        public TextView meldingBeschrijving;
-        public FrameLayout meldingStatus;
-        public int melding_id;
+        private ImageView meldingFoto;
+        private TextView meldingTitel;
+        private TextView meldingBeschrijving;
+        private FrameLayout meldingStatus;
+        private int melding_id;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,7 +75,7 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
 
         }
 
-        public void registreerOnClickListener(final View itemView) {
+        private void registreerOnClickListener(final View itemView) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
