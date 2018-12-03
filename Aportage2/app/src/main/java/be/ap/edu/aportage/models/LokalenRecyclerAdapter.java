@@ -1,6 +1,7 @@
 package be.ap.edu.aportage.models;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,7 +35,7 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         int lokaalNummer = this.lokalenList.get(i);
-        String lokaalNummerString = lokaalNummer+"";
+        String lokaalNummerString = String.format("%03d", lokaalNummer);
         viewHolder.verdiepTitel.setText(lokaalNummerString);
     }
 
@@ -49,6 +50,19 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             verdiepTitel = (TextView) itemView.findViewById(R.id.tv_verdiep_titel);
+            registreerOnClickListener(itemView);
+        }
+
+        public void registreerOnClickListener(View itemView) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, be.ap.edu.aportage.Meldingen.class);
+
+                    intent.putExtra("lokaalInfo", "ELL-01.005");
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }

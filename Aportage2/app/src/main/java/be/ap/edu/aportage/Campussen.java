@@ -26,8 +26,6 @@ public class Campussen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_campussen);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         //initialisatie properties voor recyclerview van campussen
         this.campussenAdapter = new CampussenRecyclerAdapter(this, this.dataManager.getCampussenLijst());

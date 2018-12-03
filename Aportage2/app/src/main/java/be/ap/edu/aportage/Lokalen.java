@@ -37,8 +37,6 @@ public class Lokalen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lokalen);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         s_campus = "ELL";
         s_verdieping = "01";
@@ -53,17 +51,6 @@ public class Lokalen extends AppCompatActivity {
         this.lokalenRV.setLayoutManager(this.lokaalLM);
         this.lokalenAdapter = new LokalenRecyclerAdapter(this, this.lokalenLijst);
         this.lokalenRV.setAdapter(lokalenAdapter);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        activity = this;
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(activity, ScanMelding.class);
-                intent.putExtra("lokaalInfo", s_campus+s_verdieping+s_lokaal);
-                startActivity(intent);
-            }
-        });
     }
 
 }

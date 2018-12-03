@@ -29,7 +29,8 @@ public class MockDataManager {
     private static void setCampussenLijst() {
         MockDataManager.campussenLijst = new ArrayList<>();
         List<Verdiep> verdiepList = new ArrayList<>();
-        verdiepList.add(new Verdiep(1, new int[]{ 0,1,2,3,4,5,6,7,8,9,10 }));
+        verdiepList.add(new Verdiep(-1, new int[]{0,1,2,3,4,5,6,7,8,9,10 }));
+        verdiepList.add(new Verdiep(1, new int[]{0,1,2,3,4,5,6,7,8,9,10 }));
         verdiepList.add(new Verdiep(2, new int[]{0,1,2,3,4,5,6,7,8,9,10 }));
         verdiepList.add(new Verdiep(3, new int[]{0,1,2,3,4,5,6,7,8,9,10 }));
         MockDataManager.campussenLijst.add(new Campus("Ellerman", "ELL", verdiepList));

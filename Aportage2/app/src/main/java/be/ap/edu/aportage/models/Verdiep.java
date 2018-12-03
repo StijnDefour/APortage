@@ -15,7 +15,7 @@ public class Verdiep {
     }
 
     public String getVerdiepNaam(){
-        return String.format("%02d", this.verdiepnr);
+        return (this.verdiepnr<0?"-":"") + String.format("%02d", Math.abs(this.verdiepnr));
     }
 
 }

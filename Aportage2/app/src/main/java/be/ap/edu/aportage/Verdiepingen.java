@@ -36,8 +36,6 @@ public class Verdiepingen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verdiepingen);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         this.inkomendeIntent = getIntent();
         String campus_naam = this.inkomendeIntent.getStringExtra("campus_titel");

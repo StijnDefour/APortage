@@ -46,8 +46,6 @@ public class Meldingen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meldingen);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         this.meldingenCampusBtn = (Button) findViewById(R.id.btn_campus_afk);
         this.meldingenVerdiepBtn = (Button) findViewById(R.id.btn_verdiep_nr);
