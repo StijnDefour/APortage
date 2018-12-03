@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,20 +28,25 @@ public class Lokalen extends AppCompatActivity {
     private LinearLayoutManager lokaalLM;
     private List<Integer> lokalenLijst = new ArrayList<>();
 
-    Activity activity;
-
     String s_campus;
     String s_verdieping;
-    String s_lokaal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lokalen);
 
-        s_campus = "ELL";
-        s_verdieping = "01";
-        s_lokaal = "001";
+        Intent iin = getIntent();
+        Bundle b = iin.getExtras();
+        if(b!=null) {
+            s_campus = (String) b.get("campus_afk");
+            s_verdieping = (String) b.get("verdiepnr");
+
+            Button btnCampus = findViewById(R.id.btn_campus);
+            Button btnVerdieping = findViewById(R.id.btn_verdiep);
+            btnCampus.setText(s_campus);
+            btnVerdieping.setText(s_verdieping);
+        }
 
         this.lokalenLijst.add(0);
         this.lokalenLijst.add(1);
@@ -49,7 +55,7 @@ public class Lokalen extends AppCompatActivity {
         this.lokaalCV = (MaterialCardView) findViewById(R.id.matcv_lokaal);
         this.lokaalLM = new LinearLayoutManager(this);
         this.lokalenRV.setLayoutManager(this.lokaalLM);
-        this.lokalenAdapter = new LokalenRecyclerAdapter(this, this.lokalenLijst);
+        this.lokalenAdapter = new LokalenRecyclerAdapter(this, this.lokalenLijst, s_campus, s_verdieping);
         this.lokalenRV.setAdapter(lokalenAdapter);
     }
 

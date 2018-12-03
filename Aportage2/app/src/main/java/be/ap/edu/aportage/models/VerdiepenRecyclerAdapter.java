@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,7 @@ public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecy
                     Intent intent = new Intent(context, be.ap.edu.aportage.Lokalen.class);
                     intent.putExtra("verdiepnr", verdiepNummer.getText());
                     intent.putExtra("campus_afk", afk);
+                    Log.d("test", verdiepNummer.getText().toString() + " " + afk);
                     context.startActivity(intent);
                 }
             });

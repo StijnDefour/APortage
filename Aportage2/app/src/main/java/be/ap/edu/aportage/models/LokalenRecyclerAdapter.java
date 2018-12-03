@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
@@ -18,11 +20,15 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
     private final Context context;
     private final List<Integer> lokalenList;
     private final LayoutInflater layoutInflater;
+    private final String afkorting_campus;
+    private final String verdieping;
 
-    public LokalenRecyclerAdapter(Context context, List<Integer> lokalenList) {
+    public LokalenRecyclerAdapter(Context context, List<Integer> lokalenList, String afk, String verdieping) {
         this.context = context;
         this.lokalenList = lokalenList;
         this.layoutInflater = LayoutInflater.from(this.context);
+        this.afkorting_campus = afk;
+        this.verdieping = verdieping;
     }
 
     @NonNull
@@ -37,6 +43,8 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
         int lokaalNummer = this.lokalenList.get(i);
         String lokaalNummerString = String.format("%03d", lokaalNummer);
         viewHolder.verdiepTitel.setText(lokaalNummerString);
+        viewHolder.campus_s = this.afkorting_campus;
+        viewHolder.verdieping_s = this.verdieping;
     }
 
     @Override
@@ -45,11 +53,13 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
         private TextView verdiepTitel;
+        private String campus_s;
+        private String verdieping_s;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            verdiepTitel = (TextView) itemView.findViewById(R.id.tv_verdiep_titel);
+            verdiepTitel = itemView.findViewById(R.id.tv_verdiep_titel);
+
             registreerOnClickListener(itemView);
         }
 
@@ -59,7 +69,9 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
                 public void onClick(View view) {
                     Intent intent = new Intent(context, be.ap.edu.aportage.Meldingen.class);
 
-                    intent.putExtra("lokaalInfo", "ELL-01.005");
+                    Log.d("test", campus_s + verdieping_s + verdiepTitel.getText().toString());
+
+                    intent.putExtra("lokaalInfo", campus_s + verdieping_s + verdiepTitel.getText().toString());
                     context.startActivity(intent);
                 }
             });

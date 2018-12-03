@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:background="@color/wetenschapentechniek"
         android:fontFamily="sans-serif"
-        android:text="ELL"
+        android:text=""
         android:textColor="@color/wit"
         android:textSize="20dp"
         app:layout_constraintEnd_toStartOf="@+id/btn-verdiep"
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:background="#8362985b"
         android:fontFamily="sans-serif"
-        android:text="Verdiep 00"
+        android:text=""
         android:textColor="@color/wit"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,11 +39,12 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv-lokalen"
         android:layout_width="match_parent"
-        android:layout_height="510dp"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn-campus"
+        app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/listitem_lokaal" />
 
 </android.support.constraint.ConstraintLayout>
