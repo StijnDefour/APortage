@@ -38,7 +38,7 @@ public class Verdiepingen extends AppCompatActivity {
         setContentView(R.layout.activity_verdiepingen);
 
         this.inkomendeIntent = getIntent();
-        String campus_naam = this.inkomendeIntent.getStringExtra("campus_titel");
+       // String campus_naam = this.inkomendeIntent.getStringExtra("campus_titel");
         String campus_afk = this.inkomendeIntent.getStringExtra("campus_afk");
 
         this.navBtnCampus = (Button)findViewById(R.id.btn_nav_campus);

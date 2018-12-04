@@ -35,7 +35,7 @@ public class Melding extends Activity {
         this.nieuweMeldingFab = findViewById(R.id.melding_fab);
 
 
-        checkBundleForData();
+        navigatieButtonsOpvullen();
         registreerButtonOnClicks();
 
     }
@@ -101,6 +101,19 @@ public class Melding extends Activity {
         }
     }
 
+    private void navigatieButtonsOpvullen(){
+
+        try {
+            this.s_campus = this.binnenkomendeIntent.getStringExtra("campus_afk");
+            this.s_verdieping = this.binnenkomendeIntent.getStringExtra("verdiep_nr");
+            this.s_lokaal = this.binnenkomendeIntent.getStringExtra("lokaal_nr");
+            this.btn_campus_afk.setText(this.s_campus);
+            this.btn_verdiep_nr.setText(this.s_verdieping);
+            this.btn_melding_lokaalnr.setText(this.s_lokaal);
+        } catch (Error e) {
+            Log.e("navigatieButtonsOpvullen Mislukt", e.getMessage());
+        }
+    }
 
     private void gaNaarScanMelding(){
         Intent intent = new Intent(this, ScanMelding.class);
@@ -111,8 +124,8 @@ public class Melding extends Activity {
     private void gaNaarLokalen() {
 
         this.uitgaandeIntent = new Intent(this, Lokalen.class);
-        this.uitgaandeIntent.putExtra("verdiep", this.btn_verdiep_nr.getText());
-        this.uitgaandeIntent.putExtra("campus", this.btn_campus_afk.getText());
+        this.uitgaandeIntent.putExtra("verdiep_nr", this.btn_verdiep_nr.getText());
+        this.uitgaandeIntent.putExtra("campus_afk", this.btn_campus_afk.getText());
         startActivity(this.uitgaandeIntent);
 
     }
@@ -120,7 +133,7 @@ public class Melding extends Activity {
     private void gaNaarVerdiepen(){
 
         this.uitgaandeIntent = new Intent(this, Verdiepingen.class);
-        this.uitgaandeIntent.putExtra("campus", this.btn_campus_afk.getText());
+        this.uitgaandeIntent.putExtra("campus_afk", this.btn_campus_afk.getText());
         startActivity(this.uitgaandeIntent);
     }
 

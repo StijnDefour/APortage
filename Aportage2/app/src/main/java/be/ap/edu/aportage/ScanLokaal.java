@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
-import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
@@ -32,6 +31,11 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
     private Button btn_ok;
     private Button btn_annuleren;
     private String[] gelezenTekst;
+
+    private String s_campusAfk;
+    private String s_verdiepNr;
+    private String s_lokaalNr;
+    private Intent uitgaandeIntent;
 
     @SuppressLint("MissingPermission")
     @Override
@@ -79,7 +83,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
             @Override
             public void onClick(View view) {
                 String lokaalInfo = gelezenTekst[gelezenTekst.length-1].toUpperCase();
-                maakAparteExtras(lokaalInfo);
+                haalCampusVerdiepLokaalDataUitGelezenString(gelezenTekst[gelezenTekst.length-1]);
                 Log.d("testLokaalInfo", lokaalInfo);
                 if (!lokaalInfo.equals("")) {
                     lokaalInfo = lokaalInfo.replace("LOKAAL ", "");
@@ -89,6 +93,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
                         Intent intent = new Intent(activity, Meldingen.class);
                         intent.putExtra("lokaalInfo", lokaalInfo);
                         startActivity(intent);
+                        gaNaarMeldingen();
                     }
                 }
             }
@@ -100,6 +105,16 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
                 startActivity(intent);
             }
         });
+    }
+
+    private void gaNaarMeldingen() {
+
+        this.uitgaandeIntent = new Intent(this, Meldingen.class);
+        this.uitgaandeIntent.putExtra("campus_afk", this.s_campusAfk);
+        this.uitgaandeIntent.putExtra("verdiep_nr", this.s_verdiepNr);
+        this.uitgaandeIntent.putExtra("lokaal_nr", this.s_lokaalNr);
+        startActivity(this.uitgaandeIntent);
+
     }
 
 
@@ -150,44 +165,39 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
             TextBlock item = (TextBlock)items.valueAt(i);
             strBuilder.append(item.getValue());
 
-
         }
         Log.v("strBuilder.toString()", strBuilder.toString());
-        registreerGelezenTekst(strBuilder.toString());
+        gelezenTekstDelimiteren(strBuilder.toString());
 
         txtView.post(new Runnable() {
             @Override
             public void run() {
                 txtView.setText(strBuilder.toString());
-                //txtView.setText(gelezenTekst.get(gelezenTekst.size()-1));
             }
 
         });
     }
 
 
-    public void registreerGelezenTekst(String teSplittenString) {
+    public void gelezenTekstDelimiteren(String teSplittenString) {
 
         String delimiter = "/";
-        gelezenTekst = teSplittenString.split(delimiter);
+        this.gelezenTekst = teSplittenString.split(delimiter);
 
-        Log.v("gelezen tekst", gelezenTekst[gelezenTekst.length-1]);
+        Log.v("gelezen tekst", this.gelezenTekst[gelezenTekst.length-1]);
 
     }
 
-    public void maakAparteExtras(String gelezenText){
+    public void haalCampusVerdiepLokaalDataUitGelezenString(String gelezenText){
         //todo: omzetten van lokaalinfo in 3 extras: afk, verdiepnr, lokaalnr
         //todo: als er geen correct lokaal kon worden gelezen nadat user op "doorsturen" klikt -> popup tonen en naar zoeken redirecten
         Log.d(LOG_TAG + "maakAparteExtras", gelezenText );
         try {
-            gelezenText = gelezenText.replace("LOKAAL ", "");
-            gelezenText = gelezenText.replace(",", ".");
-            Log.d(LOG_TAG + "maakAparteExtras", gelezenText );
-
-            gelezenText = gelezenText.replace("LOKAAL", "");
-            gelezenText = gelezenText.replace(" ", "");
-            gelezenText = gelezenText.replace(".", "");
-            Log.d(LOG_TAG + "maakAparteExtras", gelezenText );
+            String[] individueleWoorden = gelezenText.split("[^\\w\\-]+|--+");
+            Log.d(LOG_TAG + "split words", individueleWoorden[0]);
+            this.s_campusAfk = individueleWoorden[1];
+            this.s_verdiepNr = individueleWoorden[2];
+            this.s_lokaalNr = individueleWoorden[3];
         } catch (Error e) {
             Log.e(LOG_TAG, e.getMessage());
         }

@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -27,6 +28,7 @@ public class Lokalen extends AppCompatActivity {
     private RecyclerView lokalenRV;
     private LinearLayoutManager lokaalLM;
     private int[] lokalenLijst;
+    private Intent inkomendeIntent;
 
     String s_campus;
     String s_verdieping;
@@ -36,25 +38,39 @@ public class Lokalen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lokalen);
 
-        Intent iin = getIntent();
-        Bundle b = iin.getExtras();
-        if(b!=null) {
-            s_campus = (String) b.get("campus_afk");
-            s_verdieping = (String) b.get("verdiepnr");
+       this.inkomendeIntent = this.getIntent();
+       this.s_campus = this.inkomendeIntent.getStringExtra("campus_afk");
+       this.s_verdieping = this.inkomendeIntent.getStringExtra("verdiep_nr");
+
+
+
+       navigatieOpvullen();
+
+       this.lokalenLijst = datamanger.getLokalenLijst(s_campus, Integer.parseInt(s_verdieping));
+
+       this.lokalenRV = (RecyclerView) findViewById(R.id.rv_lokalen);
+
+       this.lokaalLM = new LinearLayoutManager(this);
+
+       this.lokalenRV.setLayoutManager(this.lokaalLM);
+
+       this.lokalenAdapter = new LokalenRecyclerAdapter(this, this.lokalenLijst, s_campus, s_verdieping);
+
+       this.lokalenRV.setAdapter(lokalenAdapter);
+
+    }
+
+    private void navigatieOpvullen(){
+        try {
+
 
             Button btnCampus = findViewById(R.id.btn_campus);
             Button btnVerdieping = findViewById(R.id.btn_verdiep);
             btnCampus.setText(s_campus);
             btnVerdieping.setText(s_verdieping);
+        } catch (Error e){
+            Log.e("navigatieOpvullen", e.getMessage());
         }
-
-        this.lokalenLijst = datamanger.getLokalenLijst(s_campus, Integer.parseInt(s_verdieping));
-        this.lokalenRV = (RecyclerView) findViewById(R.id.rv_lokalen);
-        this.lokaalLM = new LinearLayoutManager(this);
-        this.lokalenRV.setLayoutManager(this.lokaalLM);
-        this.lokalenAdapter = new LokalenRecyclerAdapter(this, this.lokalenLijst, s_campus, s_verdieping);
-        this.lokalenRV.setAdapter(lokalenAdapter);
-
     }
 
 }

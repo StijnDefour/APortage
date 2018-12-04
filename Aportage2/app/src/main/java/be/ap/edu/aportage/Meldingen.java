@@ -62,7 +62,8 @@ public class Meldingen extends AppCompatActivity {
         this.meldingenRV.setAdapter(this.meldingenAdapter);
 
 
-        checkBundleForData();
+        //checkBundleForData();
+        navigatieButtonsOpvullen();
         registreerButtonOnClicks();
     }
 
@@ -77,6 +78,19 @@ public class Meldingen extends AppCompatActivity {
 
     }
 
+    private void navigatieButtonsOpvullen(){
+
+        try {
+            this.s_campus = this.binnenkomendeIntent.getStringExtra("campus_afk");
+            this.s_verdieping = this.binnenkomendeIntent.getStringExtra("verdiep_nr");
+            this.s_lokaal = this.binnenkomendeIntent.getStringExtra("lokaal_nr");
+            this.meldingenCampusBtn.setText(this.s_campus);
+            this.meldingenVerdiepBtn.setText(this.s_verdieping);
+            this.meldingenLokaalBtn.setText(this.s_lokaal);
+        } catch (Error e) {
+            Log.e("navigatieButtonsOpvullen Mislukt", e.getMessage());
+        }
+    }
     private void lokaalButtonsOpvullen(String lokaalInfo) {
             try {
                 lokaalInfo = lokaalInfo.replace("LOKAAL", "");
@@ -136,8 +150,8 @@ public class Meldingen extends AppCompatActivity {
     private void gaNaarLokalen() {
 
         this.uitgaandeIntent = new Intent(this, Lokalen.class);
-        this.uitgaandeIntent.putExtra("verdiep", this.meldingenVerdiepBtn.getText());
-        this.uitgaandeIntent.putExtra("campus", this.meldingenCampusBtn.getText());
+        this.uitgaandeIntent.putExtra("verdiep_nr", this.meldingenVerdiepBtn.getText());
+        this.uitgaandeIntent.putExtra("campus_afk", this.meldingenCampusBtn.getText());
         startActivity(this.uitgaandeIntent);
 
     }
@@ -145,7 +159,7 @@ public class Meldingen extends AppCompatActivity {
     private void gaNaarVerdiepen(){
 
         this.uitgaandeIntent = new Intent(this, Verdiepingen.class);
-        this.uitgaandeIntent.putExtra("campus", this.meldingenCampusBtn.getText());
+        this.uitgaandeIntent.putExtra("campus_afk", this.meldingenCampusBtn.getText());
         startActivity(this.uitgaandeIntent);
     }
 

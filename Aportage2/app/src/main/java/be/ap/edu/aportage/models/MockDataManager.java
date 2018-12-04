@@ -67,16 +67,16 @@ public class MockDataManager {
     }
 
     public static int[] getLokalenLijst(String afk, int verdiep){
-        List<Verdiep> list = new ArrayList<>();
+        List<Verdiep> verdiepenLijst = new ArrayList<>();
         int[] lokalen = null;
 
         for(int i = 0; i < MockDataManager.campussenLijst.size(); i++){
-            if(afk.equals(campussenLijst.get(i).afkorting)){
-                list =  campussenLijst.get(i).verdiepingen;
+            if(afk.equals(MockDataManager.campussenLijst.get(i).afkorting)){
+                verdiepenLijst =  MockDataManager.campussenLijst.get(i).verdiepingen;
             }
         }
 
-        for (Verdiep v: list) {
+        for (Verdiep v: verdiepenLijst) {
             if(v.verdiepnr == verdiep) {
                 Log.d("verdiepen foreach", "verdiepnr: "+verdiep + " gevonden!");
                 lokalen = v.lokalen;
