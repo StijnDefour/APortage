@@ -102,7 +102,7 @@ public class ScanMelding extends AppCompatActivity {
             }
 
             try {
-                if (j == null) throw new AssertionError();
+                if (j == null) throw new Error();
                 s_campus = j.substring(0,3);
                 j = j.substring(3, j.length());
                 s_lokaal = j.substring(j.length()-3,j.length());

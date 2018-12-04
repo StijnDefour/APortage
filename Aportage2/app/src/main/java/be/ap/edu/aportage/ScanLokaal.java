@@ -25,6 +25,7 @@ import com.google.android.gms.vision.text.TextRecognizer;
 
 public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Callback, Detector.Processor  {
 
+    private String LOG_TAG = this.getClass().toString();
     private SurfaceView cameraView;
     private TextView txtView;
     private CameraSource cameraSource;
@@ -78,6 +79,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
             @Override
             public void onClick(View view) {
                 String lokaalInfo = gelezenTekst[gelezenTekst.length-1].toUpperCase();
+                maakAparteExtras(lokaalInfo);
                 Log.d("testLokaalInfo", lokaalInfo);
                 if (!lokaalInfo.equals("")) {
                     lokaalInfo = lokaalInfo.replace("LOKAAL ", "");
@@ -147,28 +149,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
         {
             TextBlock item = (TextBlock)items.valueAt(i);
             strBuilder.append(item.getValue());
-            /*strBuilder.append("/");
-            // The following Process is used to show how to use lines & elements as well
-            for (int j = 0; j < items.size(); j++) {
-                TextBlock textBlock = (TextBlock) items.valueAt(j);
-                //gelezenTekst.add(textBlock.getValue());
-                strBuilder.append(textBlock.getValue());
-                strBuilder.append("/");
-                for (Text line : textBlock.getComponents()) {
-                    //extract scanned text lines here
-                    Log.v("lines", line.getValue());
-                    strBuilder.append(line.getValue());
-                    strBuilder.append("/");
-                    for (Text element : line.getComponents()) {
-                        //extract scanned text words here
-                        Log.v("element", element.getValue());
-                        strBuilder.append(element.getValue());
-                    }
 
-                }
-            }*/
-
-            //int indexText = (gelezenTekst.size() >= 0)  ? gelezenTekst.size() -1 : 0;
 
         }
         Log.v("strBuilder.toString()", strBuilder.toString());
@@ -192,5 +173,23 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
 
         Log.v("gelezen tekst", gelezenTekst[gelezenTekst.length-1]);
 
+    }
+
+    public void maakAparteExtras(String gelezenText){
+        //todo: omzetten van lokaalinfo in 3 extras: afk, verdiepnr, lokaalnr
+        //todo: als er geen correct lokaal kon worden gelezen nadat user op "doorsturen" klikt -> popup tonen en naar zoeken redirecten
+        Log.d(LOG_TAG + "maakAparteExtras", gelezenText );
+        try {
+            gelezenText = gelezenText.replace("LOKAAL ", "");
+            gelezenText = gelezenText.replace(",", ".");
+            Log.d(LOG_TAG + "maakAparteExtras", gelezenText );
+
+            gelezenText = gelezenText.replace("LOKAAL", "");
+            gelezenText = gelezenText.replace(" ", "");
+            gelezenText = gelezenText.replace(".", "");
+            Log.d(LOG_TAG + "maakAparteExtras", gelezenText );
+        } catch (Error e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
     }
 }

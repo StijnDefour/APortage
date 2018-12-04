@@ -18,15 +18,15 @@ import java.util.List;
 import java.util.concurrent.RecursiveAction;
 
 import be.ap.edu.aportage.models.LokalenRecyclerAdapter;
+import be.ap.edu.aportage.models.MockDataManager;
 
 public class Lokalen extends AppCompatActivity {
 
+    private MockDataManager datamanger = MockDataManager.getInstance();
     private LokalenRecyclerAdapter lokalenAdapter;
     private RecyclerView lokalenRV;
-    private MaterialCardView lokaalCV;
-
     private LinearLayoutManager lokaalLM;
-    private List<Integer> lokalenLijst = new ArrayList<>();
+    private int[] lokalenLijst;
 
     String s_campus;
     String s_verdieping;
@@ -48,15 +48,13 @@ public class Lokalen extends AppCompatActivity {
             btnVerdieping.setText(s_verdieping);
         }
 
-        this.lokalenLijst.add(0);
-        this.lokalenLijst.add(1);
-        this.lokalenLijst.add(2);
+        this.lokalenLijst = datamanger.getLokalenLijst(s_campus, Integer.parseInt(s_verdieping));
         this.lokalenRV = (RecyclerView) findViewById(R.id.rv_lokalen);
-        this.lokaalCV = (MaterialCardView) findViewById(R.id.matcv_lokaal);
         this.lokaalLM = new LinearLayoutManager(this);
         this.lokalenRV.setLayoutManager(this.lokaalLM);
         this.lokalenAdapter = new LokalenRecyclerAdapter(this, this.lokalenLijst, s_campus, s_verdieping);
         this.lokalenRV.setAdapter(lokalenAdapter);
+
     }
 
 }

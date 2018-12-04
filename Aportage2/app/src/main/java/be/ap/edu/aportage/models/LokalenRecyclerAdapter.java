@@ -18,12 +18,12 @@ import be.ap.edu.aportage.R;
 public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecyclerAdapter.ViewHolder> {
 
     private final Context context;
-    private final List<Integer> lokalenList;
+    private final int[] lokalenList;
     private final LayoutInflater layoutInflater;
     private final String afkorting_campus;
     private final String verdieping;
 
-    public LokalenRecyclerAdapter(Context context, List<Integer> lokalenList, String afk, String verdieping) {
+    public LokalenRecyclerAdapter(Context context, int[] lokalenList, String afk, String verdieping) {
         this.context = context;
         this.lokalenList = lokalenList;
         this.layoutInflater = LayoutInflater.from(this.context);
@@ -40,16 +40,16 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        int lokaalNummer = this.lokalenList.get(i);
+        int lokaalNummer = this.lokalenList[i];
         String lokaalNummerString = String.format("%03d", lokaalNummer);
-        viewHolder.verdiepTitel.setText(lokaalNummerString);
+        viewHolder.verdiepTitel.setText(this.verdieping+"."+lokaalNummerString);
         viewHolder.campus_s = this.afkorting_campus;
         viewHolder.verdieping_s = this.verdieping;
     }
 
     @Override
     public int getItemCount() {
-        return this.lokalenList.size();
+        return this.lokalenList.length;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

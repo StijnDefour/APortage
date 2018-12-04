@@ -35,8 +35,7 @@ public class Meldingen extends AppCompatActivity {
     private Intent binnenkomendeIntent;
     private MockDataManager dataManager = MockDataManager.getInstance();
     private Intent uitgaandeIntent;
-
-    Activity activity;
+    private FloatingActionButton nieuweMeldingfab;
 
     private String s_campus;
     private String s_verdieping;
@@ -52,6 +51,7 @@ public class Meldingen extends AppCompatActivity {
         this.meldingenLokaalBtn = (Button) findViewById(R.id.btn_melding_lokaalnr);
         this.meldingenRV = (RecyclerView) findViewById(R.id.rv_meldingen);
         this.meldingCV = (CardView) findViewById(R.id.cv_melding);
+        this.nieuweMeldingfab = (FloatingActionButton) findViewById(R.id.meldingen_fab);
         this.meldingenLijst = dataManager.getMeldingenLijst();
         this.binnenkomendeIntent = getIntent();
 
@@ -62,25 +62,13 @@ public class Meldingen extends AppCompatActivity {
         this.meldingenRV.setAdapter(this.meldingenAdapter);
 
 
-
-        Bundle b = this.binnenkomendeIntent.getExtras();
-        checkBundleForData(b);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        activity = this;
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(activity, ScanMelding.class);
-                intent.putExtra("lokaalInfo", s_campus+s_verdieping+s_lokaal);
-                startActivity(intent);
-            }
-        });
+        checkBundleForData();
+        registreerButtonOnClicks();
     }
 
-    private void checkBundleForData(Bundle b) {
-
-        if(b!=null)
+    private void checkBundleForData() {
+        Bundle b = this.binnenkomendeIntent.getExtras();
+        if(b.get("lokaalInfo") != null)
         {
             String j = (String) b.get("lokaalInfo");
             lokaalButtonsOpvullen(j);
@@ -131,6 +119,18 @@ public class Meldingen extends AppCompatActivity {
                 gaNaarCampussen();
             }
         });
+        this.nieuweMeldingfab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gaNaarScanMelding();
+            }
+        });
+    }
+
+    private void gaNaarScanMelding(){
+        Intent intent = new Intent(this, ScanMelding.class);
+        intent.putExtra("lokaalInfo", s_campus+s_verdieping+s_lokaal);
+        startActivity(intent);
     }
 
     private void gaNaarLokalen() {

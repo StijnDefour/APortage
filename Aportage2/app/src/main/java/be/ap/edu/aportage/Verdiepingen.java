@@ -56,7 +56,6 @@ public class Verdiepingen extends AppCompatActivity {
 
 
 
-
     }
 
     public void registreerOnClickListeners(){
