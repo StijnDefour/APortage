@@ -73,7 +73,6 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
 
                     Log.d("test", campus_s + verdieping_s + verdiepTitel.getText().toString());
 
-                    //intent.putExtra("lokaalInfo", campus_s + verdieping_s + verdiepTitel.getText().toString());
                     intent.putExtra("campus_afk", campus_s );
                     intent.putExtra("verdiep_nr", verdieping_s);
                     intent.putExtra("lokaal_nr", lokaal_s);

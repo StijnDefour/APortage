@@ -105,14 +105,14 @@ public class ScanMelding extends AppCompatActivity {
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveInDB();
+                slaMeldingOpNaarDeDB();
             }
         });
     }
 
-    private void saveInDB() {
+    private void slaMeldingOpNaarDeDB() {
         //todo vul in juiste data en push naar database
-        be.ap.edu.aportage.models.Melding melding = new be.ap.edu.aportage.models.Melding("MockMelding", "Blablablablabla", "testtest", "behandeling", new Date());
+        //be.ap.edu.aportage.models.Melding melding = new be.ap.edu.aportage.models.Melding("MockMelding", "Blablablablabla", new String[]{"ELL","-01","005"}, "behandeling", new Date());
     }
 
     private void lokaalButtonsOpvullen() {
@@ -171,10 +171,5 @@ public class ScanMelding extends AppCompatActivity {
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
-    }
-
-
-    public void slaMeldingOpNaarDeDB(){
-
     }
 }

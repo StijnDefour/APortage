@@ -12,7 +12,6 @@ public class Melding extends Activity {
 
     Intent binnenkomendeIntent;
     Intent uitgaandeIntent;
-    Activity activity;
     Button btn_campus_afk;
     Button btn_verdiep_nr;
     Button btn_melding_lokaalnr;
@@ -34,10 +33,8 @@ public class Melding extends Activity {
         this.btn_melding_lokaalnr = findViewById(R.id.btn_melding_lokaalnr);
         this.nieuweMeldingFab = findViewById(R.id.melding_fab);
 
-
         navigatieButtonsOpvullen();
         registreerButtonOnClicks();
-
     }
 
     private void registreerButtonOnClicks() {
@@ -64,43 +61,6 @@ public class Melding extends Activity {
         });
     }
 
-    private void checkBundleForData() {
-        Bundle b = this.binnenkomendeIntent.getExtras();
-        if(b.get("lokaalInfo") != null)
-        {
-            String j = (String) b.get("lokaalInfo");
-            lokaalButtonsOpvullen(j);
-            Log.v("Meldingen", j);
-        }
-
-    }
-
-    private void lokaalButtonsOpvullen(String lokaalInfo) {
-        try {
-            lokaalInfo = lokaalInfo.replace("LOKAAL", "");
-            lokaalInfo = lokaalInfo.replace(" ", "");
-            lokaalInfo = lokaalInfo.replace(".", "");
-        } catch (NullPointerException e) {
-            Log.e("Error",e.toString());
-        }
-
-        try {
-            if (lokaalInfo == null) throw new AssertionError();
-            this.s_campus = lokaalInfo.substring(0,3);
-            lokaalInfo = lokaalInfo.substring(3, lokaalInfo.length());
-            this.s_lokaal = lokaalInfo.substring(lokaalInfo.length()-3,lokaalInfo.length());
-            lokaalInfo = lokaalInfo.substring(0,lokaalInfo.length()-3);
-            this.s_verdieping = lokaalInfo;
-            this.btn_campus_afk.setText(s_campus);
-            this.btn_verdiep_nr.setText(s_verdieping);
-            this.btn_melding_lokaalnr.setText(s_lokaal);
-        } catch (StringIndexOutOfBoundsException e) {
-            Log.e("Error",e.toString());
-            Intent intent = new Intent(this, Overzicht.class);
-            startActivity(intent);
-        }
-    }
-
     private void navigatieButtonsOpvullen(){
 
         try {
@@ -117,7 +77,9 @@ public class Melding extends Activity {
 
     private void gaNaarScanMelding(){
         Intent intent = new Intent(this, ScanMelding.class);
-        intent.putExtra("lokaalInfo", this.s_campus+ this.s_verdieping+ this.s_lokaal);
+        intent.putExtra("campus_afk", s_campus );
+        intent.putExtra("verdiep_nr", s_verdieping);
+        intent.putExtra("lokaal_nr", s_lokaal);
         startActivity(intent);
     }
 
