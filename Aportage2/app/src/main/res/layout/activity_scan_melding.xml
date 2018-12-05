@@ -75,7 +75,7 @@
         android:ems="10"
         android:hint="@string/scan_melding_hint_titel"
         android:inputType="text|textShortMessage|textPersonName"
-        android:text="Name"
+        android:text="@string/melding_titel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv-label-titel" />

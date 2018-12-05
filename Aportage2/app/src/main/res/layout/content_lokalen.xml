@@ -17,7 +17,7 @@
         android:fontFamily="sans-serif"
         android:text=""
         android:textColor="@color/wit"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/btn-verdiep"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +31,7 @@
         android:fontFamily="sans-serif"
         android:text=""
         android:textColor="@color/wit"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn-campus"
         app:layout_constraintTop_toTopOf="parent" />
