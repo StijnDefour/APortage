@@ -42,15 +42,11 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-
-
         Melding melding = this.meldingenList.get(i);
         viewHolder.meldingTitel.setText(melding.titel);
         viewHolder.meldingBeschrijving.setText(melding.omschrijving);
         viewHolder.melding_id = i;
-        //viewHolder.meldingStatus.setBackgroundColor(this.context.getResources().getInteger(melding.getKleurInt()));
-
-
+        viewHolder.locatie = melding.locatie;
     }
 
     @Override
@@ -64,6 +60,7 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
         private TextView meldingBeschrijving;
         private FrameLayout meldingStatus;
         private int melding_id;
+        private String[] locatie;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -81,6 +78,11 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
                     Intent intent = new Intent(context, be.ap.edu.aportage.Melding.class);
                     intent.putExtra("melding_titel", meldingTitel.getText());
                     intent.putExtra("melding_id", melding_id);
+
+                    intent.putExtra("campus_afk", locatie[0]);
+                    intent.putExtra("verdiep_nr", locatie[1]);
+                    intent.putExtra("lokaal_nr", locatie[2]);
+
                     context.startActivity(intent);
                 }
             });

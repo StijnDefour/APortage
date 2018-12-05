@@ -6,14 +6,14 @@ public class Melding {
     int _id;
     String titel;
     String omschrijving;
-    String locatie;
+    String[] locatie;
     String status;
     //Melder melder;
 
     //todo: api call naar 26 vs 24 rechtzetten om localdatetime te kunnen gebruiken, of een andere date lib gebruiken
     Date datum;
 
-    public Melding(String t, String omschr, String loc, String sts, Date d) {
+    public Melding(String t, String omschr, String[] loc, String sts, Date d) {
 
         this.titel = t;
         this.omschrijving = omschr;

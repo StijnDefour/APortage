@@ -106,7 +106,7 @@ public class ScanMelding extends AppCompatActivity {
 
     private void saveInDB() {
         //todo vul in juiste data en push naar database
-        be.ap.edu.aportage.models.Melding melding = new be.ap.edu.aportage.models.Melding("MockMelding", "Blablablablabla", "testtest", "behandeling", new Date());
+        //be.ap.edu.aportage.models.Melding melding = new be.ap.edu.aportage.models.Melding("MockMelding", "Blablablablabla", new String[]{"ELL","-01","005"}, "behandeling", new Date());
     }
 
     private void lokaalButtonsOpvullen() {
