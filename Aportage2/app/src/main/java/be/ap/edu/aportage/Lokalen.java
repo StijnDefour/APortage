@@ -84,12 +84,25 @@ public class Lokalen extends AppCompatActivity {
                 gaNaarCampussen();
             }
         });
+        this.btnVerdiep.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                gaNaarVerdiepen();
+            }
+        });
 
     }
 
     private void gaNaarCampussen(){
         this.uitgaandeIntent = new Intent(this, Campussen.class);
         this.startActivity(this.uitgaandeIntent);
+    }
+
+    private void gaNaarVerdiepen(){
+        this.uitgaandeIntent = new Intent(this, Verdiepingen.class);
+        this.uitgaandeIntent.putExtra("verdiep_nr", this.btnVerdiep.getText());
+        this.uitgaandeIntent.putExtra("campus_afk", this.btnCampus.getText());
+        this.startActivity(this.uitgaandeIntent);
+
     }
 
 

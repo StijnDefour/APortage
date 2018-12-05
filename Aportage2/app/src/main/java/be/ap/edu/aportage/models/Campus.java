@@ -17,11 +17,11 @@ public class Campus {
         this.verdiepingen = verd;
     }
 
-<<<<<<< HEAD
     public Verdiep getVerdiepingenLijst(int v) {
         Verdiep verdiep = this.verdiepingen.get(v);
         return verdiep;
-=======
+    }
+
     public String getNaam() {
         return this.naam;
     }
@@ -49,6 +49,5 @@ public class Campus {
     public void voegToeAanVerdiepingenlijst(Verdiep v) {
         this.verdiepingen.add(v);
 
->>>>>>> master
     }
 }
