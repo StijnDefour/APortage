@@ -12,7 +12,6 @@ public class Melding extends Activity {
 
     Intent binnenkomendeIntent;
     Intent uitgaandeIntent;
-    Activity activity;
     Button btn_campus_afk;
     Button btn_verdiep_nr;
     Button btn_melding_lokaalnr;

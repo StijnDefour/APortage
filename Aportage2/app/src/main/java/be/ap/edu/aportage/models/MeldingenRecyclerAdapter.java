@@ -15,9 +15,6 @@ import java.util.List;
 
 import be.ap.edu.aportage.R;
 
-//import static android.support.v4.graphics.drawable.IconCompat.getResources;
-
-
 public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecyclerAdapter.ViewHolder> {
 
 

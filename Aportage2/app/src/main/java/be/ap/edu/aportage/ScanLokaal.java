@@ -72,7 +72,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
                     .setRequestedFps(2.0f)
                     .setAutoFocusEnabled(true)
                     .build();
-            cameraView.getHolder().addCallback(this);  //getcontext shit gebruiken in de plaat
+            cameraView.getHolder().addCallback(this);
             txtRecognizer.setProcessor(this);
         }
 

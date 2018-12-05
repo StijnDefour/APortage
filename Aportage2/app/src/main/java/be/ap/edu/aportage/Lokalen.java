@@ -62,8 +62,6 @@ public class Lokalen extends AppCompatActivity {
 
     private void navigatieOpvullen(){
         try {
-
-
             Button btnCampus = findViewById(R.id.btn_campus);
             Button btnVerdieping = findViewById(R.id.btn_verdiep);
             btnCampus.setText(s_campus);
