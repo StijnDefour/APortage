@@ -16,12 +16,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ScanMelding extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
 
     static final int REQUEST_IMAGE_CAPTURE = 5;
     String mCurrentPhotoPath;
@@ -40,11 +44,13 @@ public class ScanMelding extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_melding);
 
-        imageView = findViewById(R.id.imageView);
-        button = findViewById(R.id.button);
-        btnCampus = findViewById(R.id.btn_campus_afk);
-        btnVerdiep = findViewById(R.id.btn_verdiep_nr);
-        btnLokaal = findViewById(R.id.btn_melding_lokaalnr);
+        this.mAuth = FirebaseAuth.getInstance();
+
+        this.imageView = findViewById(R.id.imageView);
+        this.button = findViewById(R.id.button);
+        this.btnCampus = findViewById(R.id.btn_campus_afk);
+        this.btnVerdiep = findViewById(R.id.btn_verdiep_nr);
+        this.btnLokaal = findViewById(R.id.btn_melding_lokaalnr);
 
         lokaalButtonsOpvullen();
         buttonsAddClickEvents();
@@ -165,5 +171,10 @@ public class ScanMelding extends AppCompatActivity {
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
+    }
+
+
+    public void slaMeldingOpNaarDeDB(){
+
     }
 }
