@@ -16,7 +16,7 @@ public class Melding {
 
     FirebaseUser melder;
 
-    //todo: api call naar 26 vs 24 rechtzetten om localdatetime te kunnen gebruiken, of een andere date lib gebruiken
+    //todo_done: api call naar 26 vs 24 rechtzetten om localdatetime te kunnen gebruiken, of een andere date lib gebruiken
     Date datum;
 
     public Melding(String t, String omschr, String[] loc, String sts, Date d) {

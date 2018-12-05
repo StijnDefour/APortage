@@ -17,6 +17,11 @@ public class Campus {
         this.verdiepingen = verd;
     }
 
+    public Verdiep getVerdiepingenLijst(int v) {
+        Verdiep verdiep = this.verdiepingen.get(v);
+        return verdiep;
+    }
+
     public String getNaam() {
         return this.naam;
     }

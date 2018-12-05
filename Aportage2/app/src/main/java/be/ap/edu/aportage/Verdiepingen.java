@@ -3,18 +3,15 @@ package be.ap.edu.aportage;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 
 import java.util.List;
 
-import be.ap.edu.aportage.models.Campus;
 import be.ap.edu.aportage.models.MockDataManager;
 import be.ap.edu.aportage.models.VerdiepenRecyclerAdapter;
 import be.ap.edu.aportage.models.Verdiep;
@@ -29,7 +26,8 @@ public class Verdiepingen extends AppCompatActivity {
     private Intent uitgaandeIntent;
     private Intent inkomendeIntent;
     private Button navBtnCampus;
-    private List<Verdiep> verdiepenLijst;
+
+
 
 
     @Override
@@ -37,6 +35,10 @@ public class Verdiepingen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verdiepingen);
 
+
+        this.verdiepenRV = (RecyclerView) findViewById(R.id.rv_verdiepingen);
+        //this.verdiepCV = (CardView) findViewById(R.id.cv)
+        this.dataManager = MockDataManager.getInstance();
         this.inkomendeIntent = getIntent();
         String campus_afk = this.inkomendeIntent.getStringExtra("campus_afk");
 
