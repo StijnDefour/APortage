@@ -10,6 +10,10 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.4'
         classpath 'com.google.gms:google-services:4.2.0' // google-services plugin
+
+        //classpath 'com.jakewharton:butterknife-gradle-plugin:8.5.1'
+
+
         
 
         // NOTE: Do not place your application dependencies here; they belong

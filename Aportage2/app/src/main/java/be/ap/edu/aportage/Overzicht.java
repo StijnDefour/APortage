@@ -28,6 +28,7 @@ public class Overzicht extends Activity {
         setContentView(R.layout.activity_overzicht);
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        //todo: anonieme authorisatie + registratie + login
         mAuth.signInAnonymously()
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override

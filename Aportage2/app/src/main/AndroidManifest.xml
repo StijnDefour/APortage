@@ -29,8 +29,6 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".Meldingen"
             android:label="@string/title_activity_meldingen"
