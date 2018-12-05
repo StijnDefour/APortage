@@ -4,6 +4,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
 import java.util.Date;
 
 public class Melding {
@@ -16,16 +17,17 @@ public class Melding {
     FirebaseUser melder;
 
     //todo: api call naar 26 vs 24 rechtzetten om localdatetime te kunnen gebruiken, of een andere date lib gebruiken
-    //LocalDateTime datum;
+    Date datum;
 
 
-    public Melding(String t, String omschr, String loc, String sts) {
+    public Melding(String t, String omschr, String loc, String sts, Date d) {
+
 
         this.titel = t;
         this.omschrijving = omschr;
         this.locatie = loc;
         this.status = sts;
-        //this.datum = d;
+        this.datum = d;
     }
 
     public int getKleurInt() {

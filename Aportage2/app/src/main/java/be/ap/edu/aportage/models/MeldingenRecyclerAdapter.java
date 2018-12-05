@@ -72,7 +72,6 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
             meldingBeschrijving = (TextView) itemView.findViewById(R.id.tv_melding_beschrijving);
             meldingStatus = (FrameLayout) itemView.findViewById(R.id.fl_melding_status);
             registreerOnClickListener(itemView);
-
         }
 
         private void registreerOnClickListener(final View itemView) {

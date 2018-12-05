@@ -62,21 +62,10 @@ public class Meldingen extends AppCompatActivity {
         this.meldingenRV.setAdapter(this.meldingenAdapter);
 
 
-        //checkBundleForData();
         navigatieButtonsOpvullen();
         registreerButtonOnClicks();
     }
 
-    private void checkBundleForData() {
-        Bundle b = this.binnenkomendeIntent.getExtras();
-        if(b.get("lokaalInfo") != null)
-        {
-            String j = (String) b.get("lokaalInfo");
-            lokaalButtonsOpvullen(j);
-            Log.v("Meldingen", j);
-        }
-
-    }
 
     private void navigatieButtonsOpvullen(){
 
@@ -91,31 +80,6 @@ public class Meldingen extends AppCompatActivity {
             Log.e("navigatieButtonsOpvullen Mislukt", e.getMessage());
         }
     }
-    private void lokaalButtonsOpvullen(String lokaalInfo) {
-            try {
-                lokaalInfo = lokaalInfo.replace("LOKAAL", "");
-                lokaalInfo = lokaalInfo.replace(" ", "");
-                lokaalInfo = lokaalInfo.replace(".", "");
-            } catch (NullPointerException e) {
-                Log.e("Error",e.toString());
-            }
-
-            try {
-                if (lokaalInfo == null) throw new AssertionError();
-                s_campus = lokaalInfo.substring(0,3);
-                lokaalInfo = lokaalInfo.substring(3, lokaalInfo.length());
-                s_lokaal = lokaalInfo.substring(lokaalInfo.length()-3,lokaalInfo.length());
-                lokaalInfo = lokaalInfo.substring(0,lokaalInfo.length()-3);
-                s_verdieping = lokaalInfo;
-                this.meldingenCampusBtn.setText(s_campus);
-                this.meldingenVerdiepBtn.setText(s_verdieping);
-                this.meldingenLokaalBtn.setText(s_lokaal);
-            } catch (StringIndexOutOfBoundsException e) {
-                Log.e("Error",e.toString());
-                Intent intent = new Intent(this, Overzicht.class);
-                startActivity(intent);
-            }
-        }
 
     private void registreerButtonOnClicks(){
         this.meldingenLokaalBtn.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +107,9 @@ public class Meldingen extends AppCompatActivity {
 
     private void gaNaarScanMelding(){
         Intent intent = new Intent(this, ScanMelding.class);
-        intent.putExtra("lokaalInfo", s_campus+s_verdieping+s_lokaal);
+        intent.putExtra("campus_afk", s_campus);
+        intent.putExtra("verdiep_nr", s_verdieping);
+        intent.putExtra("lokaal_nr", s_lokaal);
         startActivity(intent);
     }
 
