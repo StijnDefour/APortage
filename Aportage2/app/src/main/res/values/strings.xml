@@ -28,5 +28,7 @@
     <string name="overzicht_label_zoeken">Zoeken</string>
     <string name="scannen_label_btn_ok">Doorsturen</string>
     <string name="scannen_label_btn_annuleren">Annuleren</string>
+    <string name="lokalen_label">Lokaal</string>
+    <string name="lokaal_placeholder">00.000</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package be.ap.edu.aportage;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,12 +16,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ScanMelding extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
 
     static final int REQUEST_IMAGE_CAPTURE = 5;
     String mCurrentPhotoPath;
@@ -30,37 +35,94 @@ public class ScanMelding extends AppCompatActivity {
     ImageView imageView;
     Button button;
 
+    Button btnOk;
+    Button btnAnnuleer;
+
+    String s_campus;
+    String s_verdieping;
+    String s_lokaal;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_melding);
 
-        imageView = findViewById(R.id.imageView);
-        //button = findViewById(R.id.button);
-//        btnCampus = findViewById(R.id.btn_campus2);
-//        btnVerdiep = findViewById(R.id.btn_verdiep2);
-//        btnLokaal = findViewById(R.id.btn_melding_lokaal);
+        this.mAuth = FirebaseAuth.getInstance();
 
-        Intent iin= getIntent();
-        Bundle b = iin.getExtras();
-        if(b!=null)
-        {
-            String j = (String) b.get("lokaal_id");
-            lokaalButtonsOpvullen();
-            Log.v("ScanMelding", j.toString());
-        }
+        this.imageView = findViewById(R.id.imageView);
+        this.button = findViewById(R.id.button);
+        this.btnCampus = findViewById(R.id.btn_campus_afk);
+        this.btnVerdiep = findViewById(R.id.btn_verdiep_nr);
+        this.btnLokaal = findViewById(R.id.btn_melding_lokaalnr);
 
+        btnOk = findViewById(R.id.btn_melding_ok);
+        btnAnnuleer = findViewById(R.id.btn_melding_annuleren);
+
+        lokaalButtonsOpvullen();
+        buttonsAddClickEvents();
+    }
+
+
+    private void buttonsAddClickEvents() {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 TakePhoto(view);
             }
         });
+
+        final Activity activity = this;
+        btnCampus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, Campussen.class);
+                startActivity(intent);
+            }
+        });
+        btnVerdiep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity,Verdiepingen.class);
+                intent.putExtra("campus_afk", s_campus);
+                startActivity(intent);
+            }
+        });
+        btnLokaal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, Lokalen.class);
+                intent.putExtra("campus_afk", s_campus);
+                intent.putExtra("verdiep_nr", s_lokaal);
+                startActivity(intent);
+            }
+        });
+        btnAnnuleer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.finish();
+            }
+        });
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveInDB();
+            }
+        });
+    }
+
+    private void saveInDB() {
+        //todo vul in juiste data en push naar database
+        be.ap.edu.aportage.models.Melding melding = new be.ap.edu.aportage.models.Melding("MockMelding", "Blablablablabla", "testtest", "behandeling", new Date());
     }
 
     private void lokaalButtonsOpvullen() {
-        //todo: lokaalButtonsOpvullen
-        Log.v("todo", "hier komt de logica voor buttons op te vullen");
+        Intent inkomendeIntent = this.getIntent();
+        s_campus = inkomendeIntent.getStringExtra("campus_afk");
+        s_verdieping = inkomendeIntent.getStringExtra("verdiep_nr");
+        s_lokaal = inkomendeIntent.getStringExtra("lokaal_nr");
+        btnCampus.setText(s_campus);
+        btnVerdiep.setText(s_verdieping);
+        btnLokaal.setText(s_lokaal);
     }
 
     @Override
@@ -109,5 +171,10 @@ public class ScanMelding extends AppCompatActivity {
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
+    }
+
+
+    public void slaMeldingOpNaarDeDB(){
+
     }
 }

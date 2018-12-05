@@ -29,14 +29,16 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".Meldingen"
             android:label="@string/title_activity_meldingen"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Melding"
-            android:label="@string/title_activity_melding" />
+            android:label="@string/title_activity_melding"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ScanMelding" />
         <activity
             android:name=".Campussen"
@@ -49,22 +51,26 @@
         <activity
             android:name=".Lokalen"
             android:label="@string/title_activity_lokalen"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".Overzicht"
-            android:label="@string/title_activity_overzicht">
+            android:label="@string/title_activity_overzicht"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ScanLokaal"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".ScanLokaal"></activity>
         <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="ocr"/>
     </application>
 

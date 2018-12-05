@@ -1,5 +1,6 @@
 package be.ap.edu.aportage;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -31,24 +32,28 @@ public class Meldingen extends AppCompatActivity {
     private LinearLayoutManager meldingenLM;
     private MeldingenRecyclerAdapter meldingenAdapter;
     private List<Melding> meldingenLijst;
-    private Intent incomingIntent;
+    private Intent binnenkomendeIntent;
     private MockDataManager dataManager = MockDataManager.getInstance();
+    private Intent uitgaandeIntent;
+    private FloatingActionButton nieuweMeldingfab;
 
+    private String s_campus;
+    private String s_verdieping;
+    private String s_lokaal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meldingen);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         this.meldingenCampusBtn = (Button) findViewById(R.id.btn_campus_afk);
         this.meldingenVerdiepBtn = (Button) findViewById(R.id.btn_verdiep_nr);
         this.meldingenLokaalBtn = (Button) findViewById(R.id.btn_melding_lokaalnr);
         this.meldingenRV = (RecyclerView) findViewById(R.id.rv_meldingen);
         this.meldingCV = (CardView) findViewById(R.id.cv_melding);
+        this.nieuweMeldingfab = (FloatingActionButton) findViewById(R.id.meldingen_fab);
         this.meldingenLijst = dataManager.getMeldingenLijst();
-        this.incomingIntent = getIntent();
+        this.binnenkomendeIntent = getIntent();
 
         this.meldingenLM = new LinearLayoutManager(this);
         this.meldingenRV.setLayoutManager(this.meldingenLM);
@@ -57,31 +62,79 @@ public class Meldingen extends AppCompatActivity {
         this.meldingenRV.setAdapter(this.meldingenAdapter);
 
 
-
-        Bundle b = this.incomingIntent.getExtras();
-        checkBundleForData(b);
-
-
+        navigatieButtonsOpvullen();
+        registreerButtonOnClicks();
     }
 
-    private void checkBundleForData(Bundle b) {
 
-        if(b!=null)
-        {
-            String j = (String) b.get("lokaal_id");
-            lokaalButtonsOpvullen();
-            Log.v("Meldingen", j.toString());
+    private void navigatieButtonsOpvullen(){
+
+        try {
+            this.s_campus = this.binnenkomendeIntent.getStringExtra("campus_afk");
+            this.s_verdieping = this.binnenkomendeIntent.getStringExtra("verdiep_nr");
+            this.s_lokaal = this.binnenkomendeIntent.getStringExtra("lokaal_nr");
+            this.meldingenCampusBtn.setText(this.s_campus);
+            this.meldingenVerdiepBtn.setText(this.s_verdieping);
+            this.meldingenLokaalBtn.setText(this.s_lokaal);
+        } catch (Error e) {
+            Log.e("navigatieButtonsOpvullen Mislukt", e.getMessage());
         }
+    }
+
+    private void registreerButtonOnClicks(){
+        this.meldingenLokaalBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                gaNaarLokalen();
+            }
+        });
+        this.meldingenVerdiepBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                gaNaarVerdiepen();
+            }
+        });
+        this.meldingenCampusBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                gaNaarCampussen();
+            }
+        });
+        this.nieuweMeldingfab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gaNaarScanMelding();
+            }
+        });
+    }
+
+    private void gaNaarScanMelding(){
+        Intent intent = new Intent(this, ScanMelding.class);
+        intent.putExtra("campus_afk", s_campus);
+        intent.putExtra("verdiep_nr", s_verdieping);
+        intent.putExtra("lokaal_nr", s_lokaal);
+        startActivity(intent);
+    }
+
+    private void gaNaarLokalen() {
+
+        this.uitgaandeIntent = new Intent(this, Lokalen.class);
+        this.uitgaandeIntent.putExtra("verdiep_nr", this.meldingenVerdiepBtn.getText());
+        this.uitgaandeIntent.putExtra("campus_afk", this.meldingenCampusBtn.getText());
+        startActivity(this.uitgaandeIntent);
 
     }
 
-    private void lokaalButtonsOpvullen() {
+    private void gaNaarVerdiepen(){
 
-        //todo: buttons aanvullen met data dat uit intent wordt gehaald, momenteel mock data
-
-        this.meldingenCampusBtn.setText("LOL");
-        this.meldingenVerdiepBtn.setText("V1");
-        this.meldingenLokaalBtn.setText("001");
+        this.uitgaandeIntent = new Intent(this, Verdiepingen.class);
+        this.uitgaandeIntent.putExtra("campus_afk", this.meldingenCampusBtn.getText());
+        startActivity(this.uitgaandeIntent);
     }
+
+    private void gaNaarCampussen(){
+
+        this.uitgaandeIntent = new Intent(this, Campussen.class);
+        startActivity(this.uitgaandeIntent);
+    }
+
+
 
 }

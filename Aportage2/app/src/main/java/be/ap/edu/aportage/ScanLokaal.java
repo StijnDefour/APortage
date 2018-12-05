@@ -19,18 +19,23 @@ import android.widget.TextView;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
-import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
 public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Callback, Detector.Processor  {
 
+    private String LOG_TAG = this.getClass().toString();
     private SurfaceView cameraView;
     private TextView txtView;
     private CameraSource cameraSource;
     private Button btn_ok;
     private Button btn_annuleren;
     private String[] gelezenTekst;
+
+    private String s_campusAfk;
+    private String s_verdiepNr;
+    private String s_lokaalNr;
+    private Intent uitgaandeIntent;
 
     @SuppressLint("MissingPermission")
     @Override
@@ -41,7 +46,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
                     try {
                         cameraSource.start(cameraView.getHolder());
                     } catch (Exception e) {
-
+                        e.printStackTrace();
                     }
                 }
             }
@@ -77,9 +82,20 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(activity, Meldingen.class);
-                intent.putExtra("lokaal_id", gelezenTekst[gelezenTekst.length - 1]);
-                startActivity(intent);
+                String lokaalInfo = gelezenTekst[gelezenTekst.length-1].toUpperCase();
+                haalCampusVerdiepLokaalDataUitGelezenString(gelezenTekst[gelezenTekst.length-1]);
+                Log.d("testLokaalInfo", lokaalInfo);
+                if (!lokaalInfo.equals("")) {
+                    lokaalInfo = lokaalInfo.replace("LOKAAL ", "");
+                    lokaalInfo = lokaalInfo.replace(",", ".");
+
+                    if (checkLokaal(lokaalInfo)) {
+                        Intent intent = new Intent(activity, Meldingen.class);
+                        intent.putExtra("lokaalInfo", lokaalInfo);
+                        startActivity(intent);
+                        gaNaarMeldingen();
+                    }
+                }
             }
         });
         btn_annuleren.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +105,22 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
                 startActivity(intent);
             }
         });
+    }
+
+    private void gaNaarMeldingen() {
+
+        this.uitgaandeIntent = new Intent(this, Meldingen.class);
+        this.uitgaandeIntent.putExtra("campus_afk", this.s_campusAfk);
+        this.uitgaandeIntent.putExtra("verdiep_nr", this.s_verdiepNr);
+        this.uitgaandeIntent.putExtra("lokaal_nr", this.s_lokaalNr);
+        startActivity(this.uitgaandeIntent);
+
+    }
+
+
+    private Boolean checkLokaal(String lokaal_s) {
+        //todo Check of lokaal wel in database zit
+        return true;
     }
 
     @Override
@@ -132,50 +164,42 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
         {
             TextBlock item = (TextBlock)items.valueAt(i);
             strBuilder.append(item.getValue());
-            strBuilder.append("/");
-            // The following Process is used to show how to use lines & elements as well
-            for (int j = 0; j < items.size(); j++) {
-                TextBlock textBlock = (TextBlock) items.valueAt(j);
-                //gelezenTekst.add(textBlock.getValue());
-                strBuilder.append(textBlock.getValue());
-                strBuilder.append("/");
-                for (Text line : textBlock.getComponents()) {
-                    //extract scanned text lines here
-                    Log.v("lines", line.getValue());
-                    strBuilder.append(line.getValue());
-                    strBuilder.append("/");
-                    for (Text element : line.getComponents()) {
-                        //extract scanned text words here
-                        Log.v("element", element.getValue());
-                        strBuilder.append(element.getValue());
-                    }
-
-                }
-            }
-
-            //int indexText = (gelezenTekst.size() >= 0)  ? gelezenTekst.size() -1 : 0;
 
         }
         Log.v("strBuilder.toString()", strBuilder.toString());
-        registreerGelezenTekst(strBuilder.toString());
+        gelezenTekstDelimiteren(strBuilder.toString());
 
         txtView.post(new Runnable() {
             @Override
             public void run() {
                 txtView.setText(strBuilder.toString());
-                //txtView.setText(gelezenTekst.get(gelezenTekst.size()-1));
             }
 
         });
     }
 
 
-    public void registreerGelezenTekst(String teSplittenString) {
+    public void gelezenTekstDelimiteren(String teSplittenString) {
 
         String delimiter = "/";
-        gelezenTekst = teSplittenString.split(delimiter);
+        this.gelezenTekst = teSplittenString.split(delimiter);
 
-        Log.v("gelezen tekst", gelezenTekst[gelezenTekst.length-1]);
+        Log.v("gelezen tekst", this.gelezenTekst[gelezenTekst.length-1]);
 
+    }
+
+    public void haalCampusVerdiepLokaalDataUitGelezenString(String gelezenText){
+        //todo: omzetten van lokaalinfo in 3 extras: afk, verdiepnr, lokaalnr
+        //todo: als er geen correct lokaal kon worden gelezen nadat user op "doorsturen" klikt -> popup tonen en naar zoeken redirecten
+        Log.d(LOG_TAG + "maakAparteExtras", gelezenText );
+        try {
+            String[] individueleWoorden = gelezenText.split("[^\\w\\-]+|--+");
+            Log.d(LOG_TAG + "split words", individueleWoorden[0]);
+            this.s_campusAfk = individueleWoorden[1];
+            this.s_verdiepNr = individueleWoorden[2];
+            this.s_lokaalNr = individueleWoorden[3];
+        } catch (Error e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
     }
 }

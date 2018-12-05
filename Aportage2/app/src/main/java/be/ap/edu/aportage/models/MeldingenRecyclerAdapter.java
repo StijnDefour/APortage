@@ -1,6 +1,7 @@
 package be.ap.edu.aportage.models;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
     private final LayoutInflater layoutInflater;
     private final List<Melding> meldingenList;
 
+
     public MeldingenRecyclerAdapter(Context context, List<Melding> meldingenList) {
         this.context = context;
         this.meldingenList = meldingenList;
@@ -41,9 +43,11 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
+
         Melding melding = this.meldingenList.get(i);
         viewHolder.meldingTitel.setText(melding.titel);
         viewHolder.meldingBeschrijving.setText(melding.omschrijving);
+        viewHolder.melding_id = i;
         //viewHolder.meldingStatus.setBackgroundColor(this.context.getResources().getInteger(melding.getKleurInt()));
 
 
@@ -55,10 +59,11 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView meldingFoto;
-        public TextView meldingTitel;
-        public TextView meldingBeschrijving;
-        public FrameLayout meldingStatus;
+        private ImageView meldingFoto;
+        private TextView meldingTitel;
+        private TextView meldingBeschrijving;
+        private FrameLayout meldingStatus;
+        private int melding_id;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +71,22 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
             meldingTitel = (TextView) itemView.findViewById(R.id.tv_melding_titel);
             meldingBeschrijving = (TextView) itemView.findViewById(R.id.tv_melding_beschrijving);
             meldingStatus = (FrameLayout) itemView.findViewById(R.id.fl_melding_status);
+            registreerOnClickListener(itemView);
         }
-    }
+
+        private void registreerOnClickListener(final View itemView) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, be.ap.edu.aportage.Melding.class);
+                    intent.putExtra("melding_titel", meldingTitel.getText());
+                    intent.putExtra("melding_id", melding_id);
+                    context.startActivity(intent);
+                }
+            });
+        }
+    };
+
+
+
 }
