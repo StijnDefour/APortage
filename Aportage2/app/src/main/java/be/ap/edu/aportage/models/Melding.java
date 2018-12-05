@@ -1,5 +1,10 @@
 package be.ap.edu.aportage.models;
 
+import com.google.firebase.auth.FirebaseUser;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import java.util.Date;
 
 public class Melding {
@@ -8,12 +13,14 @@ public class Melding {
     String omschrijving;
     String[] locatie;
     String status;
-    //Melder melder;
+
+    FirebaseUser melder;
 
     //todo: api call naar 26 vs 24 rechtzetten om localdatetime te kunnen gebruiken, of een andere date lib gebruiken
     Date datum;
 
     public Melding(String t, String omschr, String[] loc, String sts, Date d) {
+
 
         this.titel = t;
         this.omschrijving = omschr;
@@ -36,6 +43,9 @@ public class Melding {
         this._id = id;
     }
 
+    public void setMelder(FirebaseUser mldr){
+        this.melder = mldr;
+    }
 
 
 }
