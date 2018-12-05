@@ -38,12 +38,11 @@ public class Verdiepingen extends AppCompatActivity {
         setContentView(R.layout.activity_verdiepingen);
 
         this.inkomendeIntent = getIntent();
-       // String campus_naam = this.inkomendeIntent.getStringExtra("campus_titel");
         String campus_afk = this.inkomendeIntent.getStringExtra("campus_afk");
 
-        this.navBtnCampus = (Button)findViewById(R.id.btn_nav_campus);
+        this.navBtnCampus = findViewById(R.id.btn_nav_campus);
         this.navBtnCampus.setText(campus_afk);
-        this.verdiepenRV = (RecyclerView) findViewById(R.id.rv_verdiepingen);
+        this.verdiepenRV = findViewById(R.id.rv_verdiepingen);
         this.verdiepenLM = new LinearLayoutManager(this);
 
         this.verdiepenAdapter = new VerdiepenRecyclerAdapter(this, this.dataManager.getVerdiepenLijst(campus_afk), campus_afk);

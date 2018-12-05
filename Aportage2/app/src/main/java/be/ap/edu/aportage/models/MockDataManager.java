@@ -6,6 +6,7 @@ import android.util.Log;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MockDataManager {
@@ -39,8 +40,8 @@ public class MockDataManager {
 
     private static void setMeldingenLijst(){
         MockDataManager.meldingenLijst = new ArrayList<>();
-        MockDataManager.meldingenLijst.add(new Melding("MockMelding", "Blablablablabla", "testtest", "behandeling"));
-        MockDataManager.meldingenLijst.add(new Melding("MockMelding2", "Blablablablabla2", "testtest2", "behandeling"));
+        MockDataManager.meldingenLijst.add(new Melding("MockMelding", "Blablablablabla", "testtest", "behandeling", new Date()));
+        MockDataManager.meldingenLijst.add(new Melding("MockMelding2", "Blablablablabla2", "testtest2", "behandeling", new Date()));
     }
 
     public static List<Melding> getMeldingenLijst() {

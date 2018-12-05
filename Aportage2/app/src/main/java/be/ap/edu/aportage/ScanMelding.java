@@ -31,6 +31,9 @@ public class ScanMelding extends AppCompatActivity {
     ImageView imageView;
     Button button;
 
+    Button btnOk;
+    Button btnAnnuleer;
+
     String s_campus;
     String s_verdieping;
     String s_lokaal;
@@ -45,6 +48,9 @@ public class ScanMelding extends AppCompatActivity {
         btnCampus = findViewById(R.id.btn_campus_afk);
         btnVerdiep = findViewById(R.id.btn_verdiep_nr);
         btnLokaal = findViewById(R.id.btn_melding_lokaalnr);
+
+        btnOk = findViewById(R.id.btn_melding_ok);
+        btnAnnuleer = findViewById(R.id.btn_melding_annuleren);
 
         lokaalButtonsOpvullen();
         buttonsAddClickEvents();
@@ -64,7 +70,6 @@ public class ScanMelding extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(activity, Campussen.class);
-                intent.putExtra("campus_id", s_campus);
                 startActivity(intent);
             }
         });
@@ -72,7 +77,7 @@ public class ScanMelding extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(activity,Verdiepingen.class);
-                intent.putExtra("verdieping_id", s_verdieping);
+                intent.putExtra("campus_afk", s_campus);
                 startActivity(intent);
             }
         });
@@ -80,43 +85,38 @@ public class ScanMelding extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(activity, Lokalen.class);
-                intent.putExtra("lokaal_id", s_lokaal);
+                intent.putExtra("campus_afk", s_campus);
+                intent.putExtra("verdiep_nr", s_lokaal);
                 startActivity(intent);
+            }
+        });
+        btnAnnuleer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.finish();
+            }
+        });
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveInDB();
             }
         });
     }
 
+    private void saveInDB() {
+        //todo vul in juiste data en push naar database
+        be.ap.edu.aportage.models.Melding melding = new be.ap.edu.aportage.models.Melding("MockMelding", "Blablablablabla", "testtest", "behandeling", new Date());
+    }
+
     private void lokaalButtonsOpvullen() {
-        Intent iin = getIntent();
-        Bundle b = iin.getExtras();
-        if(b!=null)
-        {
-            String j = (String) b.get("lokaalInfo");
-            Log.d("Test", j);
-
-            try {
-                j = j.replace(" ", "");
-                j = j.replace(".", "");
-            } catch (NullPointerException e) {
-                Log.e("Error",e.toString());
-            }
-
-            try {
-                if (j == null) throw new Error();
-                s_campus = j.substring(0,3);
-                j = j.substring(3, j.length());
-                s_lokaal = j.substring(j.length()-3,j.length());
-                j = j.substring(0,j.length()-3);
-                s_verdieping = j;
-                btnCampus.setText(s_campus);
-                btnVerdiep.setText(s_verdieping);
-                btnLokaal.setText(s_lokaal);
-            } catch (StringIndexOutOfBoundsException e) {
-                Log.e("Error",e.toString());
-                Intent intent = new Intent(this, Overzicht.class);
-                startActivity(intent);
-            }
-        }
+        Intent inkomendeIntent = this.getIntent();
+        s_campus = inkomendeIntent.getStringExtra("campus_afk");
+        s_verdieping = inkomendeIntent.getStringExtra("verdiep_nr");
+        s_lokaal = inkomendeIntent.getStringExtra("lokaal_nr");
+        btnCampus.setText(s_campus);
+        btnVerdiep.setText(s_verdieping);
+        btnLokaal.setText(s_lokaal);
     }
 
     @Override
