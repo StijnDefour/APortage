@@ -35,7 +35,7 @@ public class MongoManager {
         } else {
             instance = new MongoManager();
 
-            initMongoConn();
+            //initMongoConn();
             //hier nog wat initialsaties
 
             return instance;
