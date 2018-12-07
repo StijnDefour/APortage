@@ -1,25 +1,17 @@
-package be.ap.edu.aportage;
+package be.ap.edu.aportage.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.card.MaterialCardView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.RecursiveAction;
-
-import be.ap.edu.aportage.models.LokalenRecyclerAdapter;
-import be.ap.edu.aportage.models.MockDataManager;
+import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.recycleradapters.LokalenRecyclerAdapter;
+import be.ap.edu.aportage.managers.MockDataManager;
 
 public class Lokalen extends AppCompatActivity {
 

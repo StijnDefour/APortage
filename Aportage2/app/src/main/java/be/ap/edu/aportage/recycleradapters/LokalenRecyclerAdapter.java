@@ -1,4 +1,4 @@
-package be.ap.edu.aportage.models;
+package be.ap.edu.aportage.recycleradapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,12 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.List;
-
 import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.activities.Meldingen;
 
 public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecyclerAdapter.ViewHolder> {
 
@@ -69,7 +67,7 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, be.ap.edu.aportage.Meldingen.class);
+                    Intent intent = new Intent(context, Meldingen.class);
 
                     Log.d("test", campus_s + verdieping_s + verdiepTitel.getText().toString());
 

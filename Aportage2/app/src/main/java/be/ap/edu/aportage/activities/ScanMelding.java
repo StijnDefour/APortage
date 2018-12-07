@@ -1,4 +1,4 @@
-package be.ap.edu.aportage;
+package be.ap.edu.aportage.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,7 +11,6 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,6 +21,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import be.ap.edu.aportage.R;
 
 public class ScanMelding extends AppCompatActivity {
 

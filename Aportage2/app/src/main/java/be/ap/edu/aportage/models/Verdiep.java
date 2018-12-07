@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class Verdiep {
 
-    int verdiepnr;
-    int[] lokalen;
+    public int verdiepnr;
+    public int[] lokalen;
 
 
     public Verdiep(int verdiepnr, int[] lok) {

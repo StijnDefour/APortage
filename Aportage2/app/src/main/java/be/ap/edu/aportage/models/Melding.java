@@ -8,13 +8,13 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Melding {
-    int _id;
-    String titel;
-    String omschrijving;
-    String[] locatie;
-    String status;
+    public int _id;
+    public String titel;
+    public String omschrijving;
+    public String[] locatie;
+    public String status;
 
-    FirebaseUser melder;
+    public FirebaseUser melder;
 
     //todo_done: api call naar 26 vs 24 rechtzetten om localdatetime te kunnen gebruiken, of een andere date lib gebruiken
     Date datum;

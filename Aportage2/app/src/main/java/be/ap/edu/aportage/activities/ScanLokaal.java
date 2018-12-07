@@ -1,4 +1,4 @@
-package be.ap.edu.aportage;
+package be.ap.edu.aportage.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -21,6 +21,8 @@ import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
+
+import be.ap.edu.aportage.R;
 
 public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Callback, Detector.Processor  {
 

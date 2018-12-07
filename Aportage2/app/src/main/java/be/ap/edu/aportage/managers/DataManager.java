@@ -1,4 +1,4 @@
-package be.ap.edu.aportage.models;
+package be.ap.edu.aportage.managers;
 
 import android.util.Log;
 
@@ -14,7 +14,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import be.ap.edu.aportage.Lokalen;
+import be.ap.edu.aportage.models.Campus;
+import be.ap.edu.aportage.models.Verdiep;
 
 public class DataManager {
 

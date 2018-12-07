@@ -1,4 +1,4 @@
-package be.ap.edu.aportage.models;
+package be.ap.edu.aportage.recycleradapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.models.Melding;
 
 public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecyclerAdapter.ViewHolder> {
 
@@ -72,7 +73,7 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, be.ap.edu.aportage.Melding.class);
+                    Intent intent = new Intent(context, be.ap.edu.aportage.activities.Melding.class);
                     intent.putExtra("melding_titel", meldingTitel.getText());
                     intent.putExtra("melding_id", melding_id);
 

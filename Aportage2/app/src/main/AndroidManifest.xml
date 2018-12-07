@@ -30,29 +30,29 @@
         </provider>
 
         <activity
-            android:name=".Meldingen"
+            android:name=".activities.Meldingen"
             android:label="@string/title_activity_meldingen"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Melding"
+            android:name=".activities.Melding"
             android:label="@string/title_activity_melding"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ScanMelding" />
+        <activity android:name=".activities.ScanMelding" />
         <activity
-            android:name=".Campussen"
+            android:name=".activities.Campussen"
             android:label="@string/title_activity_campussen"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Verdiepingen"
+            android:name=".activities.Verdiepingen"
             android:label="@string/title_activity_verdiepingen"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Lokalen"
+            android:name=".activities.Lokalen"
             android:label="@string/title_activity_lokalen"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".Overzicht"
+            android:name=".activities.Overzicht"
             android:label="@string/title_activity_overzicht"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -62,7 +62,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ScanLokaal"
+            android:name=".activities.ScanLokaal"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <meta-data
