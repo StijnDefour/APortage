@@ -1,31 +1,27 @@
 package be.ap.edu.aportage.models;
 
+import android.app.Activity;
+import android.provider.ContactsContract;
 import android.util.Log;
 
-/* firebase imports dat niet werken bij mij/karima
-
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-*/
 
 import java.util.ArrayList;
 
-import be.ap.edu.aportage.Lokalen;
-
 public class DataManager {
 
-    //private DatabaseReference mDatabase;
+    private static DatabaseReference mDatabase;
 
     private static DataManager singleInstance = null;
     private static ArrayList<Campus> campusList = new ArrayList<Campus>();
-    private static ArrayList<Verdiep> verdiepingList = new ArrayList<Verdiep>();
 
     public static DataManager getInstance(){
         if(singleInstance == null) {
+            mDatabase = FirebaseDatabase.getInstance().getReference("Campussen");
             singleInstance = new DataManager();
             singleInstance.populateList();
         }
@@ -33,16 +29,14 @@ public class DataManager {
     }
 
     private void populateList() {
-        campusList = getCampusList();
+        fillCampusList();
     }
 
-    public Campus JsonToCampus(String json) {
+    private Campus JsonToCampus(String json) {
         Campus formatted = new Campus("", "", new ArrayList<Verdiep>());
-        ArrayList<Integer> lokalenLijst;
 
         // json opschonen van tekens
         json = json.replaceAll("\\{|\\}|\\s", "");
-        Log.d("Campus ", json);
         String[] input = json.split(",");
 
         // campus item opvullen
@@ -56,7 +50,9 @@ public class DataManager {
                     formatted.setAfkorting(substring[1]);
                     break;
                 default:
+
                     try {
+                        int[] lokalenLijst;
                         // index verdiepingnr
                         int i = 0;
 
@@ -65,18 +61,16 @@ public class DataManager {
                             i = 1;
                         }
 
-                        // lokalen in array steken
-	                    for (String lokaal: lokalen) {
-	                        lokalenLijst.add(Integer.parseInt(lokaal));
-	                    }
-
-                        lokalenLijst = new ArrayList<Integer>();
                         String[] lokalen = substring[i+2].split(";");
+                        lokalenLijst = new int[lokalen.length];
 
-                        for (String lokaal: lokalen) {
-                            lokalenLijst.add(Integer.parseInt(lokaal));
+                        for (int teller = 0; teller < lokalen.length; teller++) {
+                            lokalenLijst[teller] = (Integer.parseInt(lokalen[teller]));
                         }
 
+                        Verdiep tmp = new Verdiep(Integer.parseInt(substring[i]) , lokalenLijst);
+
+                        formatted.voegToeAanVerdiepingenlijst(tmp);
 
                     } catch (Exception e) {
                         Log.d("Error", e.toString());
@@ -85,23 +79,23 @@ public class DataManager {
             }
         }
 
-        Verdiep tmp = new Verdiep(Integer.parseInt(substring[i]) , lokalenLijst);
-        formatted.voegToeAanVerdiepingenlijst(tmp);
-
         return formatted;
     }
 
-    private ArrayList<Campus> getCampusList() {
-        mDatabase = FirebaseDatabase.getInstance().getReference("Campussen");
-
-        //Get data from database
+    private void fillCampusList() {
+        /* Get data from database */
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                DataManager dm = DataManager.getInstance();
                 Iterable<DataSnapshot> campusChildren = dataSnapshot.getChildren();
 
                 for (DataSnapshot campus : campusChildren) {
-                    campusList.add(JsonToCampus(campus.getValue().toString()));
+                    dm.addCampusList(JsonToCampus(campus.getValue().toString()));
+                }
+
+                for (Campus c: campusList) {
+                    Log.d("test inner", c.getNaam());
                 }
             }
 
@@ -112,7 +106,16 @@ public class DataManager {
             }
         });
 
+        for (Campus c: campusList) {
+            Log.d("test outside", c.getNaam());
+        }
+    }
 
+    public static ArrayList<Campus> getCampusList() {
         return campusList;
+    }
+
+    public static void addCampusList(Campus c) {
+        campusList.add(c);
     }
 }
