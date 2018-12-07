@@ -21,7 +21,7 @@ public class DataManager {
 
     //private DatabaseReference mDatabase;
 
-    //test voor git ignore
+    //test voor git ignore 2
     private static DataManager singleInstance = null;
     private static ArrayList<Campus> campusList = new ArrayList<Campus>();
     private static ArrayList<Verdiep> verdiepingList = new ArrayList<Verdiep>();
