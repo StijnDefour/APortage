@@ -64,42 +64,9 @@ public class Melding extends Activity {
         });
     }
 
-    private void checkBundleForData() {
-        Bundle b = this.binnenkomendeIntent.getExtras();
-        if(b.get("lokaalInfo") != null)
-        {
-            String j = (String) b.get("lokaalInfo");
-            lokaalButtonsOpvullen(j);
-            Log.v("Meldingen", j);
-        }
 
-    }
 
-    private void lokaalButtonsOpvullen(String lokaalInfo) {
-        try {
-            lokaalInfo = lokaalInfo.replace("LOKAAL", "");
-            lokaalInfo = lokaalInfo.replace(" ", "");
-            lokaalInfo = lokaalInfo.replace(".", "");
-        } catch (NullPointerException e) {
-            Log.e("Error",e.toString());
-        }
 
-        try {
-            if (lokaalInfo == null) throw new AssertionError();
-            this.s_campus = lokaalInfo.substring(0,3);
-            lokaalInfo = lokaalInfo.substring(3, lokaalInfo.length());
-            this.s_lokaal = lokaalInfo.substring(lokaalInfo.length()-3,lokaalInfo.length());
-            lokaalInfo = lokaalInfo.substring(0,lokaalInfo.length()-3);
-            this.s_verdieping = lokaalInfo;
-            this.btn_campus_afk.setText(s_campus);
-            this.btn_verdiep_nr.setText(s_verdieping);
-            this.btn_melding_lokaalnr.setText(s_lokaal);
-        } catch (StringIndexOutOfBoundsException e) {
-            Log.e("Error",e.toString());
-            Intent intent = new Intent(this, Overzicht.class);
-            startActivity(intent);
-        }
-    }
 
     private void navigatieButtonsOpvullen(){
 

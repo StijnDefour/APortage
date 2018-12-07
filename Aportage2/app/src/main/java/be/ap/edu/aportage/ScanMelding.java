@@ -25,6 +25,9 @@ import java.util.Date;
 
 public class ScanMelding extends AppCompatActivity {
 
+    static final String CAMPUS = "campus_afk";
+    static final String VERDIEP = "verdiep_nr";
+    static final String LOKAAL = "lokaal_nr";
     private FirebaseAuth mAuth;
 
     static final int REQUEST_IMAGE_CAPTURE = 5;
@@ -71,45 +74,51 @@ public class ScanMelding extends AppCompatActivity {
             }
         });
 
-        final Activity activity = this;
         btnCampus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(activity, Campussen.class);
+                Intent intent = new Intent(ScanMelding.this, Campussen.class);
                 startActivity(intent);
             }
         });
         btnVerdiep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(activity,Verdiepingen.class);
-                intent.putExtra("campus_afk", s_campus);
+                Intent intent = new Intent(ScanMelding.this, Verdiepingen.class);
+                intent.putExtra(ScanMelding.CAMPUS, s_campus);
                 startActivity(intent);
             }
         });
         btnLokaal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(activity, Lokalen.class);
-                intent.putExtra("campus_afk", s_campus);
-                intent.putExtra("verdiep_nr", s_lokaal);
+                Intent intent = new Intent(ScanMelding.this, Lokalen.class);
+                intent.putExtra(ScanMelding.CAMPUS, s_campus);
+                intent.putExtra(ScanMelding.LOKAAL, s_lokaal);
                 startActivity(intent);
             }
         });
         btnAnnuleer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity.finish();
+                ScanMelding.this.finish();
             }
         });
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveInDB();
+                slaMeldingOpNaarDeDB();
+                gaNaarMelding();
             }
         });
     }
 
+    private void gaNaarMelding() {
+    }
+
+    private void maakIntent(Activity destination) {
+
+    }
     private void saveInDB() {
         //todo vul in juiste data en push naar database
         be.ap.edu.aportage.models.Melding melding = new be.ap.edu.aportage.models.Melding("MockMelding", "Blablablablabla", "testtest", "behandeling", new Date());
@@ -117,9 +126,9 @@ public class ScanMelding extends AppCompatActivity {
 
     private void lokaalButtonsOpvullen() {
         Intent inkomendeIntent = this.getIntent();
-        s_campus = inkomendeIntent.getStringExtra("campus_afk");
-        s_verdieping = inkomendeIntent.getStringExtra("verdiep_nr");
-        s_lokaal = inkomendeIntent.getStringExtra("lokaal_nr");
+        s_campus = inkomendeIntent.getStringExtra(ScanMelding.CAMPUS);
+        s_verdieping = inkomendeIntent.getStringExtra(ScanMelding.VERDIEP);
+        s_lokaal = inkomendeIntent.getStringExtra(ScanMelding.LOKAAL);
         btnCampus.setText(s_campus);
         btnVerdiep.setText(s_verdieping);
         btnLokaal.setText(s_lokaal);
