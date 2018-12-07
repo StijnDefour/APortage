@@ -1,4 +1,4 @@
-package be.ap.edu.aportage.models;
+package be.ap.edu.aportage.recycleradapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,11 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.activities.Lokalen;
+import be.ap.edu.aportage.models.Verdiep;
 
 public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecyclerAdapter.ViewHolder> {
 
@@ -63,7 +63,7 @@ public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecy
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, be.ap.edu.aportage.Lokalen.class);
+                    Intent intent = new Intent(context, Lokalen.class);
                     intent.putExtra("verdiep_nr", verdiepNummer.getText());
                     intent.putExtra("campus_afk", afk);
                     Log.d("test", verdiepNummer.getText().toString() + " " + afk);

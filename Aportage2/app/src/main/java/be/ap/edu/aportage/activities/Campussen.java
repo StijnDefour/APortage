@@ -1,18 +1,14 @@
-package be.ap.edu.aportage;
+package be.ap.edu.aportage.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 
-import java.util.List;
-
-import be.ap.edu.aportage.models.Campus;
-import be.ap.edu.aportage.models.CampussenRecyclerAdapter;
-import be.ap.edu.aportage.models.MockDataManager;
+import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.recycleradapters.CampussenRecyclerAdapter;
+import be.ap.edu.aportage.managers.MockDataManager;
 
 public class Campussen extends AppCompatActivity {
 

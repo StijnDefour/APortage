@@ -1,13 +1,15 @@
-package be.ap.edu.aportage.models;
+package be.ap.edu.aportage.managers;
 
 
 import android.util.Log;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import be.ap.edu.aportage.models.Campus;
+import be.ap.edu.aportage.models.Melding;
+import be.ap.edu.aportage.models.Verdiep;
 
 public class MockDataManager {
 
@@ -40,8 +42,8 @@ public class MockDataManager {
 
     private static void setMeldingenLijst(){
         MockDataManager.meldingenLijst = new ArrayList<>();
-        MockDataManager.meldingenLijst.add(new Melding("MockMelding", "Blablablablabla", "testtest", "behandeling", new Date()));
-        MockDataManager.meldingenLijst.add(new Melding("MockMelding2", "Blablablablabla2", "testtest2", "behandeling", new Date()));
+        MockDataManager.meldingenLijst.add(new Melding("MockMelding", "Blablablablabla", new String[]{"ELL","-01","005"}, "behandeling", new Date()));
+        MockDataManager.meldingenLijst.add(new Melding("MockMelding2", "Blablablablabla2", new String[]{"NOO","05","013"}, "behandeling", new Date()));
     }
 
     public static List<Melding> getMeldingenLijst() {

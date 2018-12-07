@@ -1,4 +1,4 @@
-package be.ap.edu.aportage;
+package be.ap.edu.aportage.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,11 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import be.ap.edu.aportage.R;
+
 public class Melding extends Activity {
 
     Intent binnenkomendeIntent;
     Intent uitgaandeIntent;
-    Activity activity;
     Button btn_campus_afk;
     Button btn_verdiep_nr;
     Button btn_melding_lokaalnr;
@@ -34,10 +35,8 @@ public class Melding extends Activity {
         this.btn_melding_lokaalnr = findViewById(R.id.btn_melding_lokaalnr);
         this.nieuweMeldingFab = findViewById(R.id.melding_fab);
 
-
         navigatieButtonsOpvullen();
         registreerButtonOnClicks();
-
     }
 
     private void registreerButtonOnClicks() {
@@ -64,10 +63,6 @@ public class Melding extends Activity {
         });
     }
 
-
-
-
-
     private void navigatieButtonsOpvullen(){
 
         try {
@@ -84,7 +79,9 @@ public class Melding extends Activity {
 
     private void gaNaarScanMelding(){
         Intent intent = new Intent(this, ScanMelding.class);
-        intent.putExtra("lokaalInfo", this.s_campus+ this.s_verdieping+ this.s_lokaal);
+        intent.putExtra("campus_afk", s_campus );
+        intent.putExtra("verdiep_nr", s_verdieping);
+        intent.putExtra("lokaal_nr", s_lokaal);
         startActivity(intent);
     }
 

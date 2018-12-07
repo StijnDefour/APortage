@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ScanMelding">
+    tools:context=".activities.ScanMelding">
 
     <include
         android:id="@+id/include2"
@@ -75,7 +75,7 @@
         android:ems="10"
         android:hint="@string/scan_melding_hint_titel"
         android:inputType="text|textShortMessage|textPersonName"
-        android:text="Name"
+        android:text="@string/melding_titel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv-label-titel" />

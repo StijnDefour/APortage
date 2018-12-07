@@ -1,8 +1,7 @@
-package be.ap.edu.aportage.models;
+package be.ap.edu.aportage.recycleradapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +13,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.activities.Verdiepingen;
+import be.ap.edu.aportage.models.Campus;
 
 public class CampussenRecyclerAdapter extends RecyclerView.Adapter<CampussenRecyclerAdapter.ViewHolder> {
 
@@ -62,7 +63,7 @@ public class CampussenRecyclerAdapter extends RecyclerView.Adapter<CampussenRecy
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, be.ap.edu.aportage.Verdiepingen.class);
+                    Intent intent = new Intent(context, Verdiepingen.class);
                     intent.putExtra("campus_titel", campusTitel.getText());
                     intent.putExtra("campus_afk", campusAfk);
                     context.startActivity(intent);

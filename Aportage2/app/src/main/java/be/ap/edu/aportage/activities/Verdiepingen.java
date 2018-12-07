@@ -1,4 +1,4 @@
-package be.ap.edu.aportage;
+package be.ap.edu.aportage.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,11 +10,9 @@ import android.view.View;
 import android.widget.Button;
 
 
-import java.util.List;
-
-import be.ap.edu.aportage.models.MockDataManager;
-import be.ap.edu.aportage.models.VerdiepenRecyclerAdapter;
-import be.ap.edu.aportage.models.Verdiep;
+import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.managers.MockDataManager;
+import be.ap.edu.aportage.recycleradapters.VerdiepenRecyclerAdapter;
 
 public class Verdiepingen extends AppCompatActivity {
 
@@ -53,8 +51,6 @@ public class Verdiepingen extends AppCompatActivity {
 
 
         registreerOnClickListeners();
-
-
     }
 
     public void registreerOnClickListeners(){

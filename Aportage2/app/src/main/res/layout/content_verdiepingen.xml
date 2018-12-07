@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".Verdiepingen"
+    tools:context=".activities.Verdiepingen"
     tools:showIn="@layout/activity_verdiepingen">
 
     <Button
@@ -15,11 +15,12 @@
         android:layout_height="50dp"
         android:background="@color/wetenschapentechniek"
         android:fontFamily="@font/montserrat"
-        android:paddingLeft="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         android:text="@string/nav_campus_naam"
         android:textAlignment="viewStart"
         android:textColor="@color/wit"
-        android:textSize="20sp "
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

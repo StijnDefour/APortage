@@ -1,4 +1,4 @@
-package be.ap.edu.aportage;
+package be.ap.edu.aportage.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,7 +11,6 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,6 +21,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import be.ap.edu.aportage.R;
 
 public class ScanMelding extends AppCompatActivity {
 
@@ -109,7 +110,7 @@ public class ScanMelding extends AppCompatActivity {
             public void onClick(View view) {
                 slaMeldingOpNaarDeDB();
                 gaNaarMelding();
-            }
+}
         });
     }
 
@@ -119,9 +120,12 @@ public class ScanMelding extends AppCompatActivity {
     private void maakIntent(Activity destination) {
 
     }
-    private void saveInDB() {
+    private void saveInDB() {}
+
+    private void slaMeldingOpNaarDeDB() {
+
         //todo vul in juiste data en push naar database
-        be.ap.edu.aportage.models.Melding melding = new be.ap.edu.aportage.models.Melding("MockMelding", "Blablablablabla", "testtest", "behandeling", new Date());
+        //be.ap.edu.aportage.models.Melding melding = new be.ap.edu.aportage.models.Melding("MockMelding", "Blablablablabla", new String[]{"ELL","-01","005"}, "behandeling", new Date());
     }
 
     private void lokaalButtonsOpvullen() {
@@ -180,10 +184,5 @@ public class ScanMelding extends AppCompatActivity {
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
-    }
-
-
-    public void slaMeldingOpNaarDeDB(){
-
     }
 }

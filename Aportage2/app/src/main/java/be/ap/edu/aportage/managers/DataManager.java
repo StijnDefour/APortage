@@ -1,4 +1,4 @@
-package be.ap.edu.aportage.models;
+package be.ap.edu.aportage.managers;
 
 import android.util.Log;
 
@@ -14,12 +14,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import be.ap.edu.aportage.Lokalen;
+import be.ap.edu.aportage.models.Campus;
+import be.ap.edu.aportage.models.Verdiep;
 
 public class DataManager {
 
     //private DatabaseReference mDatabase;
 
+    //test voor git ignore 2
     private static DataManager singleInstance = null;
     private static ArrayList<Campus> campusList = new ArrayList<Campus>();
     private static ArrayList<Verdiep> verdiepingList = new ArrayList<Verdiep>();

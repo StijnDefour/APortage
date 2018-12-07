@@ -17,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -27,7 +31,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     implementation 'com.google.firebase:firebase-core:16.0.4'
     implementation 'com.google.firebase:firebase-auth:16.0.5'
-    implementation 'org.mongodb:mongodb-driver-sync:3.9.1'
+    implementation 'org.mongodb:stitch-android-sdk:4.1.0'
+
+
 
     implementation 'com.google.firebase:firebase-storage:16.0.4'
     implementation 'com.google.firebase:firebase-database:16.0.4'

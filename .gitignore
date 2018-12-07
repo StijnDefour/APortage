@@ -1,0 +1,12 @@
+Aportage2/*.iml
+Aportage2/.gradle
+Aportage2/local.properties
+Aportage2/.idea/libraries
+Aportage2/.idea/modules.xml
+Aportage2/.idea/workspace.xml
+Aportage2/.idea/misc.xml
+Aportage2/.idea/*
+Aportage2/.DS_Store
+Aportage2/build
+Aportage2/captures
+Aportage2/.externalNativeBuild
