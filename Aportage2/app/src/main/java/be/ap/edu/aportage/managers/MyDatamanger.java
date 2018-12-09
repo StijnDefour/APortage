@@ -7,61 +7,60 @@ import java.util.List;
 import be.ap.edu.aportage.models.Campus;
 import be.ap.edu.aportage.models.Verdiep;
 
-public class MyDatamanger implements IData {
-    private MyDatamanger mInstance = null;
+public class MyDatamanger {
+    private static MyDatamanger mInstance = null;
 
-    public MyDatamanger getInstance(){
-        if(this.mInstance != null)
-            return this.mInstance;
+    public static MyDatamanger getInstance(){
+        if(mInstance != null)
+            return mInstance;
         else {
-            this.mInstance = new MyDatamanger();
+            mInstance = new MyDatamanger();
             initialiseerData();
-            return this.mInstance;
+            return mInstance;
         }
     }
 
-    private void initialiseerData() {
-        this.setCampussenLijst();
-        this.setMeldingenLijst();
+    private static void initialiseerData() {
+        setCampussenLijst();
+        setMeldingenLijst();
     }
 
-    @Override
-    public void setMeldingenLijst() {
 
-    }
-
-    @Override
-    public void setCampussenLijst() {
+    public static void setMeldingenLijst() {
 
     }
 
-    @Override
-    public void setVerdiepenLijst() {
+
+    public static void setCampussenLijst() {
 
     }
 
-    @Override
+
+    public static void setVerdiepenLijst() {
+
+    }
+
+
     public void setLokalenLijst() {
 
     }
 
 
-    @Override
+
     public List<Verdiep> getVerdiepenLijst(String afk) {
         return null;
     }
 
-    @Override
+
     public int[] getLokalenLijst(String afk, int verdiep) {
         return new int[0];
     }
 
-    @Override
+
     public List<Verdiep> getVerdiepLijst(int campusID) {
         return null;
     }
 
-    @Override
     public List<Campus> getCampussenLijst() {
         return null;
     }
