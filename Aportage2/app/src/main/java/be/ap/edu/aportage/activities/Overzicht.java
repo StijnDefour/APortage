@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import be.ap.edu.aportage.R;
 import be.ap.edu.aportage.managers.MongoManager;
+import be.ap.edu.aportage.managers.MyDatamanger;
 
 public class Overzicht extends Activity {
 
@@ -23,7 +24,7 @@ public class Overzicht extends Activity {
     private ImageView iv_scannen_bg;
     private ImageView iv_zoeken_bg;
     private String TAG = Overzicht.class.toString();
-    private MongoManager manager = MongoManager.getInstance();
+    private MyDatamanger manager = MyDatamanger.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
