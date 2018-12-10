@@ -31,10 +31,13 @@ import java.util.List;
 import java.util.Locale;
 
 import be.ap.edu.aportage.models.Campus;
+import be.ap.edu.aportage.models.Lokaal;
 import be.ap.edu.aportage.models.Melding;
+import be.ap.edu.aportage.models.MongoCollections;
 import be.ap.edu.aportage.models.Verdiep;
 
-import static be.ap.edu.aportage.managers.ApiContract.MELDINGEN_COLL;
+
+import static be.ap.edu.aportage.models.MongoCollections.CAMPUSSEN;
 
 public class MyDatamanger {
     public static String TAG_DM = "MyDataManager ";
@@ -44,6 +47,9 @@ public class MyDatamanger {
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
     private List<Melding> mMeldingen;
+    private List<Verdiep> mVerdiepen;
+    private List<Campus> mCampussen;
+    private List<Lokaal> mLokalen;
 
 
 
@@ -51,6 +57,9 @@ public class MyDatamanger {
         mContext = ctx;
         mRequestQueue = getRequestQueue();
         mMeldingen = new ArrayList<>();
+        mVerdiepen = new ArrayList<>();
+        mCampussen = new ArrayList<>();
+        mLokalen = new ArrayList<>();
 
         Log.v(TAG_DM, "initialised!");
     }
@@ -86,31 +95,21 @@ public class MyDatamanger {
 
     }
 
-
-    public static void setMeldingenLijst() {
-
-        //todo: meldingen lijst parsen uit response van Volley
-
-
-    }
-
-    public JsonArrayRequest createRequest(String url, String collection) {
+    public JsonArrayRequest createRequest(String url, MongoCollections collection) {
         JsonArrayRequest jsonArrayR = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.d(TAG_DM, response.toString());
-                        parseJsontoMeldingen(response);
-
-
+                        handleJsonResponse(response, collection);
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Log.d(TAG_DM, "something went wrong");
+                        Log.d(TAG_DM + collection, "something went wrong");
 
                     }
                 });
@@ -118,26 +117,15 @@ public class MyDatamanger {
         return jsonArrayR;
     }
 
-    public static void setCampussenLijst() {
-
-    }
-
-
-    public static void setVerdiepenLijst() {
-
-    }
-
-
-    public void setLokalenLijst() {
-
-    }
-
-
-
 
 
     public List<Verdiep> getVerdiepenLijst(String afk) {
-        return null;
+        List<Verdiep> temp = new ArrayList<>();
+        for (Verdiep v: this.mVerdiepen) {
+            if(v.campus_afk == afk)
+                temp.add(v);
+        }
+        return temp;
     }
 
 
@@ -146,24 +134,51 @@ public class MyDatamanger {
     }
 
 
-    public List<Verdiep> getVerdiepLijst(int campusID) {
-        return null;
-    }
 
     public List<Campus> getCampussenLijst() {
-        return null;
+        return this.mCampussen;
     }
 
     public List<Melding> getMeldingenLijst(){
         return null;
     }
 
-    private void parseJsontoMeldingen(JSONArray elements){
+    private void parseToCorrectList(JSONObject obj, MongoCollections coll) throws JSONException {
+        switch(coll){
+
+            case CAMPUSSEN :  createCampusAndAddToList(obj);
+            break;
+            case MELDINGEN: createMeldingAndAddToList(obj);
+            break;
+            case VERDIEPEN: createVerdiepAndAddToList(obj);
+            break;
+            case LOKALEN: createLokaalAndAddToList(obj);
+            default: throw new JSONException("couldn't create object from json");
+        }
+    }
+
+    private void createLokaalAndAddToList(JSONObject obj) {
+    }
+
+    private void createCampusAndAddToList(JSONObject obj) {
+        try {
+            Campus campus = new Campus(
+                    obj.get(ApiContract.CAMPUS_NAAM).toString(),
+                    obj.get(ApiContract.CAMPUS_AFK).toString()
+            );
+            this.mCampussen.add(campus);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    private void handleJsonResponse(JSONArray elements, MongoCollections coll){
         for (int i = 0; i < elements.length(); i++) {
             try {
                 JSONObject obj = elements.getJSONObject(i);
-                Log.d("JSONObject titel", obj.get("titel").toString());
-                this.mMeldingen.add(createMeldingFromJson(obj));
+                this.parseToCorrectList(obj, coll );
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -171,7 +186,7 @@ public class MyDatamanger {
         }
     }
 
-    private Melding createMeldingFromJson(JSONObject obj){
+    private void createMeldingAndAddToList(JSONObject obj){
 
         try {
             Melding melding = new Melding(
@@ -184,43 +199,26 @@ public class MyDatamanger {
                     },
                     obj.get("status").toString(),
                    obj.get("datum").toString());
-            return melding;
+            this.mMeldingen.add(melding);
+
 
         } catch (JSONException e) {
             e.printStackTrace();
-            return null;
         }
 
     }
 
-    private Campus createCampusFromJson(JSONObject obj){
+
+    private void createVerdiepAndAddToList(JSONObject obj){
         try {
-            Campus campus = new Campus(
-                    obj.get(ApiContract.CAMPUS_NAAM).toString(),
+            Verdiep verdiep = new Verdiep(
+                    Integer.parseInt(obj.get(ApiContract.VERDIEP_NR).toString()),
                     obj.get(ApiContract.CAMPUS_AFK).toString()
             );
-            return campus;
-
+            this.mVerdiepen.add(verdiep);
         } catch (JSONException e) {
             e.printStackTrace();
-            return null;
         }
     }
-
-    private Verdiep createVerdiepFromJson(JSONObject obj){
-        try {
-            Verdiep verdiep = new Campus(
-                    obj.get().toString(),
-                    obj.get().toString()
-            );
-            return verdiep;
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-
 
 }
