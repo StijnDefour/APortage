@@ -11,20 +11,22 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Locale;
 
+import be.ap.edu.aportage.interfaces.Statussen;
+
 public class Melding {
     public int _id;
     public String titel;
     public String omschrijving;
     public String[] locatie;
-    public String status;
-    public Date mDatum;
+    public Statussen status;
+
     public Date datum;
 
-    public FirebaseUser melder;
+    public Melder melder;
 
     //todo_done: api call naar 26 vs 24 rechtzetten om localdatetime te kunnen gebruiken, of een andere date lib gebruiken
 
-    public Melding(String t, String omschr, String[] loc, String sts, Date d) {
+    public Melding(String t, String omschr, String[] loc, Statussen sts, Date d) {
 
 
         this.titel = t;
@@ -33,7 +35,7 @@ public class Melding {
         this.status = sts;
         this.datum = d;
     }
-    public Melding(String t, String omschr, String[] loc, String sts, String d) {
+    public Melding(String t, String omschr, String[] loc, Statussen sts, String d) {
 
 
 
@@ -62,7 +64,7 @@ public class Melding {
         this._id = id;
     }
 
-    public void setMelder(FirebaseUser mldr){
+    public void setMelder(Melder mldr){
         this.melder = mldr;
     }
 

@@ -2,8 +2,6 @@ package be.ap.edu.aportage.interfaces;
 
 import android.util.Log;
 
-import be.ap.edu.aportage.models.MongoCollections;
-
 public class ApiContract {
     public static String API_BASE_URL = "https://api.mlab.com/api/1";
     public static String API_KEY = "OlG7Ic3_9_iemwwMvmErBnkK-N0DrZs4";
@@ -32,10 +30,7 @@ public class ApiContract {
 
     public static String createQueryUrl(String campus, String verdiep, String lok) {
         //q={"active": true}
-        String campusQ = "campusafk";
-        String verdiepQ = "verdiepnr";
-        String lokaalQ= "lokaalnr";
-        String query = "?q={"+campusQ+":"+campus.toUpperCase()+","+verdiepQ+":"+verdiep.toLowerCase()+","+lokaalQ+":"+lok.toLowerCase()+"}";
+        String query = "?q={"+CAMPUS_AFK+":"+campus.toUpperCase()+","+VERDIEP_NR+":"+verdiep.toLowerCase()+","+LOKAAL_NR+":"+lok.toLowerCase()+"}";
 
         Log.d("ApiContract", query);
 

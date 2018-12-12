@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -11,6 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -20,12 +22,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import be.ap.edu.aportage.activities.ScanMelding;
 import be.ap.edu.aportage.interfaces.ApiContract;
-import be.ap.edu.aportage.interfaces.IVolleyCallback;
+import be.ap.edu.aportage.interfaces.Statussen;
 import be.ap.edu.aportage.models.Campus;
 import be.ap.edu.aportage.models.Lokaal;
 import be.ap.edu.aportage.models.Melding;
-import be.ap.edu.aportage.models.MongoCollections;
+import be.ap.edu.aportage.interfaces.MongoCollections;
 import be.ap.edu.aportage.models.Verdiep;
 
 public class MyDatamanger extends Application {
@@ -105,26 +108,46 @@ public class MyDatamanger extends Application {
 
         return jsonArrayR;
     }
-    public JsonArrayRequest createPostRequest(String url, MongoCollections collection, RecyclerView.Adapter adapter, Melding melding) {
+    public JsonObjectRequest createPostRequest(String url, MongoCollections collection, Melding melding) {
         JSONObject meldingObject = new JSONObject();
-        meldingObject.put()
-        JsonArrayRequest jsonArrayR = new JsonArrayRequest
-                (Request.Method.POST, url, null, new Response.Listener<JSONArray>() {
+        JsonObjectRequest jsonArrayR = null;
+        try {
 
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d(TAG_DM, response.toString());
-                        handleJsonResponse(response, collection, adapter);
+            meldingObject.put("titel",melding.titel);
+            meldingObject.put("omschrijving", melding.omschrijving);
+            meldingObject.put("datum", melding.datum.toString());
+            meldingObject.put("melderid", melding.melder.getID());
+            meldingObject.put(ApiContract.CAMPUS_AFK, melding.locatie[0].toString());
+            meldingObject.put(ApiContract.VERDIEP_NR, melding.locatie[1].toString());
+            meldingObject.put(ApiContract.LOKAAL_NR, melding.locatie[2].toString());
+            meldingObject.put("status", melding.status.toString());
+
+
+            jsonArrayR = new JsonObjectRequest(
+                    Request.Method.POST,
+                    ApiContract.createCollectionUrl(collection),
+                    meldingObject,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d("post req", response.toString());
+
+                        }
+                    },new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        //throw new JSONException("er is iets misgelopen tijdens het posten van de melding");
+                            Log.e("volleyerror", error.getMessage());
+
                     }
-                }, new Response.ErrorListener() {
+            });
 
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-                        Log.d(TAG_DM + collection, "something went wrong");
 
-                    }
-                });
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
         return jsonArrayR;
     }
@@ -134,7 +157,7 @@ public class MyDatamanger extends Application {
     public List<Verdiep> getVerdiepenLijst(String afk) {
         List<Verdiep> temp = new ArrayList<>();
         for (Verdiep v: this.mVerdiepen) {
-            if(v.campus_afk == afk)
+            if(afk.equals(v.campus_afk))
                 temp.add(v);
         }
         return temp;
@@ -167,6 +190,8 @@ public class MyDatamanger extends Application {
             case LOKALEN: createLokaalAndAddToList(obj, adapter);
             default: throw new JSONException("couldn't create object from json");
         }
+
+
     }
 
     private void createLokaalAndAddToList(JSONObject obj, RecyclerView.Adapter adapter) {
@@ -180,7 +205,7 @@ public class MyDatamanger extends Application {
                     obj.get(ApiContract.CAMPUS_AFK).toString()
             );
             this.mCampussen.add(campus);
-            adapter.notifyDataSetChanged();
+            //adapter.notifyDataSetChanged();
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -211,12 +236,10 @@ public class MyDatamanger extends Application {
                             obj.get("verdiepnr").toString(),
                             obj.get("lokaalnr").toString()
                     },
-                    obj.get("status").toString(),
+                    Statussen.getStatus(obj.get("status").toString()),
                    obj.get("datum").toString());
             this.mMeldingen.add(melding);
             adapter.notifyDataSetChanged();
-
-
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -232,7 +255,7 @@ public class MyDatamanger extends Application {
                     obj.get(ApiContract.CAMPUS_AFK).toString()
             );
             this.mVerdiepen.add(verdiep);
-            adapter.notifyDataSetChanged();
+            //adapter.notifyDataSetChanged();
         } catch (JSONException e) {
             e.printStackTrace();
         }

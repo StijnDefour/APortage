@@ -20,7 +20,7 @@ public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecy
 
     private final Context context;
     private final LayoutInflater layoutInflater;
-    private final List<Verdiep> verdiepenLijst;
+    private List<Verdiep> verdiepenLijst;
     private final String afkorting_campus;
 
     public VerdiepenRecyclerAdapter(Context context, List<Verdiep> verdiepenLijst, String afk) {
@@ -28,6 +28,10 @@ public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecy
         this.layoutInflater = LayoutInflater.from(this.context);
         this.verdiepenLijst = verdiepenLijst;
         this.afkorting_campus = afk;
+    }
+
+    public void setVerdiepenLijst(List<Verdiep> lijst){
+        this.verdiepenLijst = lijst;
     }
 
     @NonNull

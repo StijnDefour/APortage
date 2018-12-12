@@ -1,4 +1,4 @@
-package be.ap.edu.aportage.models;
+package be.ap.edu.aportage.interfaces;
 
 public enum MongoCollections {
 
