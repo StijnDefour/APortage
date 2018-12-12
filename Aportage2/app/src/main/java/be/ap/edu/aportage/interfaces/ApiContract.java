@@ -1,4 +1,4 @@
-package be.ap.edu.aportage.managers;
+package be.ap.edu.aportage.interfaces;
 
 import android.util.Log;
 

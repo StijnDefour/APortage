@@ -3,22 +3,10 @@ package be.ap.edu.aportage.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 import be.ap.edu.aportage.R;
-import be.ap.edu.aportage.managers.ApiContract;
-import be.ap.edu.aportage.managers.MongoManager;
-import be.ap.edu.aportage.managers.MyDatamanger;
 
 public class Overzicht extends Activity {
 

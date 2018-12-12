@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 import be.ap.edu.aportage.R;
-import be.ap.edu.aportage.managers.ApiContract;
+import be.ap.edu.aportage.interfaces.ApiContract;
 import be.ap.edu.aportage.managers.MyDatamanger;
 import be.ap.edu.aportage.models.MongoCollections;
 import be.ap.edu.aportage.recycleradapters.CampussenRecyclerAdapter;
@@ -32,6 +32,7 @@ public class Campussen extends AppCompatActivity {
         //initialisatie van Datamanager die een getrequest doet naar de mLab Api voor de campussen collection
         this.manager = MyDatamanger.getInstance(this.getApplicationContext());
         JsonArrayRequest req = this.manager.createRequest(ApiContract.createCollectionUrl(MongoCollections.CAMPUSSEN), MongoCollections.CAMPUSSEN);
+        req.setShouldCache(false);
         this.manager.addToRequestQueue(req);
 
         //initialisatie properties voor recyclerview van campussen

@@ -1,10 +1,7 @@
 package be.ap.edu.aportage.managers;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.Log;
-import android.util.LruCache;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -12,32 +9,22 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.google.android.gms.common.api.Api;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
+import be.ap.edu.aportage.interfaces.ApiContract;
+import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.models.Campus;
 import be.ap.edu.aportage.models.Lokaal;
 import be.ap.edu.aportage.models.Melding;
 import be.ap.edu.aportage.models.MongoCollections;
 import be.ap.edu.aportage.models.Verdiep;
-
-
-import static be.ap.edu.aportage.models.MongoCollections.CAMPUSSEN;
 
 public class MyDatamanger {
     public static String TAG_DM = "MyDataManager ";
@@ -84,7 +71,7 @@ public class MyDatamanger {
     }
 
     public <T> void addToRequestQueue(Request<T> req) {
-        getRequestQueue().add(req);
+        this.mRequestQueue.add(req);
     }
 
     public ImageLoader getImageLoader() {
