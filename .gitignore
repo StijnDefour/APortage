@@ -10,3 +10,43 @@ Aportage2/.DS_Store
 Aportage2/build
 Aportage2/captures
 Aportage2/.externalNativeBuild
+
+
+
+# APORTAGE DASHBOARD IGNORE #
+
+Aportage-dashboard/.DS_STORE
+
+Aportage-dashboard/dist/
+Aportage-dashboard/bazel-*
+Aportage-dashboard/integration/bazel/bazel-*
+Aportage-dashboard/e2e_test.*
+Aportage-dashboard/node_modules
+Aportage-dashboard/bower_components
+Aportage-dashboard/tools/gulp-tasks/cldr/cldr-data/
+
+# Include when developing application packages.
+Aportage-dashboard/pubspec.lock
+Aportage-dashboard/.c9
+Aportage-dashboard/.idea/
+Aportage-dashboard/.settings/
+Aportage-dashboard/*.swo
+Aportage-dashboard/modules/.settings
+Aportage-dashboard/.vscode
+Aportage-dashboard/modules/.vscode
+
+# Don't check in secret files
+Aportage-dashboard/*secret.js
+
+# Ignore npm/yarn debug log
+Aportage-dashboard/npm-debug.log
+Aportage-dashboard/yarn-error.log
+
+# build-analytics
+Aportage-dashboard/.build-analytics
+
+# rollup-test output
+Aportage-dashboard/modules/rollup-test/dist/
+
+# User specific bazel settings
+Aportage-dashboard/.bazelrc.user
