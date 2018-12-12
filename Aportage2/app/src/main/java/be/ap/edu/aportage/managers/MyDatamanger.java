@@ -1,6 +1,8 @@
 package be.ap.edu.aportage.managers;
 
+import android.app.Application;
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -26,7 +28,7 @@ import be.ap.edu.aportage.models.Melding;
 import be.ap.edu.aportage.models.MongoCollections;
 import be.ap.edu.aportage.models.Verdiep;
 
-public class MyDatamanger {
+public class MyDatamanger extends Application {
     public static String TAG_DM = "MyDataManager ";
     protected static MyDatamanger mInstance = null;
     private static Context mContext;
@@ -71,7 +73,7 @@ public class MyDatamanger {
     }
 
     public <T> void addToRequestQueue(Request<T> req) {
-        this.mRequestQueue.add(req);
+        this.getRequestQueue().add(req);
     }
 
     public ImageLoader getImageLoader() {
@@ -82,14 +84,37 @@ public class MyDatamanger {
 
     }
 
-    public JsonArrayRequest createRequest(String url, MongoCollections collection) {
+    public JsonArrayRequest createGetRequest(String url, MongoCollections collection, RecyclerView.Adapter adapter) {
         JsonArrayRequest jsonArrayR = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.d(TAG_DM, response.toString());
-                        handleJsonResponse(response, collection);
+                        handleJsonResponse(response, collection, adapter);
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.d(TAG_DM + collection, "something went wrong");
+
+                    }
+                });
+
+        return jsonArrayR;
+    }
+    public JsonArrayRequest createPostRequest(String url, MongoCollections collection, RecyclerView.Adapter adapter, Melding melding) {
+        JSONObject meldingObject = new JSONObject();
+        meldingObject.put()
+        JsonArrayRequest jsonArrayR = new JsonArrayRequest
+                (Request.Method.POST, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d(TAG_DM, response.toString());
+                        handleJsonResponse(response, collection, adapter);
                     }
                 }, new Response.ErrorListener() {
 
@@ -130,30 +155,32 @@ public class MyDatamanger {
         return null;
     }
 
-    private void parseToCorrectList(JSONObject obj, MongoCollections coll) throws JSONException {
+    private void parseToCorrectList(JSONObject obj, MongoCollections coll,  RecyclerView.Adapter adapter) throws JSONException {
         switch(coll){
 
-            case CAMPUSSEN :  createCampusAndAddToList(obj);
+            case CAMPUSSEN :  createCampusAndAddToList(obj, adapter);
             break;
-            case MELDINGEN: createMeldingAndAddToList(obj);
+            case MELDINGEN: createMeldingAndAddToList(obj, adapter);
             break;
-            case VERDIEPEN: createVerdiepAndAddToList(obj);
+            case VERDIEPEN: createVerdiepAndAddToList(obj, adapter);
             break;
-            case LOKALEN: createLokaalAndAddToList(obj);
+            case LOKALEN: createLokaalAndAddToList(obj, adapter);
             default: throw new JSONException("couldn't create object from json");
         }
     }
 
-    private void createLokaalAndAddToList(JSONObject obj) {
+    private void createLokaalAndAddToList(JSONObject obj, RecyclerView.Adapter adapter) {
+
     }
 
-    private void createCampusAndAddToList(JSONObject obj) {
+    private void createCampusAndAddToList(JSONObject obj,  RecyclerView.Adapter adapter) {
         try {
             Campus campus = new Campus(
                     obj.get(ApiContract.CAMPUS_NAAM).toString(),
                     obj.get(ApiContract.CAMPUS_AFK).toString()
             );
             this.mCampussen.add(campus);
+            adapter.notifyDataSetChanged();
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -161,11 +188,11 @@ public class MyDatamanger {
         }
     }
 
-    private void handleJsonResponse(JSONArray elements, MongoCollections coll){
+    private void handleJsonResponse(JSONArray elements, MongoCollections coll,  RecyclerView.Adapter adapter){
         for (int i = 0; i < elements.length(); i++) {
             try {
                 JSONObject obj = elements.getJSONObject(i);
-                this.parseToCorrectList(obj, coll );
+                this.parseToCorrectList(obj, coll , adapter);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -173,7 +200,7 @@ public class MyDatamanger {
         }
     }
 
-    private void createMeldingAndAddToList(JSONObject obj){
+    private void createMeldingAndAddToList(JSONObject obj, RecyclerView.Adapter adapter){
 
         try {
             Melding melding = new Melding(
@@ -187,6 +214,8 @@ public class MyDatamanger {
                     obj.get("status").toString(),
                    obj.get("datum").toString());
             this.mMeldingen.add(melding);
+            adapter.notifyDataSetChanged();
+
 
 
         } catch (JSONException e) {
@@ -196,15 +225,30 @@ public class MyDatamanger {
     }
 
 
-    private void createVerdiepAndAddToList(JSONObject obj){
+    private void createVerdiepAndAddToList(JSONObject obj, RecyclerView.Adapter adapter){
         try {
             Verdiep verdiep = new Verdiep(
                     Integer.parseInt(obj.get(ApiContract.VERDIEP_NR).toString()),
                     obj.get(ApiContract.CAMPUS_AFK).toString()
             );
             this.mVerdiepen.add(verdiep);
+            adapter.notifyDataSetChanged();
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+
+
+    /**
+     * Cancels all pending requests by the specified TAG, it is important
+     * to specify a TAG so that the pending/ongoing requests can be cancelled.
+     *
+     * @param tag
+     */
+    public void cancelPendingRequests(Object tag) {
+        if (mRequestQueue != null) {
+            mRequestQueue.cancelAll(tag);
         }
     }
 

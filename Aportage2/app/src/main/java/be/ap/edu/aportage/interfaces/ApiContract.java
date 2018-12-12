@@ -8,8 +8,6 @@ public class ApiContract {
     public static String API_BASE_URL = "https://api.mlab.com/api/1";
     public static String API_KEY = "OlG7Ic3_9_iemwwMvmErBnkK-N0DrZs4";
     public static String DATABASE = "campusdb";
-    public static String USER = "lol";
-    public static String PW = "lol1lol";
     public static String CAMPUS_AFK = "campusafk";
     public static String VERDIEP_NR = "verdiepnr";
     public static String LOKAAL_NR = "lokaalnr";

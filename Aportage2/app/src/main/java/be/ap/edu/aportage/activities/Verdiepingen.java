@@ -10,8 +10,12 @@ import android.view.View;
 import android.widget.Button;
 
 
+import com.android.volley.toolbox.JsonArrayRequest;
+
 import be.ap.edu.aportage.R;
-import be.ap.edu.aportage.managers.MockDataManager;
+import be.ap.edu.aportage.interfaces.ApiContract;
+import be.ap.edu.aportage.managers.MyDatamanger;
+import be.ap.edu.aportage.models.MongoCollections;
 import be.ap.edu.aportage.recycleradapters.VerdiepenRecyclerAdapter;
 
 public class Verdiepingen extends AppCompatActivity {
@@ -20,7 +24,7 @@ public class Verdiepingen extends AppCompatActivity {
     private RecyclerView verdiepenRV;
     private LinearLayoutManager verdiepenLM;
     private VerdiepenRecyclerAdapter verdiepenAdapter;
-    private MockDataManager dataManager = MockDataManager.getInstance();
+    private MyDatamanger dataManager = MyDatamanger.getInstance(this.getApplicationContext());
     private Intent uitgaandeIntent;
     private Intent inkomendeIntent;
     private Button navBtnCampus;
@@ -32,12 +36,14 @@ public class Verdiepingen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verdiepingen);
+        this.inkomendeIntent = getIntent();
+
 
 
         this.verdiepenRV = (RecyclerView) findViewById(R.id.rv_verdiepingen);
         //this.verdiepCV = (CardView) findViewById(R.id.cv)
-        this.dataManager = MockDataManager.getInstance();
-        this.inkomendeIntent = getIntent();
+
+
         String campus_afk = this.inkomendeIntent.getStringExtra("campus_afk");
 
         this.navBtnCampus = findViewById(R.id.btn_nav_campus);
@@ -51,6 +57,9 @@ public class Verdiepingen extends AppCompatActivity {
 
 
         registreerOnClickListeners();
+        JsonArrayRequest req = this.dataManager.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.VERDIEPEN), MongoCollections.CAMPUSSEN, this.verdiepenAdapter );
+        req.setShouldCache(false);
+        this.dataManager.addToRequestQueue(req);
     }
 
     public void registreerOnClickListeners(){
