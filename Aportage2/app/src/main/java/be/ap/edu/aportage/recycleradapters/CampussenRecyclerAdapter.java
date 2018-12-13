@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.activities.Campussen;
 import be.ap.edu.aportage.activities.Verdiepingen;
 import be.ap.edu.aportage.models.Campus;
 
@@ -67,6 +68,7 @@ public class CampussenRecyclerAdapter extends RecyclerView.Adapter<CampussenRecy
                     intent.putExtra("campus_titel", campusTitel.getText());
                     intent.putExtra("campus_afk", campusAfk);
                     context.startActivity(intent);
+                    ((Campussen)context).finish();
                 }
             });
         }

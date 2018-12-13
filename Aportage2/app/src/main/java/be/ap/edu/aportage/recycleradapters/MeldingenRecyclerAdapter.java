@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.activities.Meldingen;
 import be.ap.edu.aportage.models.Melding;
 
 public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecyclerAdapter.ViewHolder> {
@@ -82,6 +83,7 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
                     intent.putExtra("lokaal_nr", locatie[2]);
 
                     context.startActivity(intent);
+                    ((Meldingen)context).finish();
                 }
             });
         }

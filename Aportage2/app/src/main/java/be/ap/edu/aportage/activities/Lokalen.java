@@ -87,6 +87,7 @@ public class Lokalen extends AppCompatActivity {
     private void gaNaarCampussen(){
         this.uitgaandeIntent = new Intent(this, Campussen.class);
         this.startActivity(this.uitgaandeIntent);
+        Lokalen.this.finish();
     }
 
     private void gaNaarVerdiepen(){
@@ -94,9 +95,14 @@ public class Lokalen extends AppCompatActivity {
         this.uitgaandeIntent.putExtra("verdiep_nr", this.btnVerdiep.getText());
         this.uitgaandeIntent.putExtra("campus_afk", this.btnCampus.getText());
         this.startActivity(this.uitgaandeIntent);
-
+        Lokalen.this.finish();
     }
 
-
-
+    @Override
+    public void onBackPressed() {
+        this.uitgaandeIntent = new Intent(this, Verdiepingen.class);
+        this.uitgaandeIntent.putExtra("campus_afk", this.s_campus);
+        startActivity(this.uitgaandeIntent);
+        Lokalen.this.finish();
+    }
 }

@@ -102,11 +102,13 @@ public class Meldingen extends AppCompatActivity {
     }
 
     private void gaNaarScanMelding(){
-        Intent intent = new Intent(this, ScanMelding.class);
-        intent.putExtra("campus_afk", s_campus);
-        intent.putExtra("verdiep_nr", s_verdieping);
-        intent.putExtra("lokaal_nr", s_lokaal);
-        startActivity(intent);
+        this.uitgaandeIntent = new Intent(this, ScanMelding.class);
+        this.uitgaandeIntent.putExtra("campus_afk", s_campus);
+        this.uitgaandeIntent.putExtra("verdiep_nr", s_verdieping);
+        this.uitgaandeIntent.putExtra("lokaal_nr", s_lokaal);
+        this.uitgaandeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(this.uitgaandeIntent);
+        Meldingen.this.finish();
     }
 
     private void gaNaarLokalen() {
@@ -115,22 +117,28 @@ public class Meldingen extends AppCompatActivity {
         this.uitgaandeIntent.putExtra("verdiep_nr", this.meldingenVerdiepBtn.getText());
         this.uitgaandeIntent.putExtra("campus_afk", this.meldingenCampusBtn.getText());
         startActivity(this.uitgaandeIntent);
-
+        Meldingen.this.finish();
     }
 
     private void gaNaarVerdiepen(){
-
         this.uitgaandeIntent = new Intent(this, Verdiepingen.class);
         this.uitgaandeIntent.putExtra("campus_afk", this.meldingenCampusBtn.getText());
         startActivity(this.uitgaandeIntent);
+        Meldingen.this.finish();
     }
 
     private void gaNaarCampussen(){
-
         this.uitgaandeIntent = new Intent(this, Campussen.class);
         startActivity(this.uitgaandeIntent);
+        Meldingen.this.finish();
     }
 
-
-
+    @Override
+    public void onBackPressed() {
+        this.uitgaandeIntent = new Intent(this, Lokalen.class);
+        this.uitgaandeIntent.putExtra("campus_afk", this.s_campus);
+        this.uitgaandeIntent.putExtra("lokaal_nr", this.s_lokaal);
+        startActivity(this.uitgaandeIntent);
+        Meldingen.this.finish();
+    }
 }

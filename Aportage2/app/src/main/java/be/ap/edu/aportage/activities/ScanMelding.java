@@ -11,12 +11,11 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
-
-import com.google.firebase.auth.FirebaseAuth;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -29,7 +28,6 @@ public class ScanMelding extends AppCompatActivity {
     static final String CAMPUS = "campus_afk";
     static final String VERDIEP = "verdiep_nr";
     static final String LOKAAL = "lokaal_nr";
-    private FirebaseAuth mAuth;
 
     static final int REQUEST_IMAGE_CAPTURE = 5;
     String mCurrentPhotoPath;
@@ -38,6 +36,8 @@ public class ScanMelding extends AppCompatActivity {
     Button btnLokaal;
     ImageView imageView;
     Button button;
+
+    EditText tvTitel;
 
     Button btnOk;
     Button btnAnnuleer;
@@ -51,21 +51,44 @@ public class ScanMelding extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_melding);
 
-        this.mAuth = FirebaseAuth.getInstance();
-
         this.imageView = findViewById(R.id.imageView);
         this.button = findViewById(R.id.button);
         this.btnCampus = findViewById(R.id.btn_campus_afk);
         this.btnVerdiep = findViewById(R.id.btn_verdiep_nr);
         this.btnLokaal = findViewById(R.id.btn_melding_lokaalnr);
 
+        this.tvTitel = findViewById(R.id.et_melding_titel);
+
         btnOk = findViewById(R.id.btn_melding_ok);
         btnAnnuleer = findViewById(R.id.btn_melding_annuleren);
 
         lokaalButtonsOpvullen();
         buttonsAddClickEvents();
+
+        if (savedInstanceState != null) {
+            this.tvTitel.setText(savedInstanceState.getString("tvTitel"));
+        } else {
+            Log.e("State", "state did not exist");
+        }
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, Meldingen.class);
+        intent.putExtra(ScanMelding.CAMPUS, s_campus);
+        intent.putExtra(ScanMelding.VERDIEP, s_verdieping);
+        intent.putExtra(ScanMelding.LOKAAL, s_lokaal);
+        startActivity(intent);
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        //        savedInstanceState.putString("mCurrentPhotoPath", this.mCurrentPhotoPath);
+        savedInstanceState.putString("tvTitel", this.tvTitel.getText().toString());
+        Log.e("saveState", savedInstanceState.getString("tvTitel"));
+        super.onSaveInstanceState(savedInstanceState);
+    }
 
     private void buttonsAddClickEvents() {
         button.setOnClickListener(new View.OnClickListener() {
@@ -95,14 +118,14 @@ public class ScanMelding extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(ScanMelding.this, Lokalen.class);
                 intent.putExtra(ScanMelding.CAMPUS, s_campus);
-                intent.putExtra(ScanMelding.LOKAAL, s_lokaal);
+                intent.putExtra(ScanMelding.VERDIEP, s_verdieping);
                 startActivity(intent);
             }
         });
         btnAnnuleer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ScanMelding.this.finish();
+//                ScanMelding.this.finish();
             }
         });
         btnOk.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +133,8 @@ public class ScanMelding extends AppCompatActivity {
             public void onClick(View view) {
                 slaMeldingOpNaarDeDB();
                 gaNaarMelding();
-}
+//                ScanMelding.this.finish();
+            }
         });
     }
 

@@ -56,14 +56,25 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
         }
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_for_food);
-        cameraView = (SurfaceView) findViewById(R.id.surface_view);
-        txtView = (TextView) findViewById(R.id.txtview);
+        cameraView = findViewById(R.id.surface_view);
+        txtView = findViewById(R.id.txtview);
 
+        initTextRecognizer();
+        createIntents();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, Overzicht.class);
+        startActivity(intent);
+        ScanLokaal.this.finish();
+    }
+
+    public void initTextRecognizer() {
         TextRecognizer txtRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
         if (!txtRecognizer.isOperational()) {
             Log.e("ScanLokaal", "Detector dependencies are not yet available");
@@ -77,10 +88,11 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
             cameraView.getHolder().addCallback(this);
             txtRecognizer.setProcessor(this);
         }
+    }
 
+    public void createIntents() {
         btn_ok = findViewById(R.id.btn_ocr_ok);
         btn_annuleren = findViewById(R.id.btn_ocr_annuleer);
-        final Activity activity = this;
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,13 +100,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
                 haalCampusVerdiepLokaalDataUitGelezenString(gelezenTekst[gelezenTekst.length-1]);
                 Log.d("testLokaalInfo", lokaalInfo);
                 if (!lokaalInfo.equals("")) {
-                    lokaalInfo = lokaalInfo.replace("LOKAAL ", "");
-                    lokaalInfo = lokaalInfo.replace(",", ".");
-
                     if (checkLokaal(lokaalInfo)) {
-                        Intent intent = new Intent(activity, Meldingen.class);
-                        intent.putExtra("lokaalInfo", lokaalInfo);
-                        startActivity(intent);
                         gaNaarMeldingen();
                     }
                 }
@@ -103,20 +109,20 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
         btn_annuleren.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(activity, Overzicht.class);
+                Intent intent = new Intent(ScanLokaal.this, Overzicht.class);
                 startActivity(intent);
+                ScanLokaal.this.finish();
             }
         });
     }
 
     private void gaNaarMeldingen() {
-
         this.uitgaandeIntent = new Intent(this, Meldingen.class);
         this.uitgaandeIntent.putExtra("campus_afk", this.s_campusAfk);
         this.uitgaandeIntent.putExtra("verdiep_nr", this.s_verdiepNr);
         this.uitgaandeIntent.putExtra("lokaal_nr", this.s_lokaalNr);
         startActivity(this.uitgaandeIntent);
-
+        ScanLokaal.this.finish();
     }
 
 
@@ -127,7 +133,6 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-
         try {
             if (ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -142,12 +147,10 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-
         cameraSource.stop();
     }
 
@@ -182,12 +185,10 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
 
 
     public void gelezenTekstDelimiteren(String teSplittenString) {
-
         String delimiter = "/";
         this.gelezenTekst = teSplittenString.split(delimiter);
 
         Log.v("gelezen tekst", this.gelezenTekst[gelezenTekst.length-1]);
-
     }
 
     public void haalCampusVerdiepLokaalDataUitGelezenString(String gelezenText){

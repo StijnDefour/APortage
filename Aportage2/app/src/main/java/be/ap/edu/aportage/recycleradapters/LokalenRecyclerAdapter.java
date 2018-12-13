@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.activities.Lokalen;
 import be.ap.edu.aportage.activities.Meldingen;
 
 public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecyclerAdapter.ViewHolder> {
@@ -63,7 +64,7 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
             registreerOnClickListener(itemView);
         }
 
-        public void registreerOnClickListener(View itemView) {
+        public void registreerOnClickListener(final View itemView) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -75,6 +76,7 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
                     intent.putExtra("verdiep_nr", verdieping_s);
                     intent.putExtra("lokaal_nr", lokaal_s);
                     context.startActivity(intent);
+                    ((Lokalen)context).finish();
                 }
             });
         }

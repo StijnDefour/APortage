@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+
+import java.io.Console;
 
 import be.ap.edu.aportage.R;
 import be.ap.edu.aportage.recycleradapters.CampussenRecyclerAdapter;
@@ -31,4 +34,10 @@ public class Campussen extends AppCompatActivity {
         this.mijnCampussenRV.setAdapter(this.campussenAdapter);
     }
 
+    @Override
+    public void onBackPressed() {
+        this.uitgaandeIntent = new Intent(this, Overzicht.class);
+        startActivity(this.uitgaandeIntent);
+        Campussen.this.finish();
+    }
 }

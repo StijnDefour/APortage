@@ -49,7 +49,6 @@ public class Verdiepingen extends AppCompatActivity {
         this.verdiepenRV.setLayoutManager(this.verdiepenLM);
         this.verdiepenRV.setAdapter(this.verdiepenAdapter);
 
-
         registreerOnClickListeners();
     }
 
@@ -66,9 +65,14 @@ public class Verdiepingen extends AppCompatActivity {
     public void gaNaarCampussenActivity(){
         this.uitgaandeIntent = new Intent(this, Campussen.class);
         startActivity(this.uitgaandeIntent);
+        Verdiepingen.this.finish();
     }
 
-
-
+    @Override
+    public void onBackPressed() {
+        this.uitgaandeIntent = new Intent(this, Campussen.class);
+        startActivity(this.uitgaandeIntent);
+        Verdiepingen.this.finish();
+    }
 
 }
