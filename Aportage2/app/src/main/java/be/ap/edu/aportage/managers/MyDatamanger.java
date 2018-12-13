@@ -37,7 +37,6 @@ public class MyDatamanger extends Application {
     private static Context mContext;
 
     private RequestQueue mRequestQueue;
-    private ImageLoader mImageLoader;
     private List<Melding> mMeldingen;
     private List<Verdiep> mVerdiepen;
     private List<Campus> mCampussen;
@@ -52,6 +51,7 @@ public class MyDatamanger extends Application {
         mVerdiepen = new ArrayList<>();
         mCampussen = new ArrayList<>();
         mLokalen = new ArrayList<>();
+        initListsCampusVerdiepLokaal();
 
         Log.v(TAG_DM, "initialised!");
     }
@@ -63,6 +63,20 @@ public class MyDatamanger extends Application {
             mContext = ctx;
         }
         return mInstance;
+    }
+
+    private void initListsCampusVerdiepLokaal(){
+        //dit wordt eenmalig uitgevoerd als de instantie van MyDataManager nog niet bestaat.
+        //Deze data is statisch dus hoeft maar eenmaal binnengehaald te worden.
+        JsonArrayRequest campusReq = this.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.CAMPUSSEN ), MongoCollections.CAMPUSSEN, null);
+        JsonArrayRequest verdiepReq = this.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.VERDIEPEN ), MongoCollections.VERDIEPEN, null);
+        JsonArrayRequest lokaalReq = this.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.LOKALEN), MongoCollections.LOKALEN, null);
+        //JsonArrayRequest meldingenReq = this.dataManager.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.MELDINGEN), MongoCollections.MELDINGEN, null);
+
+
+        this.addToRequestQueue(campusReq);
+        this.addToRequestQueue(verdiepReq);
+        this.addToRequestQueue(lokaalReq);
     }
 
 
@@ -79,14 +93,6 @@ public class MyDatamanger extends Application {
         this.getRequestQueue().add(req);
     }
 
-    public ImageLoader getImageLoader() {
-        return mImageLoader;
-    }
-
-    private static void initialiseerData() {
-
-    }
-
     public JsonArrayRequest createGetRequest(String url, MongoCollections collection, RecyclerView.Adapter adapter) {
         JsonArrayRequest jsonArrayR = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -100,8 +106,8 @@ public class MyDatamanger extends Application {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-                        Log.d(TAG_DM + collection, "something went wrong");
+                        // done: Handle error
+                        Log.e(TAG_DM + collection, "something went wrong");
 
                     }
                 });
@@ -164,8 +170,8 @@ public class MyDatamanger extends Application {
     }
 
 
-    public int[] getLokalenLijst(String afk, int verdiep) {
-        return new int[0];
+    public List<Lokaal> getLokalenLijst(String afk, int verdiep) {
+        return this.mLokalen;
     }
 
 
@@ -196,6 +202,19 @@ public class MyDatamanger extends Application {
 
     private void createLokaalAndAddToList(JSONObject obj, RecyclerView.Adapter adapter) {
 
+        try {
+            Lokaal lokaal = new Lokaal(
+                    obj.get(ApiContract.CAMPUS_NAAM).toString(),
+                    obj.get(ApiContract.CAMPUS_AFK).toString(),
+                    Integer.parseInt(obj.get(ApiContract.LOKAAL_NR).toString())
+            );
+            this.mLokalen.add(lokaal);
+            //adapter.notifyDataSetChanged();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+        }
     }
 
     private void createCampusAndAddToList(JSONObject obj,  RecyclerView.Adapter adapter) {
@@ -260,7 +279,6 @@ public class MyDatamanger extends Application {
             e.printStackTrace();
         }
     }
-
 
 
     /**

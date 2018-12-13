@@ -52,22 +52,8 @@ public class Overzicht extends Activity {
             }
         });
 
-        loadAllData();
     }
 
-    public void loadAllData(){
-        JsonArrayRequest campusReq = this.dataManager.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.CAMPUSSEN ), MongoCollections.CAMPUSSEN, null);
-        JsonArrayRequest verdiepReq = this.dataManager.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.VERDIEPEN ), MongoCollections.VERDIEPEN, null);
-        JsonArrayRequest lokaalReq = this.dataManager.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.LOKALEN), MongoCollections.LOKALEN, null);
-        //JsonArrayRequest meldingenReq = this.dataManager.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.MELDINGEN), MongoCollections.MELDINGEN, null);
 
-
-        this.dataManager.addToRequestQueue(campusReq);
-        this.dataManager.addToRequestQueue(verdiepReq);
-        this.dataManager.addToRequestQueue(lokaalReq);
-
-
-
-    }
 
 }
