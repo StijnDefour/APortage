@@ -16,7 +16,6 @@ import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.managers.MyDatamanger;
 import be.ap.edu.aportage.interfaces.MongoCollections;
 import be.ap.edu.aportage.recycleradapters.CampussenRecyclerAdapter;
-import be.ap.edu.aportage.managers.MockDataManager;
 
 public class Campussen extends AppCompatActivity {
 

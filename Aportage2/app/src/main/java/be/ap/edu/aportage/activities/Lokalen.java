@@ -9,22 +9,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-<<<<<<< HEAD
+
 import com.android.volley.toolbox.JsonArrayRequest;
 
 import org.json.JSONObject;
 
-import java.util.List;
-
-=======
->>>>>>> 023720fe679d833e639a7dde858eda9364266af9
 import be.ap.edu.aportage.R;
 import be.ap.edu.aportage.interfaces.ApiContract;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.interfaces.MongoCollections;
 import be.ap.edu.aportage.managers.MyDatamanger;
 import be.ap.edu.aportage.recycleradapters.LokalenRecyclerAdapter;
-import be.ap.edu.aportage.managers.MockDataManager;
 
 public class Lokalen extends AppCompatActivity {
 
@@ -45,46 +40,41 @@ public class Lokalen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lokalen);
-<<<<<<< HEAD
-        this.datamanger = MyDatamanger.getInstance(this.getApplicationContext());
 
+        this.datamanger = MyDatamanger.getInstance(this.getApplicationContext());
         this.inkomendeIntent = this.getIntent();
+
         this.s_campus = this.inkomendeIntent.getStringExtra("campus_afk");
         this.s_verdieping = this.inkomendeIntent.getStringExtra("verdiep_nr");
 
         this.btnCampus = findViewById(R.id.btn_campus);
 
         this.btnVerdiep = findViewById(R.id.btn_verdiep);
-=======
-
-       this.inkomendeIntent = this.getIntent();
-       this.s_campus = this.inkomendeIntent.getStringExtra("campus_afk");
-       this.s_verdieping = this.inkomendeIntent.getStringExtra("verdiep_nr");
-       this.btnCampus = findViewById(R.id.btn_campus);
-       this.btnVerdiep = findViewById(R.id.btn_verdiep);
->>>>>>> 023720fe679d833e639a7dde858eda9364266af9
 
 
+        this.inkomendeIntent = this.getIntent();
+
+        this.s_campus = this.inkomendeIntent.getStringExtra("campus_afk");
 
 
-       navigatieOpvullen();
-       //requestLokalenData();
+        navigatieOpvullen();
+        //requestLokalenData();
 
-       //this.lokalenLijst = datamanger.getLokalenLijst(s_campus, Integer.parseInt(s_verdieping));
+        //this.lokalenLijst = datamanger.getLokalenLijst(s_campus, Integer.parseInt(s_verdieping));
 
-       this.lokalenRV = (RecyclerView) findViewById(R.id.rv_lokalen);
+        this.lokalenRV = (RecyclerView) findViewById(R.id.rv_lokalen);
 
-       this.lokaalLM = new LinearLayoutManager(this);
+        this.lokaalLM = new LinearLayoutManager(this);
 
-       this.lokalenRV.setLayoutManager(this.lokaalLM);
+        this.lokalenRV.setLayoutManager(this.lokaalLM);
 
-       this.lokalenAdapter = new LokalenRecyclerAdapter(this, this.datamanger.getLokalenLijst(s_campus, Integer.parseInt(s_verdieping)), s_campus, s_verdieping);
+        this.lokalenAdapter = new LokalenRecyclerAdapter(this, this.datamanger.getLokalenLijst(s_campus, Integer.parseInt(s_verdieping)), s_campus, s_verdieping);
 
-       this.lokalenRV.setAdapter(lokalenAdapter);
+        this.lokalenRV.setAdapter(lokalenAdapter);
 
-       registreerOnClicks();
+        registreerOnClicks();
 
-       requestLokalenData();
+        requestLokalenData();
 
 
 
