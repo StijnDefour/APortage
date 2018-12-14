@@ -64,9 +64,6 @@ public class MyDatamanger extends Application {
         return mInstance;
     }
 
-
-
-
     private RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
             // getApplicationContext() is key, it keeps you from leaking the
@@ -121,11 +118,8 @@ public class MyDatamanger extends Application {
 
         return jsonArrayR;
     }
-<<<<<<< HEAD
+
     public JsonObjectRequest createPostRequest(MongoCollections collection, Melding melding, IVolleyCallback callback) {
-=======
-    public JsonObjectRequest createPostRequest(String url, MongoCollections collection, Melding melding) {
->>>>>>> 023720fe679d833e639a7dde858eda9364266af9
         JSONObject meldingObject = new JSONObject();
         JsonObjectRequest jsonArrayR = null;
         try {
@@ -171,17 +165,10 @@ public class MyDatamanger extends Application {
         return jsonArrayR;
     }
 
-
-
-
-
-<<<<<<< HEAD
-=======
-    public List<Lokaal> getLokalenLijst(String afk, int verdiep) {
-        return this.mLokalen;
+    public void checkLokaalExists(String afk, String verdiep, String lokaal){
+        String url = ApiContract.createLokaalQuery(afk, verdiep, lokaal);
     }
 
->>>>>>> 023720fe679d833e639a7dde858eda9364266af9
 
     private void handleJsonResponse(JSONArray elements, MongoCollections coll,  IVolleyCallback callback){
         //todo: herschrijven dat dit hier de volledige jSOn array meegeeft aan parseToCorrList
@@ -196,26 +183,15 @@ public class MyDatamanger extends Application {
         }
     }
 
-<<<<<<< HEAD
-
-
-    public List<Melding> getMeldingenLijst(){
-
-        return this.mMeldingen;
-=======
-    public List<Melding> getMeldingenLijst(){
-        return null;
->>>>>>> 023720fe679d833e639a7dde858eda9364266af9
-    }
-
 
     private void createLokaalAndAddToList(JSONObject obj, IVolleyCallback callback) {
         //todo: obj moet array zijn en hier alles laten loopen en toevoegen aan lists
 
         try {
             Lokaal lokaal = new Lokaal(
-                    obj.get(ApiContract.CAMPUS_NAAM).toString(),
+
                     obj.get(ApiContract.CAMPUS_AFK).toString(),
+                    Integer.parseInt(obj.get(ApiContract.VERDIEP_NR).toString()),
                     Integer.parseInt(obj.get(ApiContract.LOKAAL_NR).toString())
             );
             this.mLokalen.add(lokaal);
@@ -243,7 +219,6 @@ public class MyDatamanger extends Application {
 
         }
     }
-
 
 
     private void createMeldingAndAddToList(JSONObject obj, IVolleyCallback callback){
@@ -297,6 +272,10 @@ public class MyDatamanger extends Application {
     }
 
 
+    public List<Melding> getMeldingenLijst(){
+
+        return this.mMeldingen;
+    }
 
     public List<Verdiep> getVerdiepenLijst(String afk) {
         List<Verdiep> temp = new ArrayList<>();
@@ -311,13 +290,11 @@ public class MyDatamanger extends Application {
     public List<Lokaal> getLokalenLijst(String afk, int verdiep) {
         List<Lokaal> temp = new ArrayList<>();
         for (Lokaal l: this.mLokalen) {
-            if(afk.toUpperCase().equals(l.mAfk.toUpperCase()) && verdiep ==l.mVerdiep)
+            if(afk.toUpperCase().equals(l.mAfk.toUpperCase()) && verdiep == l.mVerdiep)
                 temp.add(l);
         }
         return temp;
     }
-
-
 
     public List<Campus> getCampussenLijst() {
         return this.mCampussen;

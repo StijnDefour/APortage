@@ -38,6 +38,14 @@ public class ApiContract {
 
     }
 
+    public static String createLokaalQuery(String campus, String verdiep, String lok) {
+        String query = createQueryUrl(campus, verdiep, lok);
+        String lokalenUrl = ApiContract.API_BASE_URL+"/databases/"+ApiContract.DATABASE+"/collections/"+ MongoCollections.LOKALEN + query;
+        Log.d("ApiContract query",lokalenUrl );
+        return lokalenUrl;
+
+    }
+
 
 
 }
