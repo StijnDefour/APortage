@@ -64,9 +64,6 @@ public class MyDatamanger extends Application {
         return mInstance;
     }
 
-
-
-
     private RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
             // getApplicationContext() is key, it keeps you from leaking the
@@ -121,6 +118,7 @@ public class MyDatamanger extends Application {
 
         return jsonArrayR;
     }
+
     public JsonObjectRequest createPostRequest(MongoCollections collection, Melding melding, IVolleyCallback callback) {
         JSONObject meldingObject = new JSONObject();
         JsonObjectRequest jsonArrayR = null;
@@ -168,10 +166,6 @@ public class MyDatamanger extends Application {
     }
 
 
-
-
-
-
     private void handleJsonResponse(JSONArray elements, MongoCollections coll,  IVolleyCallback callback){
         //todo: herschrijven dat dit hier de volledige jSOn array meegeeft aan parseToCorrList
         for (int i = 0; i < elements.length(); i++) {
@@ -185,13 +179,9 @@ public class MyDatamanger extends Application {
         }
     }
 
+    private void checkIfLokaalExists(String[] lokaal) {
 
-
-    public List<Melding> getMeldingenLijst(){
-
-        return this.mMeldingen;
     }
-
 
     private void createLokaalAndAddToList(JSONObject obj, IVolleyCallback callback) {
         //todo: obj moet array zijn en hier alles laten loopen en toevoegen aan lists
@@ -227,7 +217,6 @@ public class MyDatamanger extends Application {
 
         }
     }
-
 
 
     private void createMeldingAndAddToList(JSONObject obj, IVolleyCallback callback){
@@ -281,6 +270,10 @@ public class MyDatamanger extends Application {
     }
 
 
+    public List<Melding> getMeldingenLijst(){
+
+        return this.mMeldingen;
+    }
 
     public List<Verdiep> getVerdiepenLijst(String afk) {
         List<Verdiep> temp = new ArrayList<>();
@@ -300,8 +293,6 @@ public class MyDatamanger extends Application {
         }
         return temp;
     }
-
-
 
     public List<Campus> getCampussenLijst() {
         return this.mCampussen;
