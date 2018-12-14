@@ -65,7 +65,7 @@ public class CampussenRecyclerAdapter extends RecyclerView.Adapter<CampussenRecy
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, Verdiepingen.class);
-                    intent.putExtra(getString(R.string.campus_intent), campusAfk);
+                    intent.putExtra(context.getResources().getString(R.string.campus_intent), campusAfk);
                     context.startActivity(intent);
                     ((Campussen)context).finish();
                 }

@@ -72,9 +72,9 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
 
                     Log.d("test", campus_s + verdieping_s + verdiepTitel.getText().toString());
 
-                    intent.putExtra(getString(R.string.campus_intent), campus_s );
-                    intent.putExtra(getString(R.string.verdieping_intent), verdieping_s);
-                    intent.putExtra(getString(R.string.lokaal_intent), lokaal_s);
+                    intent.putExtra(context.getResources().getString(R.string.campus_intent), campus_s );
+                    intent.putExtra(context.getResources().getString(R.string.verdieping_intent), verdieping_s);
+                    intent.putExtra(context.getResources().getString(R.string.lokaal_intent), lokaal_s);
                     context.startActivity(intent);
                     ((Lokalen)context).finish();
                 }

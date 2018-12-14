@@ -78,9 +78,9 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
                     intent.putExtra("melding_titel", meldingTitel.getText());
                     intent.putExtra("melding_id", melding_id);
 
-                    intent.putExtra(getString(R.string.campus_intent), locatie[0]);
-                    intent.putExtra(getString(R.string.verdieping_intent), locatie[1]);
-                    intent.putExtra(getString(R.string.lokaal_intent), locatie[2]);
+                    intent.putExtra(context.getResources().getString(R.string.campus_intent), locatie[0]);
+                    intent.putExtra(context.getResources().getString(R.string.verdieping_intent), locatie[1]);
+                    intent.putExtra(context.getResources().getString(R.string.lokaal_intent), locatie[2]);
 
                     context.startActivity(intent);
                     ((Meldingen)context).finish();
