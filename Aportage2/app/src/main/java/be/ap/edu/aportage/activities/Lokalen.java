@@ -9,18 +9,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+<<<<<<< HEAD
 import com.android.volley.toolbox.JsonArrayRequest;
 
 import org.json.JSONObject;
 
 import java.util.List;
 
+=======
+>>>>>>> 023720fe679d833e639a7dde858eda9364266af9
 import be.ap.edu.aportage.R;
 import be.ap.edu.aportage.interfaces.ApiContract;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.interfaces.MongoCollections;
 import be.ap.edu.aportage.managers.MyDatamanger;
-import be.ap.edu.aportage.models.Lokaal;
 import be.ap.edu.aportage.recycleradapters.LokalenRecyclerAdapter;
 import be.ap.edu.aportage.managers.MockDataManager;
 
@@ -30,7 +32,7 @@ public class Lokalen extends AppCompatActivity {
     private LokalenRecyclerAdapter lokalenAdapter;
     private RecyclerView lokalenRV;
     private LinearLayoutManager lokaalLM;
-    private List<Lokaal> lokalenLijst;
+    private int[] lokalenLijst;
     private Intent inkomendeIntent;
     private Intent uitgaandeIntent;
     private Button btnCampus;
@@ -43,6 +45,7 @@ public class Lokalen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lokalen);
+<<<<<<< HEAD
         this.datamanger = MyDatamanger.getInstance(this.getApplicationContext());
 
         this.inkomendeIntent = this.getIntent();
@@ -52,6 +55,14 @@ public class Lokalen extends AppCompatActivity {
         this.btnCampus = findViewById(R.id.btn_campus);
 
         this.btnVerdiep = findViewById(R.id.btn_verdiep);
+=======
+
+       this.inkomendeIntent = this.getIntent();
+       this.s_campus = this.inkomendeIntent.getStringExtra("campus_afk");
+       this.s_verdieping = this.inkomendeIntent.getStringExtra("verdiep_nr");
+       this.btnCampus = findViewById(R.id.btn_campus);
+       this.btnVerdiep = findViewById(R.id.btn_verdiep);
+>>>>>>> 023720fe679d833e639a7dde858eda9364266af9
 
 
 

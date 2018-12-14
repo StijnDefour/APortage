@@ -121,7 +121,11 @@ public class MyDatamanger extends Application {
 
         return jsonArrayR;
     }
+<<<<<<< HEAD
     public JsonObjectRequest createPostRequest(MongoCollections collection, Melding melding, IVolleyCallback callback) {
+=======
+    public JsonObjectRequest createPostRequest(String url, MongoCollections collection, Melding melding) {
+>>>>>>> 023720fe679d833e639a7dde858eda9364266af9
         JSONObject meldingObject = new JSONObject();
         JsonObjectRequest jsonArrayR = null;
         try {
@@ -171,6 +175,13 @@ public class MyDatamanger extends Application {
 
 
 
+<<<<<<< HEAD
+=======
+    public List<Lokaal> getLokalenLijst(String afk, int verdiep) {
+        return this.mLokalen;
+    }
+
+>>>>>>> 023720fe679d833e639a7dde858eda9364266af9
 
     private void handleJsonResponse(JSONArray elements, MongoCollections coll,  IVolleyCallback callback){
         //todo: herschrijven dat dit hier de volledige jSOn array meegeeft aan parseToCorrList
@@ -185,11 +196,16 @@ public class MyDatamanger extends Application {
         }
     }
 
+<<<<<<< HEAD
 
 
     public List<Melding> getMeldingenLijst(){
 
         return this.mMeldingen;
+=======
+    public List<Melding> getMeldingenLijst(){
+        return null;
+>>>>>>> 023720fe679d833e639a7dde858eda9364266af9
     }
 
 
@@ -198,8 +214,8 @@ public class MyDatamanger extends Application {
 
         try {
             Lokaal lokaal = new Lokaal(
+                    obj.get(ApiContract.CAMPUS_NAAM).toString(),
                     obj.get(ApiContract.CAMPUS_AFK).toString(),
-                    Integer.parseInt(obj.get(ApiContract.VERDIEP_NR).toString()),
                     Integer.parseInt(obj.get(ApiContract.LOKAAL_NR).toString())
             );
             this.mLokalen.add(lokaal);
