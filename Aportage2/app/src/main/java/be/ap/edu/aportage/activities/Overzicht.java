@@ -31,7 +31,7 @@ public class Overzicht extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overzicht);
 
-        this.dataManager = MyDatamanger.getInstance(this.getApplicationContext());
+        //this.dataManager = MyDatamanger.getInstance(this.getApplicationContext());
 
         iv_scannen_bg = findViewById(R.id.iv_scannen_bg);
         iv_zoeken_bg = findViewById(R.id.iv_zoeken_bg);

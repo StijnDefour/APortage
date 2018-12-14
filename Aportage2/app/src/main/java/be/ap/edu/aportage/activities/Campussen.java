@@ -8,8 +8,11 @@ import android.support.v7.widget.RecyclerView;
 
 import com.android.volley.toolbox.JsonArrayRequest;
 
+import org.json.JSONObject;
+
 import be.ap.edu.aportage.R;
 import be.ap.edu.aportage.interfaces.ApiContract;
+import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.managers.MyDatamanger;
 import be.ap.edu.aportage.interfaces.MongoCollections;
 import be.ap.edu.aportage.recycleradapters.CampussenRecyclerAdapter;
@@ -39,11 +42,32 @@ public class Campussen extends AppCompatActivity {
         this.mijnLM = new LinearLayoutManager(this);
         this.mijnCampussenRV.setLayoutManager(this.mijnLM);
         this.mijnCampussenRV.setAdapter(this.campussenAdapter);
-        JsonArrayRequest req = this.dataManager.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.CAMPUSSEN), MongoCollections.CAMPUSSEN, this.campussenAdapter );
+        JsonArrayRequest req = this.dataManager.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.CAMPUSSEN), MongoCollections.CAMPUSSEN, new IVolleyCallback() {
+            @Override
+            public void onSuccess(Object data) {
+                //todo_done: implementatie
+                campussenAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCustomSuccess(Object data) {
+
+                campussenAdapter.setCampussenList(dataManager.getCampussenLijst());
+                campussenAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onPostSuccess(JSONObject response) {
+                //ignore
+            }
+        });
         req.setShouldCache(false);
         this.dataManager.addToRequestQueue(req);
 
     }
+
+
+
 
 
 

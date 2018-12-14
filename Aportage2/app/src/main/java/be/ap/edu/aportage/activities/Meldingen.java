@@ -11,14 +11,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.interfaces.ApiContract;
+import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.interfaces.MongoCollections;
 import be.ap.edu.aportage.interfaces.Statussen;
 import be.ap.edu.aportage.managers.MyDatamanger;
@@ -65,11 +70,39 @@ public class Meldingen extends AppCompatActivity {
         this.meldingenRV.setLayoutManager(this.meldingenLM);
         this.meldingenAdapter = new MeldingenRecyclerAdapter(this, this.meldingenLijst);
         this.meldingenRV.setAdapter(this.meldingenAdapter);
-        this.meldingenLijst = dataManager.getMeldingenLijst(s_campus, s_verdieping, s_lokaal, this.meldingenAdapter);
 
+
+
+        getMeldingenData();
 
 
         registreerButtonOnClicks();
+    }
+
+    private void getMeldingenData() {
+        String url = ApiContract.createMeldingenQueryUrl(s_campus, s_verdieping, s_lokaal);
+        JsonArrayRequest req = dataManager.createGetRequest(url, MongoCollections.MELDINGEN, new IVolleyCallback() {
+
+            @Override
+            public void onSuccess(Object data) {
+                Log.d("getMeldingenLijst", data.toString());
+
+            }
+
+            @Override
+            public void onCustomSuccess(Object data) {
+                Log.d("getMeldingenLijst", data.toString());
+                meldingenAdapter.setMeldingenList(dataManager.getMeldingenLijst());
+                meldingenAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onPostSuccess(JSONObject response) {
+
+            }
+        });
+        dataManager.addToRequestQueue(req);
+
     }
 
 
@@ -151,7 +184,24 @@ public class Meldingen extends AppCompatActivity {
         Melder melder = new Melder();
         melder.melderid = "testid";
         melding.melder = melder;
-        JsonObjectRequest obj = this.dataManager.createPostRequest(MongoCollections.MELDINGEN, melding);
+        JsonObjectRequest obj = this.dataManager.createPostRequest(MongoCollections.MELDINGEN, melding, new IVolleyCallback() {
+            @Override
+            public void onSuccess(Object data) {
+                Log.d("post", data.toString());
+            }
+
+            @Override
+            public void onCustomSuccess(Object data) {
+                Log.d("post", data.toString());
+
+            }
+
+            @Override
+            public void onPostSuccess(JSONObject response) {
+
+                Log.d("post", response.toString());
+            }
+        });
         this.dataManager.addToRequestQueue(obj);
     }
 

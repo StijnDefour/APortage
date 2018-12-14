@@ -52,8 +52,6 @@ public class MyDatamanger extends Application {
         mVerdiepen = new ArrayList<>();
         mCampussen = new ArrayList<>();
         mLokalen = new ArrayList<>();
-        initListsCampusVerdiepLokaal();
-
         Log.v(TAG_DM, "initialised!");
     }
 
@@ -66,19 +64,7 @@ public class MyDatamanger extends Application {
         return mInstance;
     }
 
-    private void initListsCampusVerdiepLokaal(){
-        //dit wordt eenmalig uitgevoerd als de instantie van MyDataManager nog niet bestaat.
-        //Deze data is statisch dus hoeft maar eenmaal binnengehaald te worden.
-        JsonArrayRequest campusReq = this.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.CAMPUSSEN ), MongoCollections.CAMPUSSEN, null);
-        JsonArrayRequest verdiepReq = this.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.VERDIEPEN ), MongoCollections.VERDIEPEN, null);
-        JsonArrayRequest lokaalReq = this.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.LOKALEN), MongoCollections.LOKALEN, null);
-        //JsonArrayRequest meldingenReq = this.dataManager.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.MELDINGEN), MongoCollections.MELDINGEN, null);
 
-
-        this.addToRequestQueue(campusReq);
-        this.addToRequestQueue(verdiepReq);
-        this.addToRequestQueue(lokaalReq);
-    }
 
 
     private RequestQueue getRequestQueue() {
@@ -94,15 +80,34 @@ public class MyDatamanger extends Application {
         this.getRequestQueue().add(req);
     }
 
-    public JsonArrayRequest createGetRequest(String url, MongoCollections collection, IVolleyCallback callback) {
+    private void parseToCorrectList(JSONObject obj, MongoCollections coll,  IVolleyCallback callback) throws JSONException {
+        //todo: array meegegven ipv van obj
+        switch(coll){
+
+            case CAMPUSSEN :  createCampusAndAddToList(obj, callback);
+                break;
+            case MELDINGEN: createMeldingAndAddToList(obj, callback);
+                break;
+            case VERDIEPEN: createVerdiepAndAddToList(obj, callback);
+                break;
+            case LOKALEN: createLokaalAndAddToList(obj, callback);
+            default: throw new JSONException("couldn't create object from json");
+        }
+
+
+    }
+
+
+
+    public JsonArrayRequest createGetRequest(String url, MongoCollections collection, IVolleyCallback volleycallback) {
         JsonArrayRequest jsonArrayR = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.d(TAG_DM, response.toString());
-                        handleJsonResponse(response, collection, callback);
-                        callback.onCustomSuccess(response);
+                        handleJsonResponse(response, collection, volleycallback);
+                        //volleycallbackcallback.onCustomSuccess(response);
                     }
                 }, new Response.ErrorListener() {
 
@@ -164,33 +169,11 @@ public class MyDatamanger extends Application {
 
 
 
-    public List<Verdiep> getVerdiepenLijst(String afk) {
-        List<Verdiep> temp = new ArrayList<>();
-        for (Verdiep v: this.mVerdiepen) {
-            if(afk.equals(v.campus_afk))
-                temp.add(v);
-        }
-        return temp;
-    }
 
-
-    public List<Lokaal> getLokalenLijst(String afk, int verdiep) {
-        List<Lokaal> temp = new ArrayList<>();
-        for (Lokaal l: this.mLokalen) {
-            if(afk.toUpperCase().equals(l.mAfk.toUpperCase()) && verdiep ==l.mVerdiep)
-                temp.add(l);
-        }
-        return temp;
-    }
-
-
-
-    public List<Campus> getCampussenLijst() {
-        return this.mCampussen;
-    }
 
 
     private void handleJsonResponse(JSONArray elements, MongoCollections coll,  IVolleyCallback callback){
+        //todo: herschrijven dat dit hier de volledige jSOn array meegeeft aan parseToCorrList
         for (int i = 0; i < elements.length(); i++) {
             try {
                 JSONObject obj = elements.getJSONObject(i);
@@ -202,32 +185,16 @@ public class MyDatamanger extends Application {
         }
     }
 
-    public List<Melding> getMeldingenLijst(String afk, String verdiep, String lokaal, IVolleyCallback callback){
 
-        String url = ApiContract.createMeldingenQueryUrl(afk, verdiep, lokaal);
-        JsonArrayRequest req = createGetRequest(url, MongoCollections.MELDINGEN, callback);
-        this.addToRequestQueue(req);
+
+    public List<Melding> getMeldingenLijst(){
 
         return this.mMeldingen;
     }
 
-    private void parseToCorrectList(JSONObject obj, MongoCollections coll,  IVolleyCallback callback) throws JSONException {
-        switch(coll){
-
-            case CAMPUSSEN :  createCampusAndAddToList(obj, callback);
-            break;
-            case MELDINGEN: createMeldingAndAddToList(obj, callback);
-            break;
-            case VERDIEPEN: createVerdiepAndAddToList(obj, callback);
-            break;
-            case LOKALEN: createLokaalAndAddToList(obj, callback);
-            default: throw new JSONException("couldn't create object from json");
-        }
-
-
-    }
 
     private void createLokaalAndAddToList(JSONObject obj, IVolleyCallback callback) {
+        //todo: obj moet array zijn en hier alles laten loopen en toevoegen aan lists
 
         try {
             Lokaal lokaal = new Lokaal(
@@ -246,6 +213,7 @@ public class MyDatamanger extends Application {
     }
 
     private void createCampusAndAddToList(JSONObject obj, IVolleyCallback callback) {
+
         try {
             Campus campus = new Campus(
                     obj.get(ApiContract.CAMPUS_NAAM).toString(),
@@ -264,7 +232,6 @@ public class MyDatamanger extends Application {
 
     private void createMeldingAndAddToList(JSONObject obj, IVolleyCallback callback){
 
-        this.mMeldingen.clear();
         try {
             Melding melding = new Melding(
                     obj.get("titel").toString(),
@@ -311,6 +278,33 @@ public class MyDatamanger extends Application {
         if (mRequestQueue != null) {
             mRequestQueue.cancelAll(tag);
         }
+    }
+
+
+
+    public List<Verdiep> getVerdiepenLijst(String afk) {
+        List<Verdiep> temp = new ArrayList<>();
+        for (Verdiep v: this.mVerdiepen) {
+            if(afk.toUpperCase().equals(v.campus_afk.toUpperCase()))
+                temp.add(v);
+        }
+        return temp;
+    }
+
+
+    public List<Lokaal> getLokalenLijst(String afk, int verdiep) {
+        List<Lokaal> temp = new ArrayList<>();
+        for (Lokaal l: this.mLokalen) {
+            if(afk.toUpperCase().equals(l.mAfk.toUpperCase()) && verdiep ==l.mVerdiep)
+                temp.add(l);
+        }
+        return temp;
+    }
+
+
+
+    public List<Campus> getCampussenLijst() {
+        return this.mCampussen;
     }
 
 }

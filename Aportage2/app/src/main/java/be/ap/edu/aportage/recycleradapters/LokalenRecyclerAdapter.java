@@ -19,7 +19,12 @@ import be.ap.edu.aportage.models.Lokaal;
 public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecyclerAdapter.ViewHolder> {
 
     private final Context context;
-    private final List<Lokaal> lokalenList;
+
+    public void setLokalenList(List<Lokaal> lokalenList) {
+        this.lokalenList = lokalenList;
+    }
+
+    private List<Lokaal> lokalenList;
     private final LayoutInflater layoutInflater;
     private final String afkorting_campus;
     private final String verdieping;
