@@ -24,6 +24,7 @@ import java.util.List;
 
 import be.ap.edu.aportage.activities.ScanMelding;
 import be.ap.edu.aportage.interfaces.ApiContract;
+import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.interfaces.Statussen;
 import be.ap.edu.aportage.models.Campus;
 import be.ap.edu.aportage.models.Lokaal;
@@ -93,14 +94,15 @@ public class MyDatamanger extends Application {
         this.getRequestQueue().add(req);
     }
 
-    public JsonArrayRequest createGetRequest(String url, MongoCollections collection, RecyclerView.Adapter adapter) {
+    public JsonArrayRequest createGetRequest(String url, MongoCollections collection, IVolleyCallback callback) {
         JsonArrayRequest jsonArrayR = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.d(TAG_DM, response.toString());
-                        handleJsonResponse(response, collection, adapter);
+                        handleJsonResponse(response, collection, callback);
+                        callback.onCustomSuccess(response);
                     }
                 }, new Response.ErrorListener() {
 
@@ -114,7 +116,7 @@ public class MyDatamanger extends Application {
 
         return jsonArrayR;
     }
-    public JsonObjectRequest createPostRequest(MongoCollections collection, Melding melding) {
+    public JsonObjectRequest createPostRequest(MongoCollections collection, Melding melding, IVolleyCallback callback) {
         JSONObject meldingObject = new JSONObject();
         JsonObjectRequest jsonArrayR = null;
         try {
@@ -138,7 +140,9 @@ public class MyDatamanger extends Application {
                         public void onResponse(JSONObject response) {
                             Log.d("post req", response.toString());
 
+                            callback.onPostSuccess(response);
                         }
+
                     },new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
@@ -185,32 +189,45 @@ public class MyDatamanger extends Application {
         return this.mCampussen;
     }
 
-    public List<Melding> getMeldingenLijst(String afk, String verdiep, String lokaal, RecyclerView.Adapter adapter){
+
+    private void handleJsonResponse(JSONArray elements, MongoCollections coll,  IVolleyCallback callback){
+        for (int i = 0; i < elements.length(); i++) {
+            try {
+                JSONObject obj = elements.getJSONObject(i);
+                this.parseToCorrectList(obj, coll , callback);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public List<Melding> getMeldingenLijst(String afk, String verdiep, String lokaal, IVolleyCallback callback){
 
         String url = ApiContract.createMeldingenQueryUrl(afk, verdiep, lokaal);
-        JsonArrayRequest req = createGetRequest(url, MongoCollections.MELDINGEN, adapter);
+        JsonArrayRequest req = createGetRequest(url, MongoCollections.MELDINGEN, callback);
         this.addToRequestQueue(req);
 
         return this.mMeldingen;
     }
 
-    private void parseToCorrectList(JSONObject obj, MongoCollections coll,  RecyclerView.Adapter adapter) throws JSONException {
+    private void parseToCorrectList(JSONObject obj, MongoCollections coll,  IVolleyCallback callback) throws JSONException {
         switch(coll){
 
-            case CAMPUSSEN :  createCampusAndAddToList(obj, adapter);
+            case CAMPUSSEN :  createCampusAndAddToList(obj, callback);
             break;
-            case MELDINGEN: createMeldingAndAddToList(obj, adapter);
+            case MELDINGEN: createMeldingAndAddToList(obj, callback);
             break;
-            case VERDIEPEN: createVerdiepAndAddToList(obj, adapter);
+            case VERDIEPEN: createVerdiepAndAddToList(obj, callback);
             break;
-            case LOKALEN: createLokaalAndAddToList(obj, adapter);
+            case LOKALEN: createLokaalAndAddToList(obj, callback);
             default: throw new JSONException("couldn't create object from json");
         }
 
 
     }
 
-    private void createLokaalAndAddToList(JSONObject obj, RecyclerView.Adapter adapter) {
+    private void createLokaalAndAddToList(JSONObject obj, IVolleyCallback callback) {
 
         try {
             Lokaal lokaal = new Lokaal(
@@ -219,7 +236,8 @@ public class MyDatamanger extends Application {
                     Integer.parseInt(obj.get(ApiContract.LOKAAL_NR).toString())
             );
             this.mLokalen.add(lokaal);
-            //adapter.notifyDataSetChanged();
+            callback.onCustomSuccess(lokaal);
+
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -227,14 +245,14 @@ public class MyDatamanger extends Application {
         }
     }
 
-    private void createCampusAndAddToList(JSONObject obj,  RecyclerView.Adapter adapter) {
+    private void createCampusAndAddToList(JSONObject obj, IVolleyCallback callback) {
         try {
             Campus campus = new Campus(
                     obj.get(ApiContract.CAMPUS_NAAM).toString(),
                     obj.get(ApiContract.CAMPUS_AFK).toString()
             );
             this.mCampussen.add(campus);
-            //adapter.notifyDataSetChanged();
+            callback.onCustomSuccess(campus);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -242,19 +260,9 @@ public class MyDatamanger extends Application {
         }
     }
 
-    private void handleJsonResponse(JSONArray elements, MongoCollections coll,  RecyclerView.Adapter adapter){
-        for (int i = 0; i < elements.length(); i++) {
-            try {
-                JSONObject obj = elements.getJSONObject(i);
-                this.parseToCorrectList(obj, coll , adapter);
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
-    private void createMeldingAndAddToList(JSONObject obj, RecyclerView.Adapter adapter){
+    private void createMeldingAndAddToList(JSONObject obj, IVolleyCallback callback){
 
         this.mMeldingen.clear();
         try {
@@ -269,7 +277,7 @@ public class MyDatamanger extends Application {
                     Statussen.getStatus(obj.get("status").toString()),
                    obj.get("datum").toString());
             this.mMeldingen.add(melding);
-            adapter.notifyDataSetChanged();
+            callback.onCustomSuccess(melding);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -278,7 +286,7 @@ public class MyDatamanger extends Application {
     }
 
 
-    private void createVerdiepAndAddToList(JSONObject obj, RecyclerView.Adapter adapter){
+    private void createVerdiepAndAddToList(JSONObject obj, IVolleyCallback callback){
         try {
             Verdiep verdiep = new Verdiep(
                     Integer.parseInt(obj.get(ApiContract.VERDIEP_NR).toString()),
@@ -286,6 +294,7 @@ public class MyDatamanger extends Application {
             );
             this.mVerdiepen.add(verdiep);
             //adapter.notifyDataSetChanged();
+            callback.onCustomSuccess(verdiep);
         } catch (JSONException e) {
             e.printStackTrace();
         }
