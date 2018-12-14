@@ -24,7 +24,7 @@ import be.ap.edu.aportage.recycleradapters.LokalenRecyclerAdapter;
 
 public class Lokalen extends AppCompatActivity {
 
-    private MockDataManager datamanger = MockDataManager.getInstance();
+    private MyDatamanger datamanger = MyDatamanger.getInstance();
     private LokalenRecyclerAdapter lokalenAdapter;
     private RecyclerView lokalenRV;
     private LinearLayoutManager lokaalLM;
