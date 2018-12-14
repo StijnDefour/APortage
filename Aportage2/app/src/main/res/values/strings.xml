@@ -18,11 +18,11 @@
     <string name="ocr_gescande_text">Gelezen tekst...</string>
 
     <string name="label_locatie">Locatie:</string>
-    <string name="scan_melding_button_label" > Foto toevoegen </string>
+    <string name="scan_melding_button_label"> Foto toevoegen </string>
     <string name="label_scan_melding_titel">Titel:</string>
     <string name="scan_melding_hint_titel">Titel voor de melding...</string>
-    <string name="scan_melding_label_omschrijving" >Omschrijving: </string>
-    <string name="scan_melding_label_btn_ok" >Ok</string>
+    <string name="scan_melding_label_omschrijving">Omschrijving: </string>
+    <string name="scan_melding_label_btn_ok">Ok</string>
     <string name="scan_melding_btn_label_annuleren">Annuleer</string>
     <string name="overzicht_label_scannen">Scannen [ - ]</string>
     <string name="overzicht_label_zoeken">Zoeken</string>
@@ -31,5 +31,10 @@
     <string name="lokalen_label">Lokaal</string>
     <string name="lokaal_placeholder">00.000</string>
     <string name="melding_titel">Name</string>
+    <string name="tv_login_label_email">Email:</string>
+    <string name="login_hint_email">Voer hier jouw e-mailadress in</string>
+    <string name="label_login_pw">Wachtwoord:</string>
+    <string name="label_login_btn">Login</string>
+    <string name="label_login_registeren">Registreren</string>
 
 </resources>

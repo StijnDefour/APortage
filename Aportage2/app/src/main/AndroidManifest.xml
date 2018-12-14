@@ -14,8 +14,6 @@
         android:maxSdkVersion="18" />
 
     <application
-
-
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -52,8 +50,7 @@
         <activity
             android:name=".activities.Lokalen"
             android:label="@string/title_activity_lokalen"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activities.Overzicht"
             android:label="@string/title_activity_overzicht"
@@ -66,13 +63,16 @@
         </activity>
         <activity
             android:name=".activities.ScanLokaal"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="ocr" />
 
-        <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="ocr"/>
+        <activity android:name=".activities.LoginActivity"></activity>
     </application>
 
 </manifest>

@@ -145,7 +145,7 @@ public class ScanMelding extends AppCompatActivity {
             if(imgFile.exists()){
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
-                imageView.setImageBitmap(myBitmap);
+                this.imageView.setImageBitmap(myBitmap);
             }
         }
     }
