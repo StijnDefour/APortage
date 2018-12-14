@@ -9,11 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import java.util.List;
-
 import be.ap.edu.aportage.R;
 import be.ap.edu.aportage.managers.MyDatamanger;
-import be.ap.edu.aportage.models.Lokaal;
 import be.ap.edu.aportage.recycleradapters.LokalenRecyclerAdapter;
 import be.ap.edu.aportage.managers.MockDataManager;
 
@@ -23,7 +20,7 @@ public class Lokalen extends AppCompatActivity {
     private LokalenRecyclerAdapter lokalenAdapter;
     private RecyclerView lokalenRV;
     private LinearLayoutManager lokaalLM;
-    private List<Lokaal> lokalenLijst;
+    private int[] lokalenLijst;
     private Intent inkomendeIntent;
     private Intent uitgaandeIntent;
     private Button btnCampus;
@@ -36,8 +33,6 @@ public class Lokalen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lokalen);
-
-        this.datamanger = MyDatamanger.getInstance(this.getApplicationContext());
 
        this.inkomendeIntent = this.getIntent();
        this.s_campus = this.inkomendeIntent.getStringExtra("campus_afk");

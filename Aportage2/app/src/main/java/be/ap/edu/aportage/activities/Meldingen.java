@@ -11,18 +11,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.gson.JsonObject;
-
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import be.ap.edu.aportage.R;
-import be.ap.edu.aportage.interfaces.MongoCollections;
-import be.ap.edu.aportage.interfaces.Statussen;
-import be.ap.edu.aportage.managers.MyDatamanger;
-import be.ap.edu.aportage.models.Melder;
 import be.ap.edu.aportage.models.Melding;
 import be.ap.edu.aportage.recycleradapters.MeldingenRecyclerAdapter;
 import be.ap.edu.aportage.managers.MockDataManager;
@@ -33,11 +24,12 @@ public class Meldingen extends AppCompatActivity {
     private Button meldingenVerdiepBtn;
     private Button meldingenLokaalBtn;
     private RecyclerView meldingenRV;
+    private CardView meldingCV;
     private LinearLayoutManager meldingenLM;
     private MeldingenRecyclerAdapter meldingenAdapter;
-    private List<Melding> meldingenLijst = new ArrayList<>();
+    private List<Melding> meldingenLijst;
     private Intent binnenkomendeIntent;
-    private MyDatamanger dataManager;
+    private MockDataManager dataManager = MockDataManager.getInstance();
     private Intent uitgaandeIntent;
     private FloatingActionButton nieuweMeldingfab;
 
@@ -49,26 +41,24 @@ public class Meldingen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meldingen);
-        this.binnenkomendeIntent = getIntent();
-        this.dataManager = MyDatamanger.getInstance(this.getApplicationContext());
 
         this.meldingenCampusBtn = (Button) findViewById(R.id.btn_campus_afk);
         this.meldingenVerdiepBtn = (Button) findViewById(R.id.btn_verdiep_nr);
         this.meldingenLokaalBtn = (Button) findViewById(R.id.btn_melding_lokaalnr);
-        this.nieuweMeldingfab = (FloatingActionButton) findViewById(R.id.meldingen_fab);
-        navigatieButtonsOpvullen();
-
         this.meldingenRV = (RecyclerView) findViewById(R.id.rv_meldingen);
-        this.meldingenAdapter = new MeldingenRecyclerAdapter(this, this.meldingenLijst);
-        this.meldingenRV.setAdapter(this.meldingenAdapter);
+        this.meldingCV = (CardView) findViewById(R.id.cv_melding);
+        this.nieuweMeldingfab = (FloatingActionButton) findViewById(R.id.meldingen_fab);
+        this.meldingenLijst = dataManager.getMeldingenLijst();
+        this.binnenkomendeIntent = getIntent();
+
         this.meldingenLM = new LinearLayoutManager(this);
         this.meldingenRV.setLayoutManager(this.meldingenLM);
+
         this.meldingenAdapter = new MeldingenRecyclerAdapter(this, this.meldingenLijst);
         this.meldingenRV.setAdapter(this.meldingenAdapter);
-        this.meldingenLijst = dataManager.getMeldingenLijst(s_campus, s_verdieping, s_lokaal, this.meldingenAdapter);
 
 
-
+        navigatieButtonsOpvullen();
         registreerButtonOnClicks();
     }
 
@@ -139,20 +129,6 @@ public class Meldingen extends AppCompatActivity {
 
         this.uitgaandeIntent = new Intent(this, Campussen.class);
         startActivity(this.uitgaandeIntent);
-    }
-
-    private void createTestMelding(){
-        Melding melding = new Melding(
-                "Test Melding voor Post",
-                "Dit is een melding om de post request met volley te testen",
-                new String[]{"MEI", "02", "203"},
-                Statussen.BEHANDELING,
-                "2018-09-28");
-        Melder melder = new Melder();
-        melder.melderid = "testid";
-        melding.melder = melder;
-        JsonObjectRequest obj = this.dataManager.createPostRequest(MongoCollections.MELDINGEN, melding);
-        this.dataManager.addToRequestQueue(obj);
     }
 
 
