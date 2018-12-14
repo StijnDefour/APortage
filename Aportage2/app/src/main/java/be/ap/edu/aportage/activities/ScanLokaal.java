@@ -95,10 +95,10 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
                     lokaalInfo = lokaalInfo.replace("LOKAAL ", "");
                     lokaalInfo = lokaalInfo.replace(",", ".");
 
-                    if (checkLokaal(lokaalInfo)) {
-                        Intent intent = new Intent(activity, Meldingen.class);
-                        intent.putExtra("lokaalInfo", lokaalInfo);
-                        startActivity(intent);
+                    if (checkLokaal()) {
+                        //Intent intent = new Intent(activity, Meldingen.class);
+                        //intent.putExtra("lokaalInfo", lokaalInfo);
+                        //startActivity(intent);
                         gaNaarMeldingen();
                     }
                 }
@@ -124,8 +124,9 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
     }
 
 
-    private Boolean checkLokaal(String lokaal_s) {
+    private Boolean checkLokaal() {
 
+        this.datamanger.checkLokaalExists(s_campusAfk, s_verdiepNr, s_lokaalNr);
         return true;
     }
 

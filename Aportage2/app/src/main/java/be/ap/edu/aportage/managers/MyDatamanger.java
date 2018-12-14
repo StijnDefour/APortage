@@ -165,6 +165,10 @@ public class MyDatamanger extends Application {
         return jsonArrayR;
     }
 
+    public void checkLokaalExists(String afk, String verdiep, String lokaal){
+        String url = ApiContract.createLokaalQuery(afk, verdiep, lokaal);
+
+    }
 
     private void handleJsonResponse(JSONArray elements, MongoCollections coll,  IVolleyCallback callback){
         //todo: herschrijven dat dit hier de volledige jSOn array meegeeft aan parseToCorrList
