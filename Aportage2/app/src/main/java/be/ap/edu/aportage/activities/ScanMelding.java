@@ -67,6 +67,7 @@ public class ScanMelding extends AppCompatActivity {
 
         if (savedInstanceState != null) {
             this.tvTitel.setText(savedInstanceState.getString("tvTitel"));
+            this.mCurrentPhotoPath = savedInstanceState.getString("mCurrentPhotoPath");
         } else {
             Log.e("State", "state did not exist");
         }
@@ -81,12 +82,10 @@ public class ScanMelding extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
-        //        savedInstanceState.putString("mCurrentPhotoPath", this.mCurrentPhotoPath);
+        savedInstanceState.putString("mCurrentPhotoPath", this.mCurrentPhotoPath);
         savedInstanceState.putString("tvTitel", this.tvTitel.getText().toString());
-        Log.e("saveState", savedInstanceState.getString("tvTitel"));
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -125,7 +124,12 @@ public class ScanMelding extends AppCompatActivity {
         btnAnnuleer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                ScanMelding.this.finish();
+                Intent intent = new Intent(ScanMelding.this, Meldingen.class);
+                intent.putExtra(ScanMelding.CAMPUS, s_campus);
+                intent.putExtra(ScanMelding.VERDIEP, s_verdieping);
+                intent.putExtra(ScanMelding.LOKAAL, s_lokaal);
+                startActivity(intent);
+                ScanMelding.this.finish();
             }
         });
         btnOk.setOnClickListener(new View.OnClickListener() {
@@ -133,7 +137,7 @@ public class ScanMelding extends AppCompatActivity {
             public void onClick(View view) {
                 slaMeldingOpNaarDeDB();
                 gaNaarMelding();
-//                ScanMelding.this.finish();
+                ScanMelding.this.finish();
             }
         });
     }
