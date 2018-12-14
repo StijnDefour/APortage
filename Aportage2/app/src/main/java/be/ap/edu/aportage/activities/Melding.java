@@ -66,9 +66,9 @@ public class Melding extends Activity {
     private void navigatieButtonsOpvullen(){
 
         try {
-            this.s_campus = this.binnenkomendeIntent.getStringExtra("campus_afk");
-            this.s_verdieping = this.binnenkomendeIntent.getStringExtra("verdiep_nr");
-            this.s_lokaal = this.binnenkomendeIntent.getStringExtra("lokaal_nr");
+            this.s_campus = this.binnenkomendeIntent.getStringExtra(getString(R.string.campus_intent));
+            this.s_verdieping = this.binnenkomendeIntent.getStringExtra(getString(R.string.verdieping_intent));
+            this.s_lokaal = this.binnenkomendeIntent.getStringExtra(getString(R.string.lokaal_intent));
             this.btn_campus_afk.setText(this.s_campus);
             this.btn_verdiep_nr.setText(this.s_verdieping);
             this.btn_melding_lokaalnr.setText(this.s_lokaal);
@@ -79,9 +79,9 @@ public class Melding extends Activity {
 
     private void gaNaarScanMelding(){
         this.uitgaandeIntent = new Intent(this, ScanMelding.class);
-        this.uitgaandeIntent.putExtra("verdiep_nr", s_verdieping);
-        this.uitgaandeIntent.putExtra("campus_afk", s_campus);
-        this.uitgaandeIntent.putExtra("lokaal_nr", s_lokaal);
+        this.uitgaandeIntent.putExtra(getString(R.string.verdieping_intent), s_verdieping);
+        this.uitgaandeIntent.putExtra(getString(R.string.campus_intent), s_campus);
+        this.uitgaandeIntent.putExtra(getString(R.string.lokaal_intent), s_lokaal);
         startActivity( this.uitgaandeIntent);
         Melding.this.finish();
     }
@@ -89,8 +89,8 @@ public class Melding extends Activity {
     private void gaNaarLokalen() {
 
         this.uitgaandeIntent = new Intent(this, Lokalen.class);
-        this.uitgaandeIntent.putExtra("verdiep_nr", this.btn_verdiep_nr.getText());
-        this.uitgaandeIntent.putExtra("campus_afk", this.btn_campus_afk.getText());
+        this.uitgaandeIntent.putExtra(getString(R.string.verdieping_intent), this.btn_verdiep_nr.getText());
+        this.uitgaandeIntent.putExtra(getString(R.string.campus_intent), this.btn_campus_afk.getText());
         startActivity(this.uitgaandeIntent);
         Melding.this.finish();
 
@@ -99,7 +99,7 @@ public class Melding extends Activity {
     private void gaNaarVerdiepen(){
 
         this.uitgaandeIntent = new Intent(this, Verdiepingen.class);
-        this.uitgaandeIntent.putExtra("campus_afk", this.btn_campus_afk.getText());
+        this.uitgaandeIntent.putExtra(getString(R.string.campus_intent), this.btn_campus_afk.getText());
         startActivity(this.uitgaandeIntent);
         Melding.this.finish();
     }
@@ -113,9 +113,9 @@ public class Melding extends Activity {
     @Override
     public void onBackPressed() {
         this.uitgaandeIntent = new Intent(this, Meldingen.class);
-        this.uitgaandeIntent.putExtra("verdiep_nr", s_verdieping);
-        this.uitgaandeIntent.putExtra("campus_afk", s_campus);
-        this.uitgaandeIntent.putExtra("lokaal_nr", s_lokaal);
+        this.uitgaandeIntent.putExtra(getString(R.string.verdieping_intent), s_verdieping);
+        this.uitgaandeIntent.putExtra(getString(R.string.campus_intent), s_campus);
+        this.uitgaandeIntent.putExtra(getString(R.string.lokaal_intent), s_lokaal);
         startActivity(this.uitgaandeIntent);
         Melding.this.finish();
     }

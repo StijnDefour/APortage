@@ -65,8 +65,8 @@ public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecy
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, Lokalen.class);
-                    intent.putExtra("verdiep_nr", verdiepNummer.getText());
-                    intent.putExtra("campus_afk", afk);
+                    intent.putExtra(getString(R.string.verdieping_intent), verdiepNummer.getText());
+                    intent.putExtra(getString(R.string.campus_intent), afk);
                     Log.d("test", verdiepNummer.getText().toString() + " " + afk);
                     context.startActivity(intent);
                     ((Verdiepingen)context).finish();

@@ -34,8 +34,8 @@ public class Lokalen extends AppCompatActivity {
         setContentView(R.layout.activity_lokalen);
 
        this.inkomendeIntent = this.getIntent();
-       this.s_campus = this.inkomendeIntent.getStringExtra("campus_afk");
-       this.s_verdieping = this.inkomendeIntent.getStringExtra("verdiep_nr");
+       this.s_campus = this.inkomendeIntent.getStringExtra(getString(R.string.campus_intent));
+       this.s_verdieping = this.inkomendeIntent.getStringExtra(getString(R.string.verdieping_intent));
        this.btnCampus = findViewById(R.id.btn_campus);
        this.btnVerdiep = findViewById(R.id.btn_verdiep);
 
@@ -92,8 +92,8 @@ public class Lokalen extends AppCompatActivity {
 
     private void gaNaarVerdiepen(){
         this.uitgaandeIntent = new Intent(this, Verdiepingen.class);
-        this.uitgaandeIntent.putExtra("verdiep_nr", this.btnVerdiep.getText());
-        this.uitgaandeIntent.putExtra("campus_afk", this.btnCampus.getText());
+        this.uitgaandeIntent.putExtra(getString(R.string.verdieping_intent), this.btnVerdiep.getText());
+        this.uitgaandeIntent.putExtra(getString(R.string.campus_intent), this.btnCampus.getText());
         this.startActivity(this.uitgaandeIntent);
         Lokalen.this.finish();
     }
@@ -101,7 +101,7 @@ public class Lokalen extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         this.uitgaandeIntent = new Intent(this, Verdiepingen.class);
-        this.uitgaandeIntent.putExtra("campus_afk", this.s_campus);
+        this.uitgaandeIntent.putExtra(getString(R.string.campus_intent), this.s_campus);
         startActivity(this.uitgaandeIntent);
         Lokalen.this.finish();
     }

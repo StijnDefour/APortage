@@ -25,10 +25,6 @@ import be.ap.edu.aportage.R;
 
 public class ScanMelding extends AppCompatActivity {
 
-    static final String CAMPUS = "campus_afk";
-    static final String VERDIEP = "verdiep_nr";
-    static final String LOKAAL = "lokaal_nr";
-
     static final int REQUEST_IMAGE_CAPTURE = 5;
     String mCurrentPhotoPath;
     Button btnCampus;
@@ -76,9 +72,10 @@ public class ScanMelding extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(this, Meldingen.class);
-        intent.putExtra(ScanMelding.CAMPUS, s_campus);
-        intent.putExtra(ScanMelding.VERDIEP, s_verdieping);
-        intent.putExtra(ScanMelding.LOKAAL, s_lokaal);
+        intent.putExtra(getString(R.string.campus_intent), s_campus);
+        Log.e("test",getString(R.string.campus_intent));
+        intent.putExtra(getString(R.string.verdieping_intent), s_verdieping);
+        intent.putExtra(getString(R.string.lokaal_intent), s_lokaal);
         startActivity(intent);
     }
 
@@ -108,7 +105,7 @@ public class ScanMelding extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ScanMelding.this, Verdiepingen.class);
-                intent.putExtra(ScanMelding.CAMPUS, s_campus);
+                intent.putExtra(getString(R.string.campus_intent), s_campus);
                 startActivity(intent);
             }
         });
@@ -116,8 +113,8 @@ public class ScanMelding extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ScanMelding.this, Lokalen.class);
-                intent.putExtra(ScanMelding.CAMPUS, s_campus);
-                intent.putExtra(ScanMelding.VERDIEP, s_verdieping);
+                intent.putExtra(getString(R.string.campus_intent), s_campus);
+                intent.putExtra(getString(R.string.verdieping_intent), s_verdieping);
                 startActivity(intent);
             }
         });
@@ -125,9 +122,9 @@ public class ScanMelding extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ScanMelding.this, Meldingen.class);
-                intent.putExtra(ScanMelding.CAMPUS, s_campus);
-                intent.putExtra(ScanMelding.VERDIEP, s_verdieping);
-                intent.putExtra(ScanMelding.LOKAAL, s_lokaal);
+                intent.putExtra(getString(R.string.campus_intent), s_campus);
+                intent.putExtra(getString(R.string.verdieping_intent), s_verdieping);
+                intent.putExtra(getString(R.string.lokaal_intent), s_lokaal);
                 startActivity(intent);
                 ScanMelding.this.finish();
             }
@@ -158,9 +155,9 @@ public class ScanMelding extends AppCompatActivity {
 
     private void lokaalButtonsOpvullen() {
         Intent inkomendeIntent = this.getIntent();
-        s_campus = inkomendeIntent.getStringExtra(ScanMelding.CAMPUS);
-        s_verdieping = inkomendeIntent.getStringExtra(ScanMelding.VERDIEP);
-        s_lokaal = inkomendeIntent.getStringExtra(ScanMelding.LOKAAL);
+        s_campus = inkomendeIntent.getStringExtra(getString(R.string.campus_intent));
+        s_verdieping = inkomendeIntent.getStringExtra(getString(R.string.verdieping_intent));
+        s_lokaal = inkomendeIntent.getStringExtra(getString(R.string.lokaal_intent));
         btnCampus.setText(s_campus);
         btnVerdiep.setText(s_verdieping);
         btnLokaal.setText(s_lokaal);

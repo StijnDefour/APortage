@@ -118,9 +118,9 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
 
     private void gaNaarMeldingen() {
         this.uitgaandeIntent = new Intent(this, Meldingen.class);
-        this.uitgaandeIntent.putExtra("campus_afk", this.s_campusAfk);
-        this.uitgaandeIntent.putExtra("verdiep_nr", this.s_verdiepNr);
-        this.uitgaandeIntent.putExtra("lokaal_nr", this.s_lokaalNr);
+        this.uitgaandeIntent.putExtra(getString(R.string.campus_intent), this.s_campusAfk);
+        this.uitgaandeIntent.putExtra(getString(R.string.verdieping_intent), this.s_verdiepNr);
+        this.uitgaandeIntent.putExtra(getString(R.string.lokaal_intent), this.s_lokaalNr);
         startActivity(this.uitgaandeIntent);
         ScanLokaal.this.finish();
     }

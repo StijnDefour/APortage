@@ -38,7 +38,7 @@ public class Verdiepingen extends AppCompatActivity {
         //this.verdiepCV = (CardView) findViewById(R.id.cv)
         this.dataManager = MockDataManager.getInstance();
         this.inkomendeIntent = getIntent();
-        String campus_afk = this.inkomendeIntent.getStringExtra("campus_afk");
+        String campus_afk = this.inkomendeIntent.getStringExtra(getString(R.string.campus_intent));
 
         this.navBtnCampus = findViewById(R.id.btn_nav_campus);
         this.navBtnCampus.setText(campus_afk);
