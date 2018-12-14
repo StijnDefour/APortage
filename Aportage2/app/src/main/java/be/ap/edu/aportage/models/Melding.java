@@ -2,31 +2,24 @@ package be.ap.edu.aportage.models;
 
 import com.google.firebase.auth.FirebaseUser;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import java.util.Date;
-import java.util.Locale;
-
-import be.ap.edu.aportage.interfaces.Statussen;
 
 public class Melding {
     public int _id;
     public String titel;
     public String omschrijving;
     public String[] locatie;
-    public Statussen status;
+    public String status;
 
-    public Date datum;
-
-    public Melder melder;
+    public FirebaseUser melder;
 
     //todo_done: api call naar 26 vs 24 rechtzetten om localdatetime te kunnen gebruiken, of een andere date lib gebruiken
+    Date datum;
 
-    public Melding(String t, String omschr, String[] loc, Statussen sts, Date d) {
+    public Melding(String t, String omschr, String[] loc, String sts, Date d) {
 
 
         this.titel = t;
@@ -35,20 +28,6 @@ public class Melding {
         this.status = sts;
         this.datum = d;
     }
-    public Melding(String t, String omschr, String[] loc, Statussen sts, String d) {
-
-
-
-        this.titel = t;
-        this.omschrijving = omschr;
-        this.locatie = loc;
-        this.status = sts;
-        this.setDate(d);
-
-
-    }
-
-
 
     public int getKleurInt() {
         //todo: switch om status tot kleur int
@@ -64,18 +43,8 @@ public class Melding {
         this._id = id;
     }
 
-    public void setMelder(Melder mldr){
+    public void setMelder(FirebaseUser mldr){
         this.melder = mldr;
-    }
-
-    public void setDate(String d){
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.FRANCE);
-        try {
-            this.datum = sdf.parse(d);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
     }
 
 

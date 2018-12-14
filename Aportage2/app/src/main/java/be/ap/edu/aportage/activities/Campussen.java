@@ -9,12 +9,7 @@ import android.util.Log;
 
 import java.io.Console;
 
-import com.android.volley.toolbox.JsonArrayRequest;
-
 import be.ap.edu.aportage.R;
-import be.ap.edu.aportage.interfaces.ApiContract;
-import be.ap.edu.aportage.managers.MyDatamanger;
-import be.ap.edu.aportage.interfaces.MongoCollections;
 import be.ap.edu.aportage.recycleradapters.CampussenRecyclerAdapter;
 import be.ap.edu.aportage.managers.MockDataManager;
 
@@ -23,18 +18,13 @@ public class Campussen extends AppCompatActivity {
     private RecyclerView mijnCampussenRV;
     private LinearLayoutManager mijnLM;
     private CampussenRecyclerAdapter campussenAdapter;
-    private MyDatamanger dataManager;
+    private MockDataManager dataManager = MockDataManager.getInstance();
     private Intent uitgaandeIntent;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_campussen);
-
-        //initialisatie van Datamanager die een getrequest doet naar de mLab Api voor de campussen collection
-        this.dataManager = MyDatamanger.getInstance(this.getApplicationContext());
-
 
         //initialisatie properties voor recyclerview van campussen
         this.campussenAdapter = new CampussenRecyclerAdapter(this, this.dataManager.getCampussenLijst());
@@ -42,10 +32,6 @@ public class Campussen extends AppCompatActivity {
         this.mijnLM = new LinearLayoutManager(this);
         this.mijnCampussenRV.setLayoutManager(this.mijnLM);
         this.mijnCampussenRV.setAdapter(this.campussenAdapter);
-        JsonArrayRequest req = this.dataManager.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.CAMPUSSEN), MongoCollections.CAMPUSSEN, this.campussenAdapter );
-        req.setShouldCache(false);
-        this.dataManager.addToRequestQueue(req);
-
     }
 
     @Override

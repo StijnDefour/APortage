@@ -10,22 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
-
 import be.ap.edu.aportage.R;
 import be.ap.edu.aportage.activities.Lokalen;
 import be.ap.edu.aportage.activities.Meldingen;
-import be.ap.edu.aportage.models.Lokaal;
 
 public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecyclerAdapter.ViewHolder> {
 
     private final Context context;
-    private final List<Lokaal> lokalenList;
+    private final int[] lokalenList;
     private final LayoutInflater layoutInflater;
     private final String afkorting_campus;
     private final String verdieping;
 
-    public LokalenRecyclerAdapter(Context context, List<Lokaal> lokalenList, String afk, String verdieping) {
+    public LokalenRecyclerAdapter(Context context, int[] lokalenList, String afk, String verdieping) {
         this.context = context;
         this.lokalenList = lokalenList;
         this.layoutInflater = LayoutInflater.from(this.context);
@@ -42,7 +39,7 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        int lokaalNummer = this.lokalenList.get(i).mNr;
+        int lokaalNummer = this.lokalenList[i];
         String lokaalNummerString = String.format("%03d", lokaalNummer);
         viewHolder.lokaal_s = lokaalNummerString;
         viewHolder.verdiepTitel.setText(this.verdieping+"."+lokaalNummerString);
@@ -52,7 +49,7 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
 
     @Override
     public int getItemCount() {
-        return this.lokalenList.size();
+        return this.lokalenList.length;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

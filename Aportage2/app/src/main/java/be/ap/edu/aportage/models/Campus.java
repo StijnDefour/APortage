@@ -16,11 +16,6 @@ public class Campus {
         this.afkorting = afkorting;
         this.verdiepingen = verd;
     }
-    public Campus(String n, String afkorting) {
-        this.naam = n;
-        this.afkorting = afkorting;
-        this.verdiepingen = new ArrayList<>();
-    }
 
     public Verdiep getVerdiepingenLijst(int v) {
         Verdiep verdiep = this.verdiepingen.get(v);

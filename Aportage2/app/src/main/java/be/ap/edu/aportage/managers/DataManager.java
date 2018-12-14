@@ -68,9 +68,9 @@ public class DataManager {
                     }
 
                     //tijdelijk lokalenLijst aangepast naar een int[]
-                    //Verdiep tmp = new Verdiep(Integer.parseInt(substring[0]) , new int[]{1, 2, 3, 4});
+                    Verdiep tmp = new Verdiep(Integer.parseInt(substring[0]) , new int[]{1, 2, 3, 4});
 
-                    //formatted.voegToeAanVerdiepingenlijst(tmp);
+                    formatted.voegToeAanVerdiepingenlijst(tmp);
                     break;
                 default:
                     break;

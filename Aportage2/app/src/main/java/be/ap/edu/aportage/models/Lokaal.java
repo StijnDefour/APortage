@@ -4,11 +4,6 @@ public class Lokaal {
 
     public String mAfk;
     public String mVerdiep;
-    public int mNr;
+    public String mNr;
 
-    public Lokaal(String mAfk, String mVerdiep, int mNr) {
-        this.mAfk = mAfk;
-        this.mVerdiep = mVerdiep;
-        this.mNr = mNr;
-    }
 }
