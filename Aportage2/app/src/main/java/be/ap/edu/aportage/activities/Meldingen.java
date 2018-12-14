@@ -72,7 +72,6 @@ public class Meldingen extends AppCompatActivity {
         this.meldingenAdapter = new MeldingenRecyclerAdapter(this, this.meldingenLijst);
         this.meldingenRV.setAdapter(this.meldingenAdapter);
 
-        getMeldingenData();
 
 
 
@@ -80,6 +79,8 @@ public class Meldingen extends AppCompatActivity {
         navigatieButtonsOpvullen();
 
         registreerButtonOnClicks();
+        getMeldingenData();
+
     }
 
     private void getMeldingenData() {
