@@ -18,7 +18,7 @@ public class ApiContract {
         return collectionUrl;
     }
 
-    private String createMeldingenQueryUrl(String campus, String verdiep, String lok ){
+    public static String createMeldingenQueryUrl(String campus, String verdiep, String lok ){
         //https://api.mlab.com/api/1/databases/my-db/collections/my-coll?q={"active": true}&apiKey=myAPIKey
 
         String meldingenUrl = ApiContract.API_BASE_URL+"/databases/"+ApiContract.DATABASE+"/collections/"+ MongoCollections.MELDINGEN;
@@ -30,7 +30,7 @@ public class ApiContract {
 
     public static String createQueryUrl(String campus, String verdiep, String lok) {
         //q={"active": true}
-        String query = "?q={"+CAMPUS_AFK+":"+campus.toUpperCase()+","+VERDIEP_NR+":"+verdiep.toLowerCase()+","+LOKAAL_NR+":"+lok.toLowerCase()+"}";
+        String query = "?q={\""+CAMPUS_AFK+"\":\""+campus.toUpperCase()+"\",\""+VERDIEP_NR+"\":\""+verdiep.toLowerCase()+"\",\""+LOKAAL_NR+"\":\""+lok.toLowerCase()+"\"}";
 
         Log.d("ApiContract", query);
 

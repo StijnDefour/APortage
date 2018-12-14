@@ -187,7 +187,7 @@ public class MyDatamanger extends Application {
 
     public List<Melding> getMeldingenLijst(String afk, String verdiep, String lokaal, RecyclerView.Adapter adapter){
 
-        String url = ApiContract.createQueryUrl(afk, verdiep, lokaal);
+        String url = ApiContract.createMeldingenQueryUrl(afk, verdiep, lokaal);
         JsonArrayRequest req = createGetRequest(url, MongoCollections.MELDINGEN, adapter);
         this.addToRequestQueue(req);
 
