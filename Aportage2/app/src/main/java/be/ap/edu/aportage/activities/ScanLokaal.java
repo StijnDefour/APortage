@@ -23,6 +23,7 @@ import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
 import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.managers.MyDatamanger;
 
 public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Callback, Detector.Processor  {
 
@@ -38,6 +39,8 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
     private String s_verdiepNr;
     private String s_lokaalNr;
     private Intent uitgaandeIntent;
+
+    private MyDatamanger datamanger;
 
     @SuppressLint("MissingPermission")
     @Override
@@ -60,47 +63,43 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_for_food);
-        cameraView = findViewById(R.id.surface_view);
-        txtView = findViewById(R.id.txtview);
-
-        initTextRecognizer();
-        createIntents();
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, Overzicht.class);
-        startActivity(intent);
-        ScanLokaal.this.finish();
-    }
+        this.cameraView = (SurfaceView) findViewById(R.id.surface_view);
+        this.txtView = (TextView) findViewById(R.id.txtview);
+        this.datamanger = MyDatamanger.getInstance(this.getApplicationContext());
 
     public void initTextRecognizer() {
         TextRecognizer txtRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
         if (!txtRecognizer.isOperational()) {
             Log.e("ScanLokaal", "Detector dependencies are not yet available");
         } else {
-            cameraSource = new CameraSource.Builder(getApplicationContext(), txtRecognizer)
+            this.cameraSource = new CameraSource.Builder(getApplicationContext(), txtRecognizer)
                     .setFacing(CameraSource.CAMERA_FACING_BACK)
                     .setRequestedPreviewSize(1280, 1024)
                     .setRequestedFps(2.0f)
                     .setAutoFocusEnabled(true)
                     .build();
-            cameraView.getHolder().addCallback(this);
+            this.cameraView.getHolder().addCallback(this);
             txtRecognizer.setProcessor(this);
         }
     }
 
-    public void createIntents() {
-        btn_ok = findViewById(R.id.btn_ocr_ok);
-        btn_annuleren = findViewById(R.id.btn_ocr_annuleer);
-        btn_ok.setOnClickListener(new View.OnClickListener() {
+        this.btn_ok = findViewById(R.id.btn_ocr_ok);
+        this.btn_annuleren = findViewById(R.id.btn_ocr_annuleer);
+        final Activity activity = this;
+        this.btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String lokaalInfo = gelezenTekst[gelezenTekst.length-1].toUpperCase();
                 haalCampusVerdiepLokaalDataUitGelezenString(gelezenTekst[gelezenTekst.length-1]);
                 Log.d("testLokaalInfo", lokaalInfo);
                 if (!lokaalInfo.equals("")) {
-                    if (checkLokaal(lokaalInfo)) {
+                    lokaalInfo = lokaalInfo.replace("LOKAAL ", "");
+                    lokaalInfo = lokaalInfo.replace(",", ".");
+
+                    if (checkLokaal()) {
+                        //Intent intent = new Intent(activity, Meldingen.class);
+                        //intent.putExtra("lokaalInfo", lokaalInfo);
+                        //startActivity(intent);
                         gaNaarMeldingen();
                     }
                 }
@@ -126,8 +125,9 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
     }
 
 
-    private Boolean checkLokaal(String lokaal_s) {
-        //todo Check of lokaal wel in database zit
+    private Boolean checkLokaal() {
+
+        this.datamanger.checkLokaalExists(s_campusAfk, s_verdiepNr, s_lokaalNr);
         return true;
     }
 
@@ -192,7 +192,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
     }
 
     public void haalCampusVerdiepLokaalDataUitGelezenString(String gelezenText){
-        //todo: omzetten van lokaalinfo in 3 extras: afk, verdiepnr, lokaalnr
+        //todo_done: omzetten van lokaalinfo in 3 extras: afk, verdiepnr, lokaalnr
         //todo: als er geen correct lokaal kon worden gelezen nadat user op "doorsturen" klikt -> popup tonen en naar zoeken redirecten
         Log.d(LOG_TAG + "maakAparteExtras", gelezenText );
         try {

@@ -22,7 +22,12 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
 
     private final Context context;
     private final LayoutInflater layoutInflater;
-    private final List<Melding> meldingenList;
+
+    public void setMeldingenList(List<Melding> meldingenList) {
+        this.meldingenList = meldingenList;
+    }
+
+    private List<Melding> meldingenList;
 
 
     public MeldingenRecyclerAdapter(Context context, List<Melding> meldingenList) {

@@ -20,7 +20,12 @@ import be.ap.edu.aportage.models.Campus;
 public class CampussenRecyclerAdapter extends RecyclerView.Adapter<CampussenRecyclerAdapter.ViewHolder> {
 
     private final Context context;
-    private final List<Campus> campussenList;
+
+    public void setCampussenList(List<Campus> campussenList) {
+        this.campussenList = campussenList;
+    }
+
+    private List<Campus> campussenList;
     private final LayoutInflater layoutInflater;
 
     public CampussenRecyclerAdapter(Context context, List<Campus> campussenList) {

@@ -11,12 +11,26 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.interfaces.ApiContract;
+import be.ap.edu.aportage.interfaces.IVolleyCallback;
+import be.ap.edu.aportage.interfaces.MongoCollections;
+import be.ap.edu.aportage.interfaces.Statussen;
+import be.ap.edu.aportage.managers.MyDatamanger;
+import be.ap.edu.aportage.models.Melder;
+
 import be.ap.edu.aportage.models.Melding;
 import be.ap.edu.aportage.recycleradapters.MeldingenRecyclerAdapter;
-import be.ap.edu.aportage.managers.MockDataManager;
 
 public class Meldingen extends AppCompatActivity {
 
@@ -29,7 +43,7 @@ public class Meldingen extends AppCompatActivity {
     private MeldingenRecyclerAdapter meldingenAdapter;
     private List<Melding> meldingenLijst;
     private Intent binnenkomendeIntent;
-    private MockDataManager dataManager = MockDataManager.getInstance();
+    private MyDatamanger dataManager ;
     private Intent uitgaandeIntent;
     private FloatingActionButton nieuweMeldingfab;
 
@@ -41,6 +55,7 @@ public class Meldingen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meldingen);
+        this.dataManager = MyDatamanger.getInstance(this.getApplicationContext());
 
         this.meldingenCampusBtn = (Button) findViewById(R.id.btn_campus_afk);
         this.meldingenVerdiepBtn = (Button) findViewById(R.id.btn_verdiep_nr);
@@ -58,8 +73,40 @@ public class Meldingen extends AppCompatActivity {
         this.meldingenRV.setAdapter(this.meldingenAdapter);
 
 
+
+
+
         navigatieButtonsOpvullen();
+
         registreerButtonOnClicks();
+        getMeldingenData();
+
+    }
+
+    private void getMeldingenData() {
+        String url = ApiContract.createMeldingenQueryUrl(s_campus, s_verdieping, s_lokaal);
+        JsonArrayRequest req = dataManager.createGetRequest(url, MongoCollections.MELDINGEN, new IVolleyCallback() {
+
+            @Override
+            public void onSuccess(Object data) {
+                Log.d("getMeldingenLijst", data.toString());
+
+            }
+
+            @Override
+            public void onCustomSuccess(Object data) {
+                Log.d("getMeldingenLijst", data.toString());
+                meldingenAdapter.setMeldingenList(dataManager.getMeldingenLijst());
+                meldingenAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onPostSuccess(JSONObject response) {
+
+            }
+        });
+        dataManager.addToRequestQueue(req);
+
     }
 
 
@@ -133,12 +180,37 @@ public class Meldingen extends AppCompatActivity {
         Meldingen.this.finish();
     }
 
-    @Override
-    public void onBackPressed() {
-        this.uitgaandeIntent = new Intent(this, Lokalen.class);
-        this.uitgaandeIntent.putExtra(getString(R.string.campus_intent), this.s_campus);
-        this.uitgaandeIntent.putExtra(getString(R.string.lokaal_intent), this.s_lokaal);
-        startActivity(this.uitgaandeIntent);
-        Meldingen.this.finish();
+
+    private void createTestMelding(){
+        Melding melding = new Melding(
+                "Test Melding voor Post",
+                "Dit is een melding om de post request met volley te testen",
+                new String[]{"MEI", "02", "203"},
+                Statussen.BEHANDELING,
+                "2018-09-28");
+        Melder melder = new Melder();
+        melder.melderid = "testid";
+        melding.melder = melder;
+        JsonObjectRequest obj = this.dataManager.createPostRequest(MongoCollections.MELDINGEN, melding, new IVolleyCallback() {
+            @Override
+            public void onSuccess(Object data) {
+                Log.d("post", data.toString());
+            }
+
+            @Override
+            public void onCustomSuccess(Object data) {
+                Log.d("post", data.toString());
+
+            }
+
+            @Override
+            public void onPostSuccess(JSONObject response) {
+
+                Log.d("post", response.toString());
+            }
+        });
+        this.dataManager.addToRequestQueue(obj);
     }
+
+
 }

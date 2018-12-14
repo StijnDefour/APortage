@@ -9,9 +9,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+
+import com.android.volley.toolbox.JsonArrayRequest;
+
+import org.json.JSONObject;
+
 import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.interfaces.ApiContract;
+import be.ap.edu.aportage.interfaces.IVolleyCallback;
+import be.ap.edu.aportage.interfaces.MongoCollections;
+import be.ap.edu.aportage.managers.MyDatamanger;
 import be.ap.edu.aportage.recycleradapters.LokalenRecyclerAdapter;
-import be.ap.edu.aportage.managers.MockDataManager;
 
 public class Lokalen extends AppCompatActivity {
 
@@ -33,31 +41,69 @@ public class Lokalen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lokalen);
 
-       this.inkomendeIntent = this.getIntent();
-       this.s_campus = this.inkomendeIntent.getStringExtra(getString(R.string.campus_intent));
-       this.s_verdieping = this.inkomendeIntent.getStringExtra(getString(R.string.verdieping_intent));
-       this.btnCampus = findViewById(R.id.btn_campus);
-       this.btnVerdiep = findViewById(R.id.btn_verdiep);
+        this.datamanger = MyDatamanger.getInstance(this.getApplicationContext());
+        this.inkomendeIntent = this.getIntent();
+
+        this.s_campus = this.inkomendeIntent.getStringExtra("campus_afk");
+        this.s_verdieping = this.inkomendeIntent.getStringExtra("verdiep_nr");
+
+        this.btnCampus = findViewById(R.id.btn_campus);
+
+        this.btnVerdiep = findViewById(R.id.btn_verdiep);
+
+
+        this.inkomendeIntent = this.getIntent();
+
+        this.s_campus = this.inkomendeIntent.getStringExtra("campus_afk");
+
+
+        navigatieOpvullen();
+        //requestLokalenData();
+
+        //this.lokalenLijst = datamanger.getLokalenLijst(s_campus, Integer.parseInt(s_verdieping));
+
+        this.lokalenRV = (RecyclerView) findViewById(R.id.rv_lokalen);
+
+        this.lokaalLM = new LinearLayoutManager(this);
+
+        this.lokalenRV.setLayoutManager(this.lokaalLM);
+
+        this.lokalenAdapter = new LokalenRecyclerAdapter(this, this.datamanger.getLokalenLijst(s_campus, Integer.parseInt(s_verdieping)), s_campus, s_verdieping);
+
+        this.lokalenRV.setAdapter(lokalenAdapter);
+
+        registreerOnClicks();
+
+        requestLokalenData();
 
 
 
 
-       navigatieOpvullen();
 
-       this.lokalenLijst = datamanger.getLokalenLijst(s_campus, Integer.parseInt(s_verdieping));
+    }
 
-       this.lokalenRV = (RecyclerView) findViewById(R.id.rv_lokalen);
+    private void requestLokalenData() {
+        JsonArrayRequest req = this.datamanger.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.LOKALEN), MongoCollections.LOKALEN, new IVolleyCallback() {
+            @Override
+            public void onSuccess(Object data) {
+                //todo_done: implementatie
+                lokalenAdapter.notifyDataSetChanged();
+            }
 
-       this.lokaalLM = new LinearLayoutManager(this);
+            @Override
+            public void onCustomSuccess(Object data) {
 
-       this.lokalenRV.setLayoutManager(this.lokaalLM);
+                lokalenAdapter.setLokalenList(datamanger.getLokalenLijst(s_campus, Integer.parseInt(s_verdieping)));
+                lokalenAdapter.notifyDataSetChanged();
+            }
 
-       this.lokalenAdapter = new LokalenRecyclerAdapter(this, this.lokalenLijst, s_campus, s_verdieping);
-
-       this.lokalenRV.setAdapter(lokalenAdapter);
-
-       registreerOnClicks();
-
+            @Override
+            public void onPostSuccess(JSONObject response) {
+                //ignore
+            }
+        });
+        req.setShouldCache(false);
+        datamanger.addToRequestQueue(req);
     }
 
     private void navigatieOpvullen(){
