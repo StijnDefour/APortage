@@ -114,7 +114,7 @@ public class MyDatamanger extends Application {
 
         return jsonArrayR;
     }
-    public JsonObjectRequest createPostRequest(String url, MongoCollections collection, Melding melding) {
+    public JsonObjectRequest createPostRequest(MongoCollections collection, Melding melding) {
         JSONObject meldingObject = new JSONObject();
         JsonObjectRequest jsonArrayR = null;
         try {
@@ -171,7 +171,12 @@ public class MyDatamanger extends Application {
 
 
     public List<Lokaal> getLokalenLijst(String afk, int verdiep) {
-        return this.mLokalen;
+        List<Lokaal> temp = new ArrayList<>();
+        for (Lokaal l: this.mLokalen) {
+            if(afk.toUpperCase().equals(l.mAfk.toUpperCase()) && verdiep ==l.mVerdiep)
+                temp.add(l);
+        }
+        return temp;
     }
 
 
@@ -180,8 +185,13 @@ public class MyDatamanger extends Application {
         return this.mCampussen;
     }
 
-    public List<Melding> getMeldingenLijst(){
-        return null;
+    public List<Melding> getMeldingenLijst(String afk, String verdiep, String lokaal, RecyclerView.Adapter adapter){
+
+        String url = ApiContract.createQueryUrl(afk, verdiep, lokaal);
+        JsonArrayRequest req = createGetRequest(url, MongoCollections.MELDINGEN, adapter);
+        this.addToRequestQueue(req);
+
+        return this.mMeldingen;
     }
 
     private void parseToCorrectList(JSONObject obj, MongoCollections coll,  RecyclerView.Adapter adapter) throws JSONException {
@@ -204,8 +214,8 @@ public class MyDatamanger extends Application {
 
         try {
             Lokaal lokaal = new Lokaal(
-                    obj.get(ApiContract.CAMPUS_NAAM).toString(),
                     obj.get(ApiContract.CAMPUS_AFK).toString(),
+                    Integer.parseInt(obj.get(ApiContract.VERDIEP_NR).toString()),
                     Integer.parseInt(obj.get(ApiContract.LOKAAL_NR).toString())
             );
             this.mLokalen.add(lokaal);
@@ -246,6 +256,7 @@ public class MyDatamanger extends Application {
 
     private void createMeldingAndAddToList(JSONObject obj, RecyclerView.Adapter adapter){
 
+        this.mMeldingen.clear();
         try {
             Melding melding = new Melding(
                     obj.get("titel").toString(),
