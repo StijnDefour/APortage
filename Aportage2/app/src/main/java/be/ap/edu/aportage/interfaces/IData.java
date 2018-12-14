@@ -1,4 +1,4 @@
-package be.ap.edu.aportage.managers;
+package be.ap.edu.aportage.interfaces;
 
 import java.util.List;
 
@@ -9,6 +9,8 @@ public interface IData {
 
     void setMeldingenLijst();
     void setCampussenLijst();
+    void setVerdiepenLijst();
+    void setLokalenLijst();
     List<Verdiep> getVerdiepenLijst(String afk);
     int[] getLokalenLijst(String afk, int verdiep);
     List<Verdiep> getVerdiepLijst(int campusID);

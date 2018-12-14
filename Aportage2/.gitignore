@@ -10,3 +10,4 @@
 /build
 /captures
 .externalNativeBuild
+#indien nodig: /app/src/main/java/be/ap/edu/aportage/managers/ApiContract.java

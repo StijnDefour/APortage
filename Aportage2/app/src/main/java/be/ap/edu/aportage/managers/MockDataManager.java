@@ -32,18 +32,18 @@ public class MockDataManager {
     private static void setCampussenLijst() {
         MockDataManager.campussenLijst = new ArrayList<>();
         List<Verdiep> verdiepList = new ArrayList<>();
-        verdiepList.add(new Verdiep(-1, new int[]{0,1,2,3,4,5,6,7,8,9,10 }));
-        verdiepList.add(new Verdiep(1, new int[]{0,1,2,3,4,5,6,7,8,9,10 }));
-        verdiepList.add(new Verdiep(2, new int[]{0,1,2,3,4,5,6,7,8,9,10 }));
-        verdiepList.add(new Verdiep(3, new int[]{0,1,2,3,4,5,6,7,8,9,10 }));
+        //verdiepList.add(new Verdiep(-1, new int[]{0,1,2,3,4,5,6,7,8,9,10 }));
+        //verdiepList.add(new Verdiep(1, new int[]{0,1,2,3,4,5,6,7,8,9,10 }));
+        //verdiepList.add(new Verdiep(2, new int[]{0,1,2,3,4,5,6,7,8,9,10 }));
+        //verdiepList.add(new Verdiep(3, new int[]{0,1,2,3,4,5,6,7,8,9,10 }));
         MockDataManager.campussenLijst.add(new Campus("Ellerman", "ELL", verdiepList));
         MockDataManager.campussenLijst.add(new Campus("Noorderplaats", "NOO", verdiepList));
     }
 
     private static void setMeldingenLijst(){
         MockDataManager.meldingenLijst = new ArrayList<>();
-        MockDataManager.meldingenLijst.add(new Melding("MockMelding", "Blablablablabla", new String[]{"ELL","-01","005"}, "behandeling", new Date()));
-        MockDataManager.meldingenLijst.add(new Melding("MockMelding2", "Blablablablabla2", new String[]{"NOO","05","013"}, "behandeling", new Date()));
+        //MockDataManager.meldingenLijst.add(new Melding("MockMelding", "Blablablablabla", new String[]{"ELL","-01","005"}, "behandeling", new Date()));
+        //MockDataManager.meldingenLijst.add(new Melding("MockMelding2", "Blablablablabla2", new String[]{"NOO","05","013"}, "behandeling", new Date()));
     }
 
     public static List<Melding> getMeldingenLijst() {
@@ -82,7 +82,7 @@ public class MockDataManager {
         for (Verdiep v: verdiepenLijst) {
             if(v.verdiepnr == verdiep) {
                 Log.d("verdiepen foreach", "verdiepnr: "+verdiep + " gevonden!");
-                lokalen = v.lokalen;
+                //lokalen = v.lokalen;
             }
         }
 
