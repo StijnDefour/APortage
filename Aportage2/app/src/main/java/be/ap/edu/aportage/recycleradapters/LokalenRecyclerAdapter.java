@@ -49,7 +49,7 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
         int lokaalNummer = this.lokalenList.get(i).mNr;
         String lokaalNummerString = String.format("%03d", lokaalNummer);
         viewHolder.lokaal_s = lokaalNummerString;
-        viewHolder.verdiepTitel.setText(this.verdieping+"."+lokaalNummerString);
+        viewHolder.verdiepTitel.setText(this.verdieping + "." + lokaalNummerString);
         viewHolder.campus_s = this.afkorting_campus;
         viewHolder.verdieping_s = this.verdieping;
     }
@@ -77,11 +77,9 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
                 public void onClick(View view) {
                     Intent intent = new Intent(context, Meldingen.class);
 
-                    Log.d("test", campus_s + verdieping_s + verdiepTitel.getText().toString());
-
-                    intent.putExtra("campus_afk", campus_s );
-                    intent.putExtra("verdiep_nr", verdieping_s);
-                    intent.putExtra("lokaal_nr", lokaal_s);
+                    intent.putExtra(context.getResources().getString(R.string.campus_intent), campus_s );
+                    intent.putExtra(context.getResources().getString(R.string.verdieping_intent), verdieping_s);
+                    intent.putExtra(context.getResources().getString(R.string.lokaal_intent), lokaal_s);
                     context.startActivity(intent);
                 }
             });

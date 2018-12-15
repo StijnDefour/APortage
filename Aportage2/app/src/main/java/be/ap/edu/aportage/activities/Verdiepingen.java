@@ -44,7 +44,7 @@ public class Verdiepingen extends AppCompatActivity {
         this.inkomendeIntent = getIntent();
 
         this.dataManager = MyDatamanger.getInstance(this.getApplicationContext());
-        String campus_afk = this.inkomendeIntent.getStringExtra("campus_afk");
+        String campus_afk = this.inkomendeIntent.getStringExtra(getString(R.string.campus_intent));
         this.navBtnCampus = (Button)findViewById(R.id.btn_nav_campus);
         this.navBtnCampus.setText(campus_afk);
         this.verdiepenAdapter = new VerdiepenRecyclerAdapter(this, this.dataManager.getVerdiepenLijst(campus_afk), campus_afk);
@@ -76,7 +76,7 @@ public class Verdiepingen extends AppCompatActivity {
             public void onCustomSuccess(Object data) {
 
                 verdiepenAdapter.setVerdiepenLijst(dataManager.getVerdiepenLijst(navBtnCampus.getText().toString()));
-                Log.d("callback", "verdiep success: "+data.toString());
+                Log.d("callback", "verdiep success: " + data.toString());
                 verdiepenAdapter.notifyDataSetChanged();
             }
 
@@ -104,10 +104,4 @@ public class Verdiepingen extends AppCompatActivity {
         this.uitgaandeIntent = new Intent(this, Campussen.class);
         startActivity(this.uitgaandeIntent);
     }
-
-
-
-
-
-
 }

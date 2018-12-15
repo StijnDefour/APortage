@@ -79,13 +79,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
                 haalCampusVerdiepLokaalDataUitGelezenString(gelezenTekst[gelezenTekst.length-1]);
                 Log.d("testLokaalInfo", lokaalInfo);
                 if (!lokaalInfo.equals("")) {
-                    lokaalInfo = lokaalInfo.replace("LOKAAL ", "");
-                    lokaalInfo = lokaalInfo.replace(",", ".");
-
                     if (checkLokaal()) {
-                        //Intent intent = new Intent(activity, Meldingen.class);
-                        //intent.putExtra("lokaalInfo", lokaalInfo);
-                        //startActivity(intent);
                         gaNaarMeldingen();
                     }
                 }

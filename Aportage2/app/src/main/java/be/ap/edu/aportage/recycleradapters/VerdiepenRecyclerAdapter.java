@@ -14,14 +14,13 @@ import java.util.List;
 
 import be.ap.edu.aportage.R;
 import be.ap.edu.aportage.activities.Lokalen;
-import be.ap.edu.aportage.activities.Verdiepingen;
 import be.ap.edu.aportage.models.Verdiep;
 
 public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecyclerAdapter.ViewHolder> {
 
     private final Context context;
     private final LayoutInflater layoutInflater;
-    private final List<Verdiep> verdiepenLijst;
+    private List<Verdiep> verdiepenLijst;
     private final String afkorting_campus;
 
     public VerdiepenRecyclerAdapter(Context context, List<Verdiep> verdiepenLijst, String afk) {
@@ -29,6 +28,10 @@ public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecy
         this.layoutInflater = LayoutInflater.from(this.context);
         this.verdiepenLijst = verdiepenLijst;
         this.afkorting_campus = afk;
+    }
+
+    public void setVerdiepenLijst(List<Verdiep> lijst){
+        this.verdiepenLijst = lijst;
     }
 
     @NonNull
@@ -67,9 +70,7 @@ public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecy
                     Intent intent = new Intent(context, Lokalen.class);
                     intent.putExtra(context.getResources().getString(R.string.verdieping_intent), verdiepNummer.getText());
                     intent.putExtra(context.getResources().getString(R.string.campus_intent), afk);
-                    Log.d("test", verdiepNummer.getText().toString() + " " + afk);
                     context.startActivity(intent);
-                    ((Verdiepingen)context).finish();
                 }
             });
         }
