@@ -5,13 +5,17 @@ import java.util.ArrayList;
 
 public class Verdiep {
 
+    public String campus_afk;
     public int verdiepnr;
-    public int[] lokalen;
 
 
-    public Verdiep(int verdiepnr, int[] lok) {
+    public Verdiep(int verdiepnr, String campus_afk) {
         this.verdiepnr = verdiepnr;
-        this.lokalen = lok;
+        this.campus_afk = campus_afk;
+    }
+    public Verdiep(int verdiepnr) {
+        this.verdiepnr = verdiepnr;
+
     }
 
     public String getVerdiepNaam(){
