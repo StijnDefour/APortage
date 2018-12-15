@@ -67,21 +67,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
         this.txtView = (TextView) findViewById(R.id.txtview);
         this.datamanger = MyDatamanger.getInstance(this.getApplicationContext());
 
-    public void initTextRecognizer() {
-        TextRecognizer txtRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
-        if (!txtRecognizer.isOperational()) {
-            Log.e("ScanLokaal", "Detector dependencies are not yet available");
-        } else {
-            this.cameraSource = new CameraSource.Builder(getApplicationContext(), txtRecognizer)
-                    .setFacing(CameraSource.CAMERA_FACING_BACK)
-                    .setRequestedPreviewSize(1280, 1024)
-                    .setRequestedFps(2.0f)
-                    .setAutoFocusEnabled(true)
-                    .build();
-            this.cameraView.getHolder().addCallback(this);
-            txtRecognizer.setProcessor(this);
-        }
-    }
+        initTextRecognizer();
 
         this.btn_ok = findViewById(R.id.btn_ocr_ok);
         this.btn_annuleren = findViewById(R.id.btn_ocr_annuleer);
@@ -113,6 +99,22 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
                 ScanLokaal.this.finish();
             }
         });
+    }
+
+    public void initTextRecognizer() {
+        TextRecognizer txtRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
+        if (!txtRecognizer.isOperational()) {
+            Log.e("ScanLokaal", "Detector dependencies are not yet available");
+        } else {
+            this.cameraSource = new CameraSource.Builder(getApplicationContext(), txtRecognizer)
+                    .setFacing(CameraSource.CAMERA_FACING_BACK)
+                    .setRequestedPreviewSize(1280, 1024)
+                    .setRequestedFps(2.0f)
+                    .setAutoFocusEnabled(true)
+                    .build();
+            this.cameraView.getHolder().addCallback(this);
+            txtRecognizer.setProcessor(this);
+        }
     }
 
     private void gaNaarMeldingen() {
