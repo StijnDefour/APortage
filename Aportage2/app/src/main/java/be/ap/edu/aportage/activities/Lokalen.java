@@ -28,7 +28,6 @@ public class Lokalen extends AppCompatActivity {
     private LokalenRecyclerAdapter lokalenAdapter;
     private RecyclerView lokalenRV;
     private LinearLayoutManager lokaalLM;
-    private int[] lokalenLijst;
     private Intent inkomendeIntent;
     private Intent uitgaandeIntent;
     private Button btnCampus;
@@ -45,42 +44,23 @@ public class Lokalen extends AppCompatActivity {
         this.datamanger = MyDatamanger.getInstance(this.getApplicationContext());
         this.inkomendeIntent = this.getIntent();
 
-        this.s_campus = this.inkomendeIntent.getStringExtra("campus_afk");
-        this.s_verdieping = this.inkomendeIntent.getStringExtra("verdiep_nr");
+        this.s_campus = this.inkomendeIntent.getStringExtra(getString(R.string.campus_intent));
+        this.s_verdieping = this.inkomendeIntent.getStringExtra(getString(R.string.verdieping_intent));
 
         this.btnCampus = findViewById(R.id.btn_campus);
 
         this.btnVerdiep = findViewById(R.id.btn_verdiep);
 
-
-        this.inkomendeIntent = this.getIntent();
-
-        this.s_campus = this.inkomendeIntent.getStringExtra("campus_afk");
-
-
         navigatieOpvullen();
-        //requestLokalenData();
-
-        //this.lokalenLijst = datamanger.getLokalenLijst(s_campus, Integer.parseInt(s_verdieping));
 
         this.lokalenRV = (RecyclerView) findViewById(R.id.rv_lokalen);
-
         this.lokaalLM = new LinearLayoutManager(this);
-
         this.lokalenRV.setLayoutManager(this.lokaalLM);
-
         this.lokalenAdapter = new LokalenRecyclerAdapter(this, this.datamanger.getLokalenLijst(s_campus, Integer.parseInt(s_verdieping)), s_campus, s_verdieping);
-
         this.lokalenRV.setAdapter(lokalenAdapter);
 
         registreerOnClicks();
-
         requestLokalenData();
-
-
-
-
-
     }
 
     private void requestLokalenData() {

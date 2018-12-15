@@ -5,9 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
-import java.io.Console;
+import com.android.volley.toolbox.JsonArrayRequest;
 
 import org.json.JSONObject;
 
@@ -23,13 +22,16 @@ public class Campussen extends AppCompatActivity {
     private RecyclerView mijnCampussenRV;
     private LinearLayoutManager mijnLM;
     private CampussenRecyclerAdapter campussenAdapter;
-    private MockDataManager dataManager = MockDataManager.getInstance();
-    private Intent uitgaandeIntent;
+    private MyDatamanger dataManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_campussen);
+
+        //initialisatie van Datamanager die een getrequest doet naar de mLab Api voor de campussen collection
+        this.dataManager = MyDatamanger.getInstance(this.getApplicationContext());
+
 
         //initialisatie properties voor recyclerview van campussen
         this.campussenAdapter = new CampussenRecyclerAdapter(this, this.dataManager.getCampussenLijst());
@@ -46,7 +48,6 @@ public class Campussen extends AppCompatActivity {
 
             @Override
             public void onCustomSuccess(Object data) {
-
                 campussenAdapter.setCampussenList(dataManager.getCampussenLijst());
                 campussenAdapter.notifyDataSetChanged();
             }
@@ -60,10 +61,4 @@ public class Campussen extends AppCompatActivity {
         this.dataManager.addToRequestQueue(req);
 
     }
-
-
-
-
-
-
 }

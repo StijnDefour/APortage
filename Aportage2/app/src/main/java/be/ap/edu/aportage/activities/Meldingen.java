@@ -72,10 +72,6 @@ public class Meldingen extends AppCompatActivity {
         this.meldingenAdapter = new MeldingenRecyclerAdapter(this, this.meldingenLijst);
         this.meldingenRV.setAdapter(this.meldingenAdapter);
 
-
-
-
-
         navigatieButtonsOpvullen();
 
         registreerButtonOnClicks();
@@ -90,7 +86,6 @@ public class Meldingen extends AppCompatActivity {
             @Override
             public void onSuccess(Object data) {
                 Log.d("getMeldingenLijst", data.toString());
-
             }
 
             @Override
