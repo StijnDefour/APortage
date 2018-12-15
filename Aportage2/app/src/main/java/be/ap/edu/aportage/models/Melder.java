@@ -5,11 +5,7 @@ public class Melder {
     public boolean facilitair;
     public String melderid;
 
-
     public String getID(){
         return this.melderid;
     }
-
-
-
 }

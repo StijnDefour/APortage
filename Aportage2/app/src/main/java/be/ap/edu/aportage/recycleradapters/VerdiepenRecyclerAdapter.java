@@ -14,6 +14,7 @@ import java.util.List;
 
 import be.ap.edu.aportage.R;
 import be.ap.edu.aportage.activities.Lokalen;
+import be.ap.edu.aportage.activities.Verdiepingen;
 import be.ap.edu.aportage.models.Verdiep;
 
 public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecyclerAdapter.ViewHolder> {
@@ -68,10 +69,10 @@ public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecy
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, Lokalen.class);
-                    intent.putExtra("verdiep_nr", verdiepNummer.getText());
-                    intent.putExtra("campus_afk", afk);
-                    Log.d("test", verdiepNummer.getText().toString() + " " + afk);
+                    intent.putExtra(context.getResources().getString(R.string.verdieping_intent), verdiepNummer.getText());
+                    intent.putExtra(context.getResources().getString(R.string.campus_intent), afk);
                     context.startActivity(intent);
+                    ((Verdiepingen)context).finish();
                 }
             });
         }

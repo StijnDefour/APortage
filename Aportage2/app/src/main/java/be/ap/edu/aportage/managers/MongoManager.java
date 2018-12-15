@@ -51,7 +51,7 @@ public class MongoManager {
     }
 
     public static List<Melding> getMeldingenLijst() {
-    //nog te implementeren
+        //nog te implementeren
         return null;
     }
 
