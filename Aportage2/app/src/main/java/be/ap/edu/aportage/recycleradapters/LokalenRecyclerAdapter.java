@@ -10,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 import be.ap.edu.aportage.R;
-import be.ap.edu.aportage.activities.Lokalen;
 import be.ap.edu.aportage.activities.Meldingen;
+import be.ap.edu.aportage.models.Lokaal;
 
 public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecyclerAdapter.ViewHolder> {
 
@@ -27,7 +29,7 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
     private final String afkorting_campus;
     private final String verdieping;
 
-    public LokalenRecyclerAdapter(Context context, int[] lokalenList, String afk, String verdieping) {
+    public LokalenRecyclerAdapter(Context context, List<Lokaal> lokalenList, String afk, String verdieping) {
         this.context = context;
         this.lokalenList = lokalenList;
         this.layoutInflater = LayoutInflater.from(this.context);
@@ -44,7 +46,7 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        int lokaalNummer = this.lokalenList[i];
+        int lokaalNummer = this.lokalenList.get(i).mNr;
         String lokaalNummerString = String.format("%03d", lokaalNummer);
         viewHolder.lokaal_s = lokaalNummerString;
         viewHolder.verdiepTitel.setText(this.verdieping+"."+lokaalNummerString);
@@ -54,7 +56,7 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
 
     @Override
     public int getItemCount() {
-        return this.lokalenList.length;
+        return this.lokalenList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -69,7 +71,7 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
             registreerOnClickListener(itemView);
         }
 
-        public void registreerOnClickListener(final View itemView) {
+        public void registreerOnClickListener(View itemView) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -77,11 +79,10 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
 
                     Log.d("test", campus_s + verdieping_s + verdiepTitel.getText().toString());
 
-                    intent.putExtra(context.getResources().getString(R.string.campus_intent), campus_s );
-                    intent.putExtra(context.getResources().getString(R.string.verdieping_intent), verdieping_s);
-                    intent.putExtra(context.getResources().getString(R.string.lokaal_intent), lokaal_s);
+                    intent.putExtra("campus_afk", campus_s );
+                    intent.putExtra("verdiep_nr", verdieping_s);
+                    intent.putExtra("lokaal_nr", lokaal_s);
                     context.startActivity(intent);
-                    ((Lokalen)context).finish();
                 }
             });
         }
