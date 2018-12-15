@@ -205,7 +205,6 @@ public class MyDatamanger extends Application {
     }
 
     private void createCampusAndAddToList(JSONObject obj, IVolleyCallback callback) {
-
         try {
             Campus campus = new Campus(
                     obj.get(ApiContract.CAMPUS_NAAM).toString(),

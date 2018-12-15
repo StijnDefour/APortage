@@ -45,7 +45,4 @@ public class ApiContract {
         return lokalenUrl;
 
     }
-
-
-
 }
