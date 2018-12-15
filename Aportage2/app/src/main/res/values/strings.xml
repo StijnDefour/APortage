@@ -36,5 +36,10 @@
     <string name="label_login_pw">Wachtwoord:</string>
     <string name="label_login_btn">Login</string>
     <string name="label_login_registeren">Registreren</string>
+    <string name="label_registeren_naam">Naam- en achternaam</string>
+    <string name="registeren_label_cb_gdpr">Ik ga akkoord dat mijn gegevens worden gebruikt om mijn meldingen op te slaan</string>
+    <string name="registreren_cb_label_facilitair">Ik ben een facilitaire medewerker</string>
+    <string name="label_registeren_btn_registreer">Registreer mij</string>
+    <string name="label_registeren_loginlink"><![CDATA[< Ik heb al een account, ga terug naar login]]></string>
 
 </resources>
