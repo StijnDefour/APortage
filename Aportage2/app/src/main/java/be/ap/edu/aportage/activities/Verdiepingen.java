@@ -28,7 +28,8 @@ public class Verdiepingen extends AppCompatActivity {
     private RecyclerView verdiepenRV;
     private LinearLayoutManager verdiepenLM;
     private VerdiepenRecyclerAdapter verdiepenAdapter;
-    private MockDataManager dataManager = MockDataManager.getInstance();
+    private MyDatamanger dataManager;
+
     private Intent uitgaandeIntent;
     private Intent inkomendeIntent;
     private Button navBtnCampus;
@@ -102,15 +103,10 @@ public class Verdiepingen extends AppCompatActivity {
     public void gaNaarCampussenActivity(){
         this.uitgaandeIntent = new Intent(this, Campussen.class);
         startActivity(this.uitgaandeIntent);
-        Verdiepingen.this.finish();
     }
 
-    @Override
-    public void onBackPressed() {
-        this.uitgaandeIntent = new Intent(this, Campussen.class);
-        startActivity(this.uitgaandeIntent);
-        Verdiepingen.this.finish();
-    }
+
+
 
 
 
