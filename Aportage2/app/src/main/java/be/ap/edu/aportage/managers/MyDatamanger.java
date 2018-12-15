@@ -147,12 +147,12 @@ public class MyDatamanger extends Application {
                         }
 
                     },new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                        //throw new JSONException("er is iets misgelopen tijdens het posten van de melding");
-                            Log.e("volleyerror", error.getMessage());
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    //throw new JSONException("er is iets misgelopen tijdens het posten van de melding");
+                    Log.e("volleyerror", error.getMessage());
 
-                    }
+                }
             });
 
 
@@ -233,7 +233,7 @@ public class MyDatamanger extends Application {
                             obj.get("lokaalnr").toString()
                     },
                     Statussen.getStatus(obj.get("status").toString()),
-                   obj.get("datum").toString());
+                    obj.get("datum").toString());
             this.mMeldingen.add(melding);
             callback.onCustomSuccess(melding);
 
