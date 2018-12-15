@@ -95,6 +95,13 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, Overzicht.class);
+        startActivity(intent);
+        ScanLokaal.this.finish();
+    }
+
     public void initTextRecognizer() {
         TextRecognizer txtRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
         if (!txtRecognizer.isOperational()) {

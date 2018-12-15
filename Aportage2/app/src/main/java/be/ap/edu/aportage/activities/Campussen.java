@@ -59,6 +59,12 @@ public class Campussen extends AppCompatActivity {
         });
         req.setShouldCache(false);
         this.dataManager.addToRequestQueue(req);
+    }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, Overzicht.class);
+        startActivity(intent);
+        Campussen.this.finish();
     }
 }

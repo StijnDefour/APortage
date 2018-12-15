@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.activities.Lokalen;
 import be.ap.edu.aportage.activities.Meldingen;
 import be.ap.edu.aportage.models.Lokaal;
 
@@ -81,6 +82,7 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
                     intent.putExtra(context.getResources().getString(R.string.verdieping_intent), verdieping_s);
                     intent.putExtra(context.getResources().getString(R.string.lokaal_intent), lokaal_s);
                     context.startActivity(intent);
+                    ((Lokalen)context).finish();
                 }
             });
         }

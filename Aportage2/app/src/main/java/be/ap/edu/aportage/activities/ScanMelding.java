@@ -73,7 +73,6 @@ public class ScanMelding extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent(this, Meldingen.class);
         intent.putExtra(getString(R.string.campus_intent), s_campus);
-        Log.e("test",getString(R.string.campus_intent));
         intent.putExtra(getString(R.string.verdieping_intent), s_verdieping);
         intent.putExtra(getString(R.string.lokaal_intent), s_lokaal);
         startActivity(intent);

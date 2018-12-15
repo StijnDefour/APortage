@@ -77,6 +77,15 @@ public class Meldingen extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, Lokalen.class);
+        intent.putExtra(getString(R.string.campus_intent), s_campus);
+        intent.putExtra(getString(R.string.verdieping_intent), s_verdieping);
+        startActivity(intent);
+        Meldingen.this.finish();
+    }
+
     private void getMeldingenData() {
         String url = ApiContract.createMeldingenQueryUrl(s_campus, s_verdieping, s_lokaal);
         JsonArrayRequest req = dataManager.createGetRequest(url, MongoCollections.MELDINGEN, new IVolleyCallback() {
