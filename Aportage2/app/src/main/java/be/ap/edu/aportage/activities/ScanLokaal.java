@@ -22,7 +22,10 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
+import org.json.JSONObject;
+
 import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.managers.MyDatamanger;
 
 public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Callback, Detector.Processor  {
@@ -41,6 +44,8 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
     private Intent uitgaandeIntent;
 
     private MyDatamanger datamanger;
+
+    public boolean exist;
 
     @SuppressLint("MissingPermission")
     @Override
@@ -91,17 +96,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
                 String lokaalInfo = gelezenTekst[gelezenTekst.length-1].toUpperCase();
                 haalCampusVerdiepLokaalDataUitGelezenString(gelezenTekst[gelezenTekst.length-1]);
                 Log.d("testLokaalInfo", lokaalInfo);
-                if (!lokaalInfo.equals("")) {
-                    lokaalInfo = lokaalInfo.replace("LOKAAL ", "");
-                    lokaalInfo = lokaalInfo.replace(",", ".");
-
-                    if (checkLokaal()) {
-                        //Intent intent = new Intent(activity, Meldingen.class);
-                        //intent.putExtra("lokaalInfo", lokaalInfo);
-                        //startActivity(intent);
-                        gaNaarMeldingen();
-                    }
-                }
+               checkLokaal();
             }
         });
         btn_annuleren.setOnClickListener(new View.OnClickListener() {
@@ -124,10 +119,26 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
     }
 
 
-    private Boolean checkLokaal() {
+    private void checkLokaal() {
 
-        this.datamanger.checkLokaalExists(s_campusAfk, s_verdiepNr, s_lokaalNr);
-        return true;
+        this.datamanger.checkLokaalExists(s_campusAfk, s_verdiepNr, s_lokaalNr, new IVolleyCallback() {
+            @Override
+            public void onCustomSuccess(Object data) {
+                gaNaarMeldingen();
+            }
+
+            @Override
+            public void onPostSuccess(JSONObject response) {
+
+                //ignore
+            }
+
+            @Override
+            public void onFailure() {
+                //todo: maak popup/bericht zichtbaar dat het lokaal niet bestaat.
+            }
+        });
+
     }
 
     @Override

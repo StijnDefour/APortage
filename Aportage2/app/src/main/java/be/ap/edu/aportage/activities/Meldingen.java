@@ -84,12 +84,6 @@ public class Meldingen extends AppCompatActivity {
         JsonArrayRequest req = dataManager.createGetRequest(url, MongoCollections.MELDINGEN, new IVolleyCallback() {
 
             @Override
-            public void onSuccess(Object data) {
-                Log.d("getMeldingenLijst", data.toString());
-
-            }
-
-            @Override
             public void onCustomSuccess(Object data) {
                 Log.d("getMeldingenLijst", data.toString());
                 meldingenAdapter.setMeldingenList(dataManager.getMeldingenLijst());
@@ -99,6 +93,11 @@ public class Meldingen extends AppCompatActivity {
             @Override
             public void onPostSuccess(JSONObject response) {
 
+            }
+
+            @Override
+            public void onFailure() {
+                //todo: bericht/popup dat het tonen van de meldingen is mislukt
             }
         });
         dataManager.addToRequestQueue(req);
@@ -186,13 +185,8 @@ public class Meldingen extends AppCompatActivity {
         melding.melder = melder;
         JsonObjectRequest obj = this.dataManager.createPostRequest(MongoCollections.MELDINGEN, melding, new IVolleyCallback() {
             @Override
-            public void onSuccess(Object data) {
-                Log.d("post", data.toString());
-            }
-
-            @Override
             public void onCustomSuccess(Object data) {
-                Log.d("post", data.toString());
+                //Log.d("post", data.toString());
 
             }
 
@@ -200,6 +194,12 @@ public class Meldingen extends AppCompatActivity {
             public void onPostSuccess(JSONObject response) {
 
                 Log.d("post", response.toString());
+                //todo: toon confirmatie dat het posten van de melding is gelukt.
+            }
+
+            @Override
+            public void onFailure() {
+                //todo: bericht tonen dt het posten van de melding is mislukt.
             }
         });
         this.dataManager.addToRequestQueue(obj);
