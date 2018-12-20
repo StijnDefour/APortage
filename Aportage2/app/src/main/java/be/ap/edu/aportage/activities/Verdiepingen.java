@@ -34,8 +34,7 @@ public class Verdiepingen extends AppCompatActivity {
     private Intent inkomendeIntent;
     private Button navBtnCampus;
 
-
-
+    String s_campus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,23 +43,24 @@ public class Verdiepingen extends AppCompatActivity {
         this.inkomendeIntent = getIntent();
 
         this.dataManager = MyDatamanger.getInstance(this.getApplicationContext());
-        String campus_afk = this.inkomendeIntent.getStringExtra("campus_afk");
+        this.s_campus = this.inkomendeIntent.getStringExtra(getString(R.string.campus_intent));
         this.navBtnCampus = (Button)findViewById(R.id.btn_nav_campus);
-        this.navBtnCampus.setText(campus_afk);
-        this.verdiepenAdapter = new VerdiepenRecyclerAdapter(this, this.dataManager.getVerdiepenLijst(campus_afk), campus_afk);
+        this.navBtnCampus.setText(s_campus);
+        this.verdiepenAdapter = new VerdiepenRecyclerAdapter(this, this.dataManager.getVerdiepenLijst(s_campus), s_campus);
         this.verdiepenRV = (RecyclerView) findViewById(R.id.rv_verdiepingen);
         this.verdiepenLM = new LinearLayoutManager(this);
         this.verdiepenRV.setLayoutManager(this.verdiepenLM);
         this.verdiepenRV.setAdapter(this.verdiepenAdapter);
 
-
-
-
         registreerOnClickListeners();
         requestVerdiepenData();
+    }
 
-
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, Campussen.class);
+        startActivity(intent);
+        Verdiepingen.this.finish();
     }
 
     private void requestVerdiepenData() {
@@ -70,7 +70,7 @@ public class Verdiepingen extends AppCompatActivity {
             public void onCustomSuccess(Object data) {
 
                 verdiepenAdapter.setVerdiepenLijst(dataManager.getVerdiepenLijst(navBtnCampus.getText().toString()));
-                Log.d("callback", "verdiep success: "+data.toString());
+                Log.d("callback", "verdiep success: " + data.toString());
                 verdiepenAdapter.notifyDataSetChanged();
             }
 
@@ -103,10 +103,4 @@ public class Verdiepingen extends AppCompatActivity {
         this.uitgaandeIntent = new Intent(this, Campussen.class);
         startActivity(this.uitgaandeIntent);
     }
-
-
-
-
-
-
 }

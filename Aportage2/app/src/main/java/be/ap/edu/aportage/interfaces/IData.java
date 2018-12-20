@@ -15,5 +15,4 @@ public interface IData {
     int[] getLokalenLijst(String afk, int verdiep);
     List<Verdiep> getVerdiepLijst(int campusID);
     List<Campus> getCampussenLijst();
-
 }

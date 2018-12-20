@@ -23,8 +23,6 @@ public class Campussen extends AppCompatActivity {
     private LinearLayoutManager mijnLM;
     private CampussenRecyclerAdapter campussenAdapter;
     private MyDatamanger dataManager;
-    private Intent uitgaandeIntent;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +43,6 @@ public class Campussen extends AppCompatActivity {
 
             @Override
             public void onCustomSuccess(Object data) {
-
                 campussenAdapter.setCampussenList(dataManager.getCampussenLijst());
                 campussenAdapter.notifyDataSetChanged();
             }
@@ -62,12 +59,12 @@ public class Campussen extends AppCompatActivity {
         });
         req.setShouldCache(false);
         this.dataManager.addToRequestQueue(req);
-
     }
 
-
-
-
-
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, Overzicht.class);
+        startActivity(intent);
+        Campussen.this.finish();
+    }
 }

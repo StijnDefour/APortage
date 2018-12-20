@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.activities.Meldingen;
 import be.ap.edu.aportage.models.Melding;
 
 public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecyclerAdapter.ViewHolder> {
@@ -82,11 +83,12 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
                     intent.putExtra("melding_titel", meldingTitel.getText());
                     intent.putExtra("melding_id", melding_id);
 
-                    intent.putExtra("campus_afk", locatie[0]);
-                    intent.putExtra("verdiep_nr", locatie[1]);
-                    intent.putExtra("lokaal_nr", locatie[2]);
+                    intent.putExtra(context.getResources().getString(R.string.campus_intent), locatie[0]);
+                    intent.putExtra(context.getResources().getString(R.string.verdieping_intent), locatie[1]);
+                    intent.putExtra(context.getResources().getString(R.string.lokaal_intent), locatie[2]);
 
                     context.startActivity(intent);
+                    ((Meldingen)context).finish();
                 }
             });
         }
