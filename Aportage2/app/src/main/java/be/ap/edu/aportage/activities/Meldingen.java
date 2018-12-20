@@ -21,6 +21,7 @@ import java.util.List;
 
 import be.ap.edu.aportage.R;
 import be.ap.edu.aportage.interfaces.ApiContract;
+import be.ap.edu.aportage.interfaces.CampusKleuren;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.interfaces.MongoCollections;
 import be.ap.edu.aportage.interfaces.Statussen;
@@ -44,6 +45,8 @@ public class Meldingen extends AppCompatActivity {
     private MyDatamanger dataManager ;
     private Intent uitgaandeIntent;
     private FloatingActionButton nieuweMeldingfab;
+
+    private CampusKleuren campusKleuren = new CampusKleuren();
 
     private String s_campus;
     private String s_verdieping;
@@ -120,6 +123,7 @@ public class Meldingen extends AppCompatActivity {
             this.meldingenCampusBtn.setText(this.s_campus);
             this.meldingenVerdiepBtn.setText(this.s_verdieping);
             this.meldingenLokaalBtn.setText(this.s_lokaal);
+            this.meldingenCampusBtn.setBackgroundColor(campusKleuren.getCampusColor(s_campus.toLowerCase(), this));
         } catch (Error e) {
             Log.e("navigatieButtonsOpvullen Mislukt", e.getMessage());
         }

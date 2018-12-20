@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.interfaces.CampusKleuren;
 
 public class ScanMelding extends AppCompatActivity {
 
@@ -32,6 +33,8 @@ public class ScanMelding extends AppCompatActivity {
     Button btnLokaal;
     ImageView imageView;
     Button button;
+
+    private CampusKleuren campusKleuren = new CampusKleuren();
 
     EditText tvTitel;
 
@@ -160,6 +163,7 @@ public class ScanMelding extends AppCompatActivity {
         btnCampus.setText(s_campus);
         btnVerdiep.setText(s_verdieping);
         btnLokaal.setText(s_lokaal);
+        this.btnCampus.setBackgroundColor(campusKleuren.getCampusColor(s_campus.toLowerCase(), this));
     }
 
     @Override

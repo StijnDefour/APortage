@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import be.ap.edu.aportage.R;
 import be.ap.edu.aportage.interfaces.ApiContract;
+import be.ap.edu.aportage.interfaces.CampusKleuren;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.interfaces.MongoCollections;
 import be.ap.edu.aportage.managers.MyDatamanger;
@@ -31,6 +32,8 @@ public class Lokalen extends AppCompatActivity {
     private Intent uitgaandeIntent;
     private Button btnCampus;
     private Button btnVerdiep;
+
+    private CampusKleuren campusKleuren = new CampusKleuren();
 
     String s_campus;
     String s_verdieping;
@@ -89,6 +92,7 @@ public class Lokalen extends AppCompatActivity {
     private void navigatieOpvullen(){
         try {
             btnCampus.setText(s_campus);
+            this.btnCampus.setBackgroundColor(campusKleuren.getCampusColor(s_campus.toLowerCase(), this));
             btnVerdiep.setText(s_verdieping);
         } catch (Error e){
             Log.e("navigatieOpvullen", e.getMessage());
