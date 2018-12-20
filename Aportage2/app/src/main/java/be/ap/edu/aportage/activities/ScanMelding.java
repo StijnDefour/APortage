@@ -15,8 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -29,7 +27,7 @@ public class ScanMelding extends AppCompatActivity {
     static final String CAMPUS = "campus_afk";
     static final String VERDIEP = "verdiep_nr";
     static final String LOKAAL = "lokaal_nr";
-    private FirebaseAuth mAuth;
+
 
     static final int REQUEST_IMAGE_CAPTURE = 5;
     String mCurrentPhotoPath;
@@ -51,7 +49,7 @@ public class ScanMelding extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_melding);
 
-        this.mAuth = FirebaseAuth.getInstance();
+
 
         this.imageView = findViewById(R.id.imageView);
         this.button = findViewById(R.id.button);
