@@ -1,6 +1,6 @@
 package be.ap.edu.aportage.models;
 
-import com.google.firebase.auth.FirebaseUser;
+
 
 import java.text.DateFormat;
 import java.text.ParseException;

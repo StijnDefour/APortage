@@ -13,6 +13,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -165,8 +166,31 @@ public class MyDatamanger extends Application {
         return jsonArrayR;
     }
 
-    public void checkLokaalExists(String afk, String verdiep, String lokaal){
+    public void checkLokaalExists(String afk, String verdiep, String lokaal, IVolleyCallback callback){
         String url = ApiContract.createLokaalQuery(afk, verdiep, lokaal);
+
+
+        JsonRequest jsonArrayR = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d(TAG_DM, response.toString());
+                        callback.onCustomSuccess(response);
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // done: Handle error
+                        Log.e(TAG_DM, "fetching lokaal failed");
+                        callback.onFailure();
+                    }
+                });
+
+
+
+
     }
 
 
@@ -182,7 +206,6 @@ public class MyDatamanger extends Application {
             }
         }
     }
-
 
     private void createLokaalAndAddToList(JSONObject obj, IVolleyCallback callback) {
         //todo: obj moet array zijn en hier alles laten loopen en toevoegen aan lists

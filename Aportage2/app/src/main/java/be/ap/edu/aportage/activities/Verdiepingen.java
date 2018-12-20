@@ -65,12 +65,6 @@ public class Verdiepingen extends AppCompatActivity {
 
     private void requestVerdiepenData() {
         JsonArrayRequest req = this.dataManager.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.VERDIEPEN), MongoCollections.VERDIEPEN, new IVolleyCallback() {
-            @Override
-            public void onSuccess(Object data) {
-                //todo_done: implementatie
-
-                //verdiepenAdapter.notifyDataSetChanged();
-            }
 
             @Override
             public void onCustomSuccess(Object data) {
@@ -83,6 +77,11 @@ public class Verdiepingen extends AppCompatActivity {
             @Override
             public void onPostSuccess(JSONObject response) {
                 //ignore
+            }
+
+            @Override
+            public void onFailure() {
+                //todo: failure bericht tonen
             }
         });
         req.setShouldCache(false);
