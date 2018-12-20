@@ -3,6 +3,7 @@ package be.ap.edu.aportage.recycleradapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,7 +48,6 @@ public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecy
         Verdiep verdiep = verdiepenLijst.get(i);
         viewHolder.verdiepNummer.setText(verdiep.getVerdiepNaam());
         viewHolder.afk = this.afkorting_campus;
-
     }
 
     @Override

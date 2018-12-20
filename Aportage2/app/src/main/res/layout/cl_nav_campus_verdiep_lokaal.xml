@@ -16,7 +16,7 @@
         style="@style/Widget.MaterialComponents.BottomNavigationView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/wetenschapentechniek"
+        android:background="@color/Meistraat"
         android:fontFamily="sans-serif"
         android:text=""
         android:textColor="@color/wit"

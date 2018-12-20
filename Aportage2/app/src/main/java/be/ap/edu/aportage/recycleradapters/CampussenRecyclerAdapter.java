@@ -3,6 +3,7 @@ package be.ap.edu.aportage.recycleradapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +47,23 @@ public class CampussenRecyclerAdapter extends RecyclerView.Adapter<CampussenRecy
         Campus campus = this.campussenList.get(i);
         viewHolder.campusTitel.setText(campus.getNaam());
         viewHolder.campusAfk = campus.afkorting;
-        //viewHolder.campusFoto.setImageURI(Uri.parse("https://www.ap.be/sites/default/files/2018-10/Meistraat.jpg"));
+
+        Integer bgcolor;
+        switch (campus.afkorting) {
+            case "ell":
+                bgcolor = ContextCompat.getColor(context, R.color.Ellerman);
+                break;
+            case "noo":
+                bgcolor = ContextCompat.getColor(context, R.color.Noorderplaats);
+                break;
+            case "mei":
+                bgcolor = ContextCompat.getColor(context, R.color.Meistraat);
+                break;
+            default:
+                bgcolor = ContextCompat.getColor(context, R.color.Meistraat);
+                break;
+        }
+        viewHolder.campusFoto.setBackgroundColor(bgcolor);
     }
 
     @Override
