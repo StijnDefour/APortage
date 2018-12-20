@@ -85,12 +85,6 @@ public class Lokalen extends AppCompatActivity {
     private void requestLokalenData() {
         JsonArrayRequest req = this.datamanger.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.LOKALEN), MongoCollections.LOKALEN, new IVolleyCallback() {
             @Override
-            public void onSuccess(Object data) {
-                //todo_done: implementatie
-                lokalenAdapter.notifyDataSetChanged();
-            }
-
-            @Override
             public void onCustomSuccess(Object data) {
 
                 lokalenAdapter.setLokalenList(datamanger.getLokalenLijst(s_campus, Integer.parseInt(s_verdieping)));
@@ -101,6 +95,12 @@ public class Lokalen extends AppCompatActivity {
             public void onPostSuccess(JSONObject response) {
                 //ignore
             }
+
+            @Override
+            public void onFailure() {
+                //todo: toon bericht dat de fetch van lokalen niet is gelukt
+            }
+
         });
         req.setShouldCache(false);
         datamanger.addToRequestQueue(req);
