@@ -24,6 +24,7 @@ public class Melding extends Activity {
     private String s_lokaal;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

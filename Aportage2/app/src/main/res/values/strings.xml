@@ -32,4 +32,17 @@
     <string name="lokaal_placeholder">00.000</string>
     <string name="melding_titel">Name</string>
 
+    <string name="tv_login_label_email">Email:</string>
+    <string name="login_hint_email">Voer hier jouw e-mailadress in</string>
+    <string name="label_login_pw">Wachtwoord:</string>
+    <string name="label_login_btn">Login</string>
+    <string name="label_login_registeren">Registreren</string>
+
+    <!-- Intents -->
+    <string name="campus_intent">campus_afk</string>
+    <string name="verdieping_intent">verdieping_nr</string>
+    <string name="lokaal_intent">lokaal_nr</string>
+    <string name="melding_intent">melding_id</string>
+
+
 </resources>
