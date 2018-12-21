@@ -64,7 +64,7 @@ public class Verdiepingen extends AppCompatActivity {
     }
 
     private void requestVerdiepenData() {
-        JsonArrayRequest req = this.dataManager.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.VERDIEPEN), MongoCollections.VERDIEPEN, new IVolleyCallback() {
+        JsonArrayRequest req = this.dataManager.createGetRequest(ApiContract.createCollectionUrlMetApi(MongoCollections.VERDIEPEN), MongoCollections.VERDIEPEN, new IVolleyCallback() {
 
 
             @Override

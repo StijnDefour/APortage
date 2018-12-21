@@ -83,7 +83,7 @@ public class Lokalen extends AppCompatActivity {
     }
 
     private void requestLokalenData() {
-        JsonArrayRequest req = this.datamanger.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.LOKALEN), MongoCollections.LOKALEN, new IVolleyCallback() {
+        JsonArrayRequest req = this.datamanger.createGetRequest(ApiContract.createCollectionUrlMetApi(MongoCollections.LOKALEN), MongoCollections.LOKALEN, new IVolleyCallback() {
 
 
             @Override

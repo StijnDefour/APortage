@@ -132,7 +132,7 @@ public class MyDatamanger extends Application {
 
             jsonArrayR = new JsonObjectRequest(
                     Request.Method.POST,
-                    ApiContract.createCollectionUrl(collection),
+                    ApiContract.createCollectionUrlMetApi(collection),
                     meldingObject,
                     new Response.Listener<JSONObject>() {
                         @Override
