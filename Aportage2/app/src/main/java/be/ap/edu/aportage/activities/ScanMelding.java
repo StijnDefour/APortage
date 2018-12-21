@@ -164,6 +164,8 @@ public class ScanMelding extends AppCompatActivity {
         btnVerdiep.setText(s_verdieping);
         btnLokaal.setText(s_lokaal);
         this.btnCampus.setBackgroundColor(campusKleuren.getCampusColor(s_campus.toLowerCase(), this));
+        this.btnVerdiep.setBackgroundColor(campusKleuren.getVerdiepingColor(s_campus.toLowerCase(), this));
+        this.btnLokaal.setBackgroundColor(campusKleuren.getLokaalColor(s_campus.toLowerCase(), this));
     }
 
     @Override

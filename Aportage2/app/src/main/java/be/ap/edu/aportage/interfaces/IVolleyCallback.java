@@ -8,6 +8,5 @@ public interface IVolleyCallback {
 
     void onPostSuccess(JSONObject response);
 
-
     void onFailure();
 }

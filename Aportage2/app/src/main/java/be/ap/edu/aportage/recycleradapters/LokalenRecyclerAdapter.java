@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,6 +84,17 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
                     ((Lokalen)context).finish();
                 }
             });
+        }
+    }
+
+    public void clearLokalen() {
+        int size = this.lokalenList.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                lokalenList.remove(0);
+            }
+
+//            this.notifyItemRangeRemoved(0, size);
         }
     }
 }

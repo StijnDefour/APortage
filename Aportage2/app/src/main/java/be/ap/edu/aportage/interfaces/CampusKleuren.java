@@ -28,15 +28,24 @@ public class CampusKleuren {
     }
 
     public int getVerdiepingColor(String campus_afk, Context context) {
+        return createAlphaColor(campus_afk, context, 0.7);
+    }
+
+    public int getLokaalColor(String campus_afk, Context context) {
+        return createAlphaColor(campus_afk, context, 0.4);
+    }
+
+    public int createAlphaColor(String campus_afk, Context context, double newAlpha) {
         Integer bgcolor;
         bgcolor = getCampusColor(campus_afk, context);
 
+
+        int alpha = (int) (Color.alpha(bgcolor)*newAlpha);
         int red = Color.red(bgcolor);
         int green = Color.green(bgcolor);
         int blue = Color.blue(bgcolor);
-        int alpha = Color.alpha(bgcolor);
 
-        
+        bgcolor = Color.argb(alpha, red, green, blue);
 
         return bgcolor;
     }

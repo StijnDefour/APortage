@@ -76,6 +76,8 @@ public class Melding extends Activity {
             this.btn_verdiep_nr.setText(this.s_verdieping);
             this.btn_melding_lokaalnr.setText(this.s_lokaal);
             this.btn_campus_afk.setBackgroundColor(campusKleuren.getCampusColor(s_campus.toLowerCase(), this));
+            this.btn_verdiep_nr.setBackgroundColor(campusKleuren.getVerdiepingColor(s_campus.toLowerCase(), this));
+            this.btn_melding_lokaalnr.setBackgroundColor(campusKleuren.getLokaalColor(s_campus.toLowerCase(), this));
         } catch (Error e) {
             Log.e("navigatieButtonsOpvullen Mislukt", e.getMessage());
         }

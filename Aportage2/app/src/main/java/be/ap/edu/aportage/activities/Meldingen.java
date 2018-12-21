@@ -90,6 +90,7 @@ public class Meldingen extends AppCompatActivity {
     }
 
     private void getMeldingenData() {
+        this.meldingenAdapter.clearMeldingen();
         String url = ApiContract.createMeldingenQueryUrl(s_campus, s_verdieping, s_lokaal);
         JsonArrayRequest req = dataManager.createGetRequest(url, MongoCollections.MELDINGEN, new IVolleyCallback() {
             @Override
@@ -124,6 +125,8 @@ public class Meldingen extends AppCompatActivity {
             this.meldingenVerdiepBtn.setText(this.s_verdieping);
             this.meldingenLokaalBtn.setText(this.s_lokaal);
             this.meldingenCampusBtn.setBackgroundColor(campusKleuren.getCampusColor(s_campus.toLowerCase(), this));
+            this.meldingenVerdiepBtn.setBackgroundColor(campusKleuren.getVerdiepingColor(s_campus.toLowerCase(), this));
+            this.meldingenLokaalBtn.setBackgroundColor(campusKleuren.getLokaalColor(s_campus.toLowerCase(), this));
         } catch (Error e) {
             Log.e("navigatieButtonsOpvullen Mislukt", e.getMessage());
         }

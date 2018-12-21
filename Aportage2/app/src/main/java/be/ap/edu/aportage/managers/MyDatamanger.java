@@ -2,15 +2,12 @@ package be.ap.edu.aportage.managers;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
@@ -23,14 +20,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import be.ap.edu.aportage.activities.ScanMelding;
 import be.ap.edu.aportage.interfaces.ApiContract;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
+import be.ap.edu.aportage.interfaces.MongoCollections;
 import be.ap.edu.aportage.interfaces.Statussen;
 import be.ap.edu.aportage.models.Campus;
 import be.ap.edu.aportage.models.Lokaal;
 import be.ap.edu.aportage.models.Melding;
-import be.ap.edu.aportage.interfaces.MongoCollections;
 import be.ap.edu.aportage.models.Verdiep;
 
 public class MyDatamanger extends Application {
@@ -98,6 +94,8 @@ public class MyDatamanger extends Application {
 
 
     public JsonArrayRequest createGetRequest(String url, MongoCollections collection, IVolleyCallback volleycallback) {
+
+
         JsonArrayRequest jsonArrayR = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 

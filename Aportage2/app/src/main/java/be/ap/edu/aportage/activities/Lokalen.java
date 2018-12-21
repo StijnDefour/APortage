@@ -66,6 +66,7 @@ public class Lokalen extends AppCompatActivity {
     }
 
     private void requestLokalenData() {
+        this.lokalenAdapter.clearLokalen();
         JsonArrayRequest req = this.datamanger.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.LOKALEN), MongoCollections.LOKALEN, new IVolleyCallback() {
             @Override
             public void onCustomSuccess(Object data) {
@@ -92,8 +93,9 @@ public class Lokalen extends AppCompatActivity {
     private void navigatieOpvullen(){
         try {
             btnCampus.setText(s_campus);
-            this.btnCampus.setBackgroundColor(campusKleuren.getCampusColor(s_campus.toLowerCase(), this));
             btnVerdiep.setText(s_verdieping);
+            this.btnCampus.setBackgroundColor(campusKleuren.getCampusColor(s_campus.toLowerCase(), this));
+            this.btnVerdiep.setBackgroundColor(campusKleuren.getVerdiepingColor(s_campus.toLowerCase(), this));
         } catch (Error e){
             Log.e("navigatieOpvullen", e.getMessage());
         }

@@ -79,4 +79,15 @@ public class CampussenRecyclerAdapter extends RecyclerView.Adapter<CampussenRecy
             });
         }
     }
+
+    public void clearCampussen() {
+        int size = this.campussenList.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                campussenList.remove(0);
+            }
+
+//            this.notifyItemRangeRemoved(0, size);
+        }
+    }
 }
