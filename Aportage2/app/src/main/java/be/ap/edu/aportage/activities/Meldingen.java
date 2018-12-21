@@ -86,12 +86,6 @@ public class Meldingen extends AppCompatActivity {
         JsonArrayRequest req = dataManager.createGetRequest(url, MongoCollections.MELDINGEN, new IVolleyCallback() {
 
             @Override
-            public void onSuccess(Object data) {
-                Log.d("getMeldingenLijst", data.toString());
-
-            }
-
-            @Override
             public void onCustomSuccess(Object data) {
                 Log.d("getMeldingenLijst", data.toString());
                 meldingenAdapter.setMeldingenList(dataManager.getMeldingenLijst());
@@ -188,11 +182,6 @@ public class Meldingen extends AppCompatActivity {
         melder.melderid = "testid";
         melding.melder = melder;
         JsonObjectRequest obj = this.dataManager.createPostRequest(MongoCollections.MELDINGEN, melding, new IVolleyCallback() {
-            @Override
-            public void onSuccess(Object data) {
-                Log.d("post", data.toString());
-            }
-
             @Override
             public void onCustomSuccess(Object data) {
                 Log.d("post", data.toString());

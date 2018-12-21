@@ -42,11 +42,6 @@ public class Campussen extends AppCompatActivity {
         this.mijnCampussenRV.setLayoutManager(this.mijnLM);
         this.mijnCampussenRV.setAdapter(this.campussenAdapter);
         JsonArrayRequest req = this.dataManager.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.CAMPUSSEN), MongoCollections.CAMPUSSEN, new IVolleyCallback() {
-            @Override
-            public void onSuccess(Object data) {
-                //todo_done: implementatie
-                campussenAdapter.notifyDataSetChanged();
-            }
 
             @Override
             public void onCustomSuccess(Object data) {

@@ -5,8 +5,8 @@ public enum MongoCollections {
         CAMPUSSEN("campussen"),
         VERDIEPEN("verdiepen"),
         LOKALEN("lokalen"),
-        MELDINGEN("meldingen")
-        ;
+        MELDINGEN("meldingen"),
+        GEBRUIKERS("gebruikers");
 
         private final String text;
 

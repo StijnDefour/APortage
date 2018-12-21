@@ -4,6 +4,7 @@ package be.ap.edu.aportage.managers;
 import android.app.Application;
 import android.content.Context;
 
+import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.models.Melder;
 
 public class MyUserManager extends Application {
@@ -33,13 +34,18 @@ public class MyUserManager extends Application {
 
     }
 
-    public boolean checkOfMelderBestaat(){
+    public void checkOfMelderBestaat(Melder melder, IVolleyCallback callback){
 
-        return true;
     }
 
     public void registreerMelder(){
 
     }
+
+    public void stuurBevestigingsMail(){
+
+    }
+
+
 
 }
