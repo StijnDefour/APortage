@@ -211,7 +211,7 @@ public class MyDatamanger extends Application {
 
                     obj.get(ApiContract.CAMPUS_AFK).toString(),
                     Integer.parseInt(obj.get(ApiContract.VERDIEP_NR).toString()),
-                    Integer.parseInt(obj.get(ApiContract.LOKAAL_NR).toString())
+                    Integer.parseInt(obj.get(ApiContract.LOKAAL_NR).toString().replaceAll("\\D", ""))
             );
             this.mLokalen.add(lokaal);
             callback.onCustomSuccess(lokaal);

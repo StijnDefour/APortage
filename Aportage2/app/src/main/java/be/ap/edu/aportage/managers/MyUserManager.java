@@ -36,6 +36,10 @@ public class MyUserManager extends Application {
 
     public void checkOfMelderBestaat(Melder melder, IVolleyCallback callback){
 
+        //https://api.mlab.com/api/1/databases/my-db/collections/my-coll?q={"active": true}&fo=true&apiKey=myAPIKey
+
+
+
     }
 
     public void registreerMelder(){
