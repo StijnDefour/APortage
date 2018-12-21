@@ -19,13 +19,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import be.ap.edu.aportage.Helpers.ApiContract;
+import be.ap.edu.aportage.helpers.ApiContract;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
-import be.ap.edu.aportage.Helpers.Statussen;
+import be.ap.edu.aportage.helpers.Statussen;
 import be.ap.edu.aportage.models.Campus;
 import be.ap.edu.aportage.models.Lokaal;
 import be.ap.edu.aportage.models.Melding;
-import be.ap.edu.aportage.Helpers.MongoCollections;
+import be.ap.edu.aportage.helpers.MongoCollections;
 import be.ap.edu.aportage.models.Verdiep;
 
 public class MyDatamanger extends Application {

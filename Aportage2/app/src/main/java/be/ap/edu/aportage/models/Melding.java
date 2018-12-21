@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import be.ap.edu.aportage.Helpers.Statussen;
+import be.ap.edu.aportage.helpers.Statussen;
 
 public class Melding {
     public int _id;

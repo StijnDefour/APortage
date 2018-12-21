@@ -1,4 +1,4 @@
-package be.ap.edu.aportage.Helpers;
+package be.ap.edu.aportage.helpers;
 
 public enum MongoCollections {
 
