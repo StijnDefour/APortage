@@ -15,7 +15,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import org.json.JSONObject;
 
 import be.ap.edu.aportage.R;
-import be.ap.edu.aportage.interfaces.ApiContract;
+import be.ap.edu.aportage.helpers.ApiContract;
 import be.ap.edu.aportage.interfaces.CampusKleuren;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.helpers.MongoCollections;
