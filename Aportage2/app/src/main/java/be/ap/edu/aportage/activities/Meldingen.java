@@ -20,10 +20,10 @@ import org.json.JSONObject;
 import java.util.List;
 
 import be.ap.edu.aportage.R;
-import be.ap.edu.aportage.interfaces.ApiContract;
+import be.ap.edu.aportage.helpers.ApiContract;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
-import be.ap.edu.aportage.interfaces.MongoCollections;
-import be.ap.edu.aportage.interfaces.Statussen;
+import be.ap.edu.aportage.helpers.MongoCollections;
+import be.ap.edu.aportage.helpers.Statussen;
 import be.ap.edu.aportage.managers.MyDatamanger;
 import be.ap.edu.aportage.models.Melder;
 
@@ -89,6 +89,10 @@ public class Meldingen extends AppCompatActivity {
     private void getMeldingenData() {
         String url = ApiContract.createMeldingenQueryUrl(s_campus, s_verdieping, s_lokaal);
         JsonArrayRequest req = dataManager.createGetRequest(url, MongoCollections.MELDINGEN, new IVolleyCallback() {
+<<<<<<< HEAD
+=======
+
+>>>>>>> login-functionaliteit
             @Override
             public void onCustomSuccess(Object data) {
                 Log.d("getMeldingenLijst", data.toString());

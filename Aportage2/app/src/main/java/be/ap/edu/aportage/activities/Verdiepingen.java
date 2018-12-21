@@ -16,10 +16,10 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import org.json.JSONObject;
 
 import be.ap.edu.aportage.R;
-import be.ap.edu.aportage.interfaces.ApiContract;
+import be.ap.edu.aportage.helpers.ApiContract;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.managers.MyDatamanger;
-import be.ap.edu.aportage.interfaces.MongoCollections;
+import be.ap.edu.aportage.helpers.MongoCollections;
 import be.ap.edu.aportage.recycleradapters.VerdiepenRecyclerAdapter;
 
 public class Verdiepingen extends AppCompatActivity {
@@ -65,6 +65,10 @@ public class Verdiepingen extends AppCompatActivity {
 
     private void requestVerdiepenData() {
         JsonArrayRequest req = this.dataManager.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.VERDIEPEN), MongoCollections.VERDIEPEN, new IVolleyCallback() {
+<<<<<<< HEAD
+=======
+
+>>>>>>> login-functionaliteit
 
             @Override
             public void onCustomSuccess(Object data) {

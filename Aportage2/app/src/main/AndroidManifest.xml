@@ -49,7 +49,7 @@
         <activity
             android:name=".activities.Lokalen"
             android:label="@string/title_activity_lokalen"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.Overzicht"
             android:label="@string/title_activity_overzicht"
@@ -71,7 +71,8 @@
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="ocr" />
 
-        <activity android:name=".activities.LoginActivity"></activity>
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.RegisterenActivity"></activity>
     </application>
 
 </manifest>
