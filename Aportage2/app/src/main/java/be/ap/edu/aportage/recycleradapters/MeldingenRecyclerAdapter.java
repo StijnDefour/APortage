@@ -88,12 +88,22 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
                     intent.putExtra(context.getResources().getString(R.string.lokaal_intent), locatie[2]);
 
                     context.startActivity(intent);
-                    ((Meldingen)context).finish();
+                    ((Meldingen) context).finish();
                 }
             });
         }
     };
 
 
+    public void clearMeldingen() {
+        int size = this.meldingenList.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                meldingenList.remove(0);
+            }
+
+//            this.notifyItemRangeRemoved(0, size);
+        }
+    }
 
 }

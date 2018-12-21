@@ -16,7 +16,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import org.json.JSONObject;
 
 import be.ap.edu.aportage.R;
-import be.ap.edu.aportage.helpers.ApiContract;
+import be.ap.edu.aportage.interfaces.ApiContract;
+import be.ap.edu.aportage.interfaces.CampusKleuren;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.managers.MyDatamanger;
 import be.ap.edu.aportage.helpers.MongoCollections;
@@ -34,6 +35,8 @@ public class Verdiepingen extends AppCompatActivity {
     private Intent inkomendeIntent;
     private Button navBtnCampus;
 
+    private CampusKleuren campusKleuren = new CampusKleuren();
+
     String s_campus;
 
     @Override
@@ -46,6 +49,8 @@ public class Verdiepingen extends AppCompatActivity {
         this.s_campus = this.inkomendeIntent.getStringExtra(getString(R.string.campus_intent));
         this.navBtnCampus = (Button)findViewById(R.id.btn_nav_campus);
         this.navBtnCampus.setText(s_campus);
+        this.navBtnCampus.setBackgroundColor(campusKleuren.getCampusColor(s_campus.toLowerCase(), this));
+
         this.verdiepenAdapter = new VerdiepenRecyclerAdapter(this, this.dataManager.getVerdiepenLijst(s_campus), s_campus);
         this.verdiepenRV = (RecyclerView) findViewById(R.id.rv_verdiepingen);
         this.verdiepenLM = new LinearLayoutManager(this);
@@ -64,6 +69,7 @@ public class Verdiepingen extends AppCompatActivity {
     }
 
     private void requestVerdiepenData() {
+        this.verdiepenAdapter.clearVerdiepingen();
         JsonArrayRequest req = this.dataManager.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.VERDIEPEN), MongoCollections.VERDIEPEN, new IVolleyCallback() {
 
             @Override

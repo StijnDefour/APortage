@@ -3,9 +3,7 @@ package be.ap.edu.aportage.recycleradapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +73,17 @@ public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecy
                     ((Verdiepingen)context).finish();
                 }
             });
+        }
+    }
+
+    public void clearVerdiepingen() {
+        int size = this.verdiepenLijst.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                verdiepenLijst.remove(0);
+            }
+
+//            this.notifyItemRangeRemoved(0, size);
         }
     }
 }

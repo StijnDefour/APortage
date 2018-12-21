@@ -3,7 +3,6 @@ package be.ap.edu.aportage.recycleradapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +15,13 @@ import java.util.List;
 import be.ap.edu.aportage.R;
 import be.ap.edu.aportage.activities.Campussen;
 import be.ap.edu.aportage.activities.Verdiepingen;
+import be.ap.edu.aportage.interfaces.CampusKleuren;
 import be.ap.edu.aportage.models.Campus;
 
 public class CampussenRecyclerAdapter extends RecyclerView.Adapter<CampussenRecyclerAdapter.ViewHolder> {
 
     private final Context context;
+    private CampusKleuren campusKleuren = new CampusKleuren();
 
     public void setCampussenList(List<Campus> campussenList) {
         this.campussenList = campussenList;
@@ -47,23 +48,7 @@ public class CampussenRecyclerAdapter extends RecyclerView.Adapter<CampussenRecy
         Campus campus = this.campussenList.get(i);
         viewHolder.campusTitel.setText(campus.getNaam());
         viewHolder.campusAfk = campus.afkorting;
-
-        Integer bgcolor;
-        switch (campus.afkorting) {
-            case "ell":
-                bgcolor = ContextCompat.getColor(context, R.color.Ellerman);
-                break;
-            case "noo":
-                bgcolor = ContextCompat.getColor(context, R.color.Noorderplaats);
-                break;
-            case "mei":
-                bgcolor = ContextCompat.getColor(context, R.color.Meistraat);
-                break;
-            default:
-                bgcolor = ContextCompat.getColor(context, R.color.Meistraat);
-                break;
-        }
-        viewHolder.campusFoto.setBackgroundColor(bgcolor);
+        viewHolder.campusFoto.setBackgroundColor(this.campusKleuren.getCampusColor(campus.afkorting, context));
     }
 
     @Override
@@ -92,6 +77,17 @@ public class CampussenRecyclerAdapter extends RecyclerView.Adapter<CampussenRecy
                     ((Campussen)context).finish();
                 }
             });
+        }
+    }
+
+    public void clearCampussen() {
+        int size = this.campussenList.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                campussenList.remove(0);
+            }
+
+//            this.notifyItemRangeRemoved(0, size);
         }
     }
 }

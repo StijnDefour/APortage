@@ -20,7 +20,8 @@ import org.json.JSONObject;
 import java.util.List;
 
 import be.ap.edu.aportage.R;
-import be.ap.edu.aportage.helpers.ApiContract;
+import be.ap.edu.aportage.interfaces.ApiContract;
+import be.ap.edu.aportage.interfaces.CampusKleuren;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.helpers.MongoCollections;
 import be.ap.edu.aportage.helpers.Statussen;
@@ -44,6 +45,8 @@ public class Meldingen extends AppCompatActivity {
     private MyDatamanger dataManager ;
     private Intent uitgaandeIntent;
     private FloatingActionButton nieuweMeldingfab;
+
+    private CampusKleuren campusKleuren = new CampusKleuren();
 
     private String s_campus;
     private String s_verdieping;
@@ -87,6 +90,7 @@ public class Meldingen extends AppCompatActivity {
     }
 
     private void getMeldingenData() {
+        this.meldingenAdapter.clearMeldingen();
         String url = ApiContract.createMeldingenQueryUrl(s_campus, s_verdieping, s_lokaal);
         JsonArrayRequest req = dataManager.createGetRequest(url, MongoCollections.MELDINGEN, new IVolleyCallback() {
 
@@ -121,6 +125,9 @@ public class Meldingen extends AppCompatActivity {
             this.meldingenCampusBtn.setText(this.s_campus);
             this.meldingenVerdiepBtn.setText(this.s_verdieping);
             this.meldingenLokaalBtn.setText(this.s_lokaal);
+            this.meldingenCampusBtn.setBackgroundColor(campusKleuren.getCampusColor(s_campus.toLowerCase(), this));
+            this.meldingenVerdiepBtn.setBackgroundColor(campusKleuren.getVerdiepingColor(s_campus.toLowerCase(), this));
+            this.meldingenLokaalBtn.setBackgroundColor(campusKleuren.getLokaalColor(s_campus.toLowerCase(), this));
         } catch (Error e) {
             Log.e("navigatieButtonsOpvullen Mislukt", e.getMessage());
         }

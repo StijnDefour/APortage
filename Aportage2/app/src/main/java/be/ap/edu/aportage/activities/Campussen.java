@@ -39,6 +39,7 @@ public class Campussen extends AppCompatActivity {
         this.mijnLM = new LinearLayoutManager(this);
         this.mijnCampussenRV.setLayoutManager(this.mijnLM);
         this.mijnCampussenRV.setAdapter(this.campussenAdapter);
+        this.campussenAdapter.clearCampussen();
         JsonArrayRequest req = this.dataManager.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.CAMPUSSEN), MongoCollections.CAMPUSSEN, new IVolleyCallback() {
 
             @Override

@@ -15,7 +15,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import org.json.JSONObject;
 
 import be.ap.edu.aportage.R;
-import be.ap.edu.aportage.helpers.ApiContract;
+import be.ap.edu.aportage.interfaces.ApiContract;
+import be.ap.edu.aportage.interfaces.CampusKleuren;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.helpers.MongoCollections;
 import be.ap.edu.aportage.managers.MyDatamanger;
@@ -31,6 +32,8 @@ public class Lokalen extends AppCompatActivity {
     private Intent uitgaandeIntent;
     private Button btnCampus;
     private Button btnVerdiep;
+
+    private CampusKleuren campusKleuren = new CampusKleuren();
 
     String s_campus;
     String s_verdieping;
@@ -63,6 +66,7 @@ public class Lokalen extends AppCompatActivity {
     }
 
     private void requestLokalenData() {
+        this.lokalenAdapter.clearLokalen();
         JsonArrayRequest req = this.datamanger.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.LOKALEN), MongoCollections.LOKALEN, new IVolleyCallback() {
 
             @Override
@@ -91,6 +95,8 @@ public class Lokalen extends AppCompatActivity {
         try {
             btnCampus.setText(s_campus);
             btnVerdiep.setText(s_verdieping);
+            this.btnCampus.setBackgroundColor(campusKleuren.getCampusColor(s_campus.toLowerCase(), this));
+            this.btnVerdiep.setBackgroundColor(campusKleuren.getVerdiepingColor(s_campus.toLowerCase(), this));
         } catch (Error e){
             Log.e("navigatieOpvullen", e.getMessage());
         }
