@@ -32,11 +32,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.0.5'
     implementation 'org.mongodb:stitch-android-sdk:4.1.0'
     implementation 'com.android.volley:volley:1.1.1'
-    implementation 'com.google.code.gson:gson:2.8.5'
+
+
+
+
     testImplementation 'junit:junit:4.12'
-
-
-
     implementation 'com.google.firebase:firebase-storage:16.0.4'
     implementation 'com.google.firebase:firebase-database:16.0.4'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

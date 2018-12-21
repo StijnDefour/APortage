@@ -59,7 +59,7 @@ public class MyDatamanger extends Application {
 
         if(mInstance == null){
             mInstance = new MyDatamanger(ctx);
-            mContext = ctx;
+
         }
         return mInstance;
     }
