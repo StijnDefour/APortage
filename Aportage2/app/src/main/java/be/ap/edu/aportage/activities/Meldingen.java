@@ -89,10 +89,7 @@ public class Meldingen extends AppCompatActivity {
     private void getMeldingenData() {
         String url = ApiContract.createMeldingenQueryUrl(s_campus, s_verdieping, s_lokaal);
         JsonArrayRequest req = dataManager.createGetRequest(url, MongoCollections.MELDINGEN, new IVolleyCallback() {
-<<<<<<< HEAD
-=======
 
->>>>>>> login-functionaliteit
             @Override
             public void onCustomSuccess(Object data) {
                 Log.d("getMeldingenLijst", data.toString());

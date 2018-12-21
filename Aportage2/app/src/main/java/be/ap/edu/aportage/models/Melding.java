@@ -1,11 +1,7 @@
 package be.ap.edu.aportage.models;
 
-<<<<<<< HEAD
-
-
 import java.text.DateFormat;
-=======
->>>>>>> login-functionaliteit
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 

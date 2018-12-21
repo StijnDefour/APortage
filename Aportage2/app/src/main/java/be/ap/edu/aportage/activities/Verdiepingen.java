@@ -65,10 +65,6 @@ public class Verdiepingen extends AppCompatActivity {
 
     private void requestVerdiepenData() {
         JsonArrayRequest req = this.dataManager.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.VERDIEPEN), MongoCollections.VERDIEPEN, new IVolleyCallback() {
-<<<<<<< HEAD
-=======
-
->>>>>>> login-functionaliteit
 
             @Override
             public void onCustomSuccess(Object data) {

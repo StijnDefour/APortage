@@ -64,11 +64,7 @@ public class Lokalen extends AppCompatActivity {
 
     private void requestLokalenData() {
         JsonArrayRequest req = this.datamanger.createGetRequest(ApiContract.createCollectionUrl(MongoCollections.LOKALEN), MongoCollections.LOKALEN, new IVolleyCallback() {
-<<<<<<< HEAD
-=======
 
-
->>>>>>> login-functionaliteit
             @Override
             public void onCustomSuccess(Object data) {
 

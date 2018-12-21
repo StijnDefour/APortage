@@ -8,10 +8,9 @@ import android.view.View;
 import android.widget.ImageView;
 
 import be.ap.edu.aportage.R;
-<<<<<<< HEAD
-=======
+
 import be.ap.edu.aportage.managers.MyDatamanger;
->>>>>>> login-functionaliteit
+
 
 public class Overzicht extends Activity {
 
