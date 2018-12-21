@@ -1,4 +1,4 @@
-package be.ap.edu.aportage.interfaces;
+package be.ap.edu.aportage.Helpers;
 
 public enum Statussen {
 

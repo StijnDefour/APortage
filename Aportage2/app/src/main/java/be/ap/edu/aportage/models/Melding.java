@@ -1,17 +1,12 @@
 package be.ap.edu.aportage.models;
 
-import com.google.firebase.auth.FirebaseUser;
-
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import java.util.Date;
 import java.util.Locale;
 
-import be.ap.edu.aportage.interfaces.Statussen;
+import be.ap.edu.aportage.Helpers.Statussen;
 
 public class Melding {
     public int _id;

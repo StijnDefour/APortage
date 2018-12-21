@@ -1,30 +1,32 @@
 package be.ap.edu.aportage.managers;
 
 
+import android.app.Application;
 import android.content.Context;
 
 import be.ap.edu.aportage.models.Melder;
 
-public class UserManager {
+public class MyUserManager extends Application {
 
 
-    protected static UserManager mInstance = null;
+    protected static MyUserManager mInstance = null;
     private static Context mContext;
     private static Melder mMelder;
-    private UserManager(Context ctx, Melder melder){
+
+    private MyUserManager(Context ctx){
 
         this.mContext = ctx;
-        this.mMelder = melder;
+
 
     }
 
 
-    public synchronized UserManager getInstance(Context ctx, Melder melder){
-        if(this.mInstance == null){
-            this.mInstance = new UserManager(ctx, melder);
+    public static synchronized MyUserManager getInstance(Context ctx){
+        if(mInstance == null){
+            mInstance = new MyUserManager(ctx);
         }
 
-        return this.mInstance;
+        return mInstance;
     }
 
     public void meldMelderAan(){

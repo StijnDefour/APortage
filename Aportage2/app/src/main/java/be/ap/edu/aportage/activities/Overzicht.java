@@ -6,14 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.android.volley.toolbox.JsonArrayRequest;
-
-import org.json.JSONArray;
-
 import be.ap.edu.aportage.R;
-import be.ap.edu.aportage.interfaces.ApiContract;
-import be.ap.edu.aportage.interfaces.MongoCollections;
-import be.ap.edu.aportage.managers.MongoManager;
 import be.ap.edu.aportage.managers.MyDatamanger;
 
 public class Overzicht extends Activity {

@@ -17,15 +17,13 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import be.ap.edu.aportage.R;
-import be.ap.edu.aportage.interfaces.ApiContract;
+import be.ap.edu.aportage.Helpers.ApiContract;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
-import be.ap.edu.aportage.interfaces.MongoCollections;
-import be.ap.edu.aportage.interfaces.Statussen;
+import be.ap.edu.aportage.Helpers.MongoCollections;
+import be.ap.edu.aportage.Helpers.Statussen;
 import be.ap.edu.aportage.managers.MyDatamanger;
 import be.ap.edu.aportage.models.Melder;
 
