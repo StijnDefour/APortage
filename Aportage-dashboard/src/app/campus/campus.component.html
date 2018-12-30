@@ -1,3 +1,5 @@
-<p>
-  campus works!
-</p>
+<h1>{{title}}</h1>
+<input type="file" (change)="onFileSelect($event.target)" name="myfile">
+<div ng-if="fileContent" class="content">
+  {{fileContent}}
+</div>
