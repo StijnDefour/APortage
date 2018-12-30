@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import be.ap.edu.aportage.helpers.ApiContract;
 import be.ap.edu.aportage.helpers.MongoCollections;
+import be.ap.edu.aportage.interfaces.IUserCallback;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.models.Melder;
 
@@ -48,7 +49,7 @@ public class MyUserManager extends Application {
 
     }
 
-    public JsonObjectRequest checkOfMelderBestaat(Melder melder, IVolleyCallback callback) {
+    public JsonObjectRequest checkOfMelderBestaat(Melder melder, IUserCallback callback) {
 
         //https://api.mlab.com/api/1/databases/my-db/collections/my-coll?q={"active": true}&fo=true&apiKey=myAPIKey
 
@@ -58,12 +59,14 @@ public class MyUserManager extends Application {
             public void onResponse(JSONObject response) {
 
                 Log.d("melder req", response.toString());
+                callback.success(response);
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
+                callback.gefaald();
             }
         });
 
@@ -72,11 +75,21 @@ public class MyUserManager extends Application {
 
     }
 
-    public void registreerMelder() {
-
+    public void registreerMelder(Melder melder) {
+        JsonObjectRequest req = checkOfMelderBestaat(melder, new IUserCallback() {
+            @Override
+            public void success(JSONObject response) {
+                //todo: haal id van de melder uit de response + naam en sla deze op het toestel
+            }
+            @Override
+            public void gefaald() {
+                //todo: melder posten en id opslaan samen met naam
+            }
+        });
     }
 
     public void stuurBevestigingsMail() {
+        //todo: mail opsturen voor bevestiging
 
     }
 
@@ -92,6 +105,10 @@ public class MyUserManager extends Application {
 
     public <T> void addToRequestQueue(Request<T> req) {
         this.getRequestQueue().add(req);
+    }
+
+    public void meldGebruikerAan(){
+
     }
 
 

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.parse.ParseInstallation;
+
 import be.ap.edu.aportage.R;
 import be.ap.edu.aportage.managers.MyDatamanger;
 
@@ -24,6 +26,7 @@ public class Overzicht extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overzicht);
 
+        ParseInstallation.getCurrentInstallation().saveInBackground();
         //this.dataManager = MyDatamanger.getInstance(this.getApplicationContext());
 
         iv_scannen_bg = findViewById(R.id.iv_scannen_bg);
