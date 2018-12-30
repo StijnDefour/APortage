@@ -29,6 +29,12 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <service android:name=".java.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".activities.Meldingen"
             android:label="@string/title_activity_meldingen"
