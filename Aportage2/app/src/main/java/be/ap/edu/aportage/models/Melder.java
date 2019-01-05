@@ -1,10 +1,21 @@
 package be.ap.edu.aportage.models;
 
-public class Melder {
-    public String naam;
-    public boolean facilitair;
-    public String melderid;
+import com.parse.ParseUser;
 
+public class Melder extends ParseUser {
+    public String naam;
+
+    public String melderid;
+    public boolean gdpr;
+    public boolean facilitair;
+
+    public void setFacilitair(boolean facilitair) {
+        this.facilitair = facilitair;
+    }
+
+    public void setGdpr(boolean gdpr) {
+        this.gdpr = gdpr;
+    }
 
     public String getID(){
         return this.melderid;

@@ -1,15 +1,23 @@
 package be.ap.edu.aportage.activities;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import be.ap.edu.aportage.R;
 import be.ap.edu.aportage.managers.MyUserManager;
+
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -34,10 +42,20 @@ public class LoginActivity extends AppCompatActivity {
         this.loginBtn = (Button) findViewById(R.id.btn_login);
         this.regBtn = (Button) findViewById(R.id.btn_registreren);
 
+        this.regBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gaNaarRegistrerenActivity();
+            }
+        });
+
 
     }
 
-    void gaNaarRegistreren(){
+    void gaNaarRegistrerenActivity(){
+        this.uitgaandeIntent = new Intent(LoginActivity.this, RegisterenActivity.class);
+        this.uitgaandeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(this.uitgaandeIntent);
 
     }
 
@@ -47,5 +65,37 @@ public class LoginActivity extends AppCompatActivity {
 
     void toonFoutmelding(String fout){
 
+    }
+
+    void logMelderIn(){
+        ParseUser.logInInBackground(this.mailEditText.getText().toString(), this.wwEditText.getText().toString(), new LogInCallback() {
+            @Override
+            public void done(ParseUser parseUser, ParseException e) {
+                if (parseUser != null) {
+                    alertDisplayer("Sucessful Login","Welcome back" + parseUser.getUsername() + "!");
+                } else {
+                    ParseUser.logOut();
+                    Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    private void alertDisplayer(String title,String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext())
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        // don't forget to change the line below with the names of your Activities
+                        Intent intent = new Intent(LoginActivity.this, UitloggenActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                });
+        AlertDialog ok = builder.create();
+        ok.show();
     }
 }
