@@ -18,6 +18,9 @@ import android.widget.ImageView;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.android.MediaManager;
+import com.parse.ParseUser;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +29,12 @@ import java.util.Calendar;
 import java.util.Date;
 
 import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.helpers.MongoCollections;
+import be.ap.edu.aportage.helpers.Statussen;
 import be.ap.edu.aportage.interfaces.CampusKleuren;
+import be.ap.edu.aportage.interfaces.IVolleyCallback;
+import be.ap.edu.aportage.managers.MyDatamanger;
+import be.ap.edu.aportage.models.Melding;
 
 public class ScanMelding extends AppCompatActivity {
 
@@ -41,6 +49,7 @@ public class ScanMelding extends AppCompatActivity {
     private CampusKleuren campusKleuren = new CampusKleuren();
 
     EditText tvTitel;
+    EditText tvOmschrijving;
 
     Button btnOk;
     Button btnAnnuleer;
@@ -48,6 +57,8 @@ public class ScanMelding extends AppCompatActivity {
     String s_campus;
     String s_verdieping;
     String s_lokaal;
+
+    private MyDatamanger myDatamanger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +72,15 @@ public class ScanMelding extends AppCompatActivity {
         this.btnLokaal = findViewById(R.id.btn_melding_lokaalnr);
 
         this.tvTitel = findViewById(R.id.et_melding_titel);
+        this.tvOmschrijving = findViewById(R.id.et_melding_omschrijving);
 
         btnOk = findViewById(R.id.btn_melding_ok);
         btnAnnuleer = findViewById(R.id.btn_melding_annuleren);
 
         lokaalButtonsOpvullen();
         buttonsAddClickEvents();
+
+        this.myDatamanger = MyDatamanger.getInstance(getApplicationContext());
 
         if (savedInstanceState != null) {
             this.tvTitel.setText(savedInstanceState.getString("tvTitel"));
@@ -178,6 +192,30 @@ public class ScanMelding extends AppCompatActivity {
 
         //todo vul in juiste data en push naar database
         //be.ap.edu.aportage.models.Melding melding = new be.ap.edu.aportage.models.Melding("MockMelding", "Blablablablabla", new String[]{"ELL","-01","005"}, "behandeling", new Date());
+        Melding melding = new Melding(
+            this.tvTitel.getText().toString(),
+            this.tvOmschrijving.getText().toString(),
+            new String[]{this.btnCampus.getText().toString(), this.btnVerdiep.getText().toString(), this.btnLokaal.getText().toString()},
+            Statussen.ONTVANGEN,
+            new Date()
+        );
+        melding.setMelderId(ParseUser.getCurrentUser().getObjectId());
+        this.myDatamanger.createPostRequest(MongoCollections.MELDINGEN, melding, new IVolleyCallback() {
+            @Override
+            public void onCustomSuccess(Object data) {
+
+            }
+
+            @Override
+            public void onPostSuccess(JSONObject response) {
+                Log.v("testPost", response.toString());
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
     }
 
     private void lokaalButtonsOpvullen() {
