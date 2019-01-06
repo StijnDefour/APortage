@@ -23,6 +23,7 @@ import com.cloudinary.android.MediaManager;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import be.ap.edu.aportage.R;
@@ -165,13 +166,16 @@ public class ScanMelding extends AppCompatActivity {
         //todo test foto api
         Cloudinary cloudinary = new Cloudinary();
         try {
-//            Map result = cloudinary.uploader().upload(mCurrentPhotoPath, ObjectUtils.emptyMap());
-//            Log.e("testFotoAPI", result.toString());
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+            String strDate = sdf.format(c.getTime());
 
-            String requestId = MediaManager.get().upload(mCurrentPhotoPath)
+            MediaManager.get().upload(mCurrentPhotoPath)
                     .unsigned("qjmws079")
+                    .option("folder", "meldingen/")
+                    .option("public_id", strDate)
                     .dispatch();
-            Log.e("test", requestId);
+            Log.e("test", strDate);
         } catch (Exception e) {
             e.printStackTrace();
         }
