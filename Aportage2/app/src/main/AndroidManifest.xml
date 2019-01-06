@@ -93,7 +93,7 @@
 
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.RegisterenActivity" />
-        <activity android:name=".activities.UitloggenActivity"></activity>
+        <activity android:name=".activities.UitloggenActivity" />
 
         <service
             android:name="com.parse.fcm.ParseFirebaseInstanceIdService"
