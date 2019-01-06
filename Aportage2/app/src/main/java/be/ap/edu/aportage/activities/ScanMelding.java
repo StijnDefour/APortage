@@ -1,6 +1,5 @@
 package be.ap.edu.aportage.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,9 +15,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.cloudinary.Cloudinary;
+import com.cloudinary.android.MediaManager;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import be.ap.edu.aportage.R;
@@ -69,6 +73,13 @@ public class ScanMelding extends AppCompatActivity {
             this.mCurrentPhotoPath = savedInstanceState.getString("mCurrentPhotoPath");
         } else {
             Log.e("State", "state did not exist");
+        }
+
+//        Cloudinary init
+        try {
+            MediaManager.init(this);
+        } catch (Exception e) {
+
         }
     }
 
@@ -135,21 +146,35 @@ public class ScanMelding extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 slaMeldingOpNaarDeDB();
-                gaNaarMelding();
+                Intent intent = new Intent(ScanMelding.this, Meldingen.class);
+                intent.putExtra(getString(R.string.campus_intent), s_campus);
+                intent.putExtra(getString(R.string.verdieping_intent), s_verdieping);
+                intent.putExtra(getString(R.string.lokaal_intent), s_lokaal);
+                startActivity(intent);
                 ScanMelding.this.finish();
             }
         });
     }
 
-    private void gaNaarMelding() {
-    }
-
-    private void maakIntent(Activity destination) {
-
-    }
-    private void saveInDB() {}
-
     private void slaMeldingOpNaarDeDB() {
+        //todo test foto api
+        Cloudinary cloudinary = new Cloudinary();
+        String fotoUrl = "";
+        try {
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+            String strDate = sdf.format(c.getTime());
+
+            MediaManager.get().upload(mCurrentPhotoPath)
+                    .unsigned("qjmws079")
+                    .option("folder", "meldingen/")
+                    .option("public_id", strDate)
+                    .dispatch();
+            Log.e("test", strDate);
+            fotoUrl = "https://res.cloudinary.com/dt6ae1zfh/image/upload/v1546785206/meldingen/" + strDate + ".jpg";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //todo vul in juiste data en push naar database
         //be.ap.edu.aportage.models.Melding melding = new be.ap.edu.aportage.models.Melding("MockMelding", "Blablablablabla", new String[]{"ELL","-01","005"}, "behandeling", new Date());
