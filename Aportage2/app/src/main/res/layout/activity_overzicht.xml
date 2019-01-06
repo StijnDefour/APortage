@@ -7,7 +7,7 @@
     tools:context=".activities.Overzicht">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/achtergrond"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:alpha="1"
@@ -15,26 +15,28 @@
         android:src="@drawable/login_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/cl-scannen"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         app:layout_constraintBottom_toTopOf="@+id/cl-zoeken"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@+id/achtergrond">
 
         <ImageView
             android:id="@+id/iv-scannen-bg"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="32dp"
             android:alpha="0.7"
             android:src="@color/ap"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -58,7 +60,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/iv-scannen-bg"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.61"
             tools:text="@string/overzicht_label_scannen" />
     </android.support.constraint.ConstraintLayout>
 
@@ -66,13 +67,13 @@
         android:id="@+id/cl-zoeken"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/cl-meldingen"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cl-scannen">
 
@@ -80,11 +81,11 @@
             android:id="@+id/iv-zoeken-bg"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="32dp"
             android:alpha="0.7"
             android:src="@color/ap"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -92,20 +93,64 @@
             android:id="@+id/tv-zoeken"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat"
             android:text="@string/overzicht_label_zoeken"
             android:textAlignment="center"
             android:textColor="@color/wit"
             android:textSize="40sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv-zoeken-bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv-zoeken-bg"
+            tools:text="Zoek lokaal" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl-meldingen"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl-zoeken">
+
+        <ImageView
+            android:id="@+id/ib-meldingen-bg"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha="0.7"
+            android:src="@color/ap"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/iv-zoeken-bg"
-            app:layout_constraintVertical_bias="0.39"
-            tools:text="Zoek lokaal" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
+        <TextView
+            android:id="@+id/tv-meldingen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/overzicht_label_zoeken"
+            android:textAlignment="center"
+            android:textColor="@color/wit"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ib-meldingen-bg"
+            app:layout_constraintEnd_toEndOf="@+id/ib-meldingen-bg"
+            app:layout_constraintStart_toStartOf="@+id/ib-meldingen-bg"
+            app:layout_constraintTop_toTopOf="@+id/ib-meldingen-bg"
+            tools:text="Mijn Meldingen" />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -47,5 +47,6 @@
     <!-- Change the following strings as required -->
     <string name="back4app_app_id">yWQjcw5gFEV6rv87LcC74lYDR3ImNemoYQoqzxRs</string>
     <string name="back4app_client_key">JNWCqKLCZynJ6YsqEVftXeUQo4wsUm85kgR8YuPR</string>
+    <string name="tv_mijnmeldingen_titel">Mijn Melding</string>
 
 </resources>

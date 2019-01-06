@@ -296,4 +296,9 @@ public class MyDatamanger extends Application {
         return this.mCampussen;
     }
 
+    public List<Melding> getMeldingenLijstMetId(String objectId) {
+        //https://api.mlab.com/api/1/databases/my-db/collections/my-coll?q={"active": true}&apiKey=myAPIKey
+
+
+    }
 }
