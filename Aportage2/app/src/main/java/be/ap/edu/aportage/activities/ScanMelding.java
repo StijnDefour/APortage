@@ -1,6 +1,5 @@
 package be.ap.edu.aportage.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -147,24 +146,20 @@ public class ScanMelding extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 slaMeldingOpNaarDeDB();
-//                Intent intent = new Intent(ScanMelding.this, Meldingen.class);
-//                intent.putExtra(getString(R.string.campus_intent), s_campus);
-//                intent.putExtra(getString(R.string.verdieping_intent), s_verdieping);
-//                intent.putExtra(getString(R.string.lokaal_intent), s_lokaal);
-//                startActivity(intent);
-//                ScanMelding.this.finish();
+                Intent intent = new Intent(ScanMelding.this, Meldingen.class);
+                intent.putExtra(getString(R.string.campus_intent), s_campus);
+                intent.putExtra(getString(R.string.verdieping_intent), s_verdieping);
+                intent.putExtra(getString(R.string.lokaal_intent), s_lokaal);
+                startActivity(intent);
+                ScanMelding.this.finish();
             }
         });
     }
 
-    private void maakIntent(Activity destination) {
-
-    }
-    private void saveInDB() {}
-
     private void slaMeldingOpNaarDeDB() {
         //todo test foto api
         Cloudinary cloudinary = new Cloudinary();
+        String fotoUrl = "";
         try {
             Calendar c = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
@@ -176,6 +171,7 @@ public class ScanMelding extends AppCompatActivity {
                     .option("public_id", strDate)
                     .dispatch();
             Log.e("test", strDate);
+            fotoUrl = "https://res.cloudinary.com/dt6ae1zfh/image/upload/v1546785206/meldingen/" + strDate + ".jpg";
         } catch (Exception e) {
             e.printStackTrace();
         }
