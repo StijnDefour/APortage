@@ -16,6 +16,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.cloudinary.Cloudinary;
+import com.cloudinary.android.MediaManager;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -69,6 +73,13 @@ public class ScanMelding extends AppCompatActivity {
             this.mCurrentPhotoPath = savedInstanceState.getString("mCurrentPhotoPath");
         } else {
             Log.e("State", "state did not exist");
+        }
+
+//        Cloudinary init
+        try {
+            MediaManager.init(this);
+        } catch (Exception e) {
+
         }
     }
 
@@ -135,13 +146,14 @@ public class ScanMelding extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 slaMeldingOpNaarDeDB();
-                gaNaarMelding();
-                ScanMelding.this.finish();
+//                Intent intent = new Intent(ScanMelding.this, Meldingen.class);
+//                intent.putExtra(getString(R.string.campus_intent), s_campus);
+//                intent.putExtra(getString(R.string.verdieping_intent), s_verdieping);
+//                intent.putExtra(getString(R.string.lokaal_intent), s_lokaal);
+//                startActivity(intent);
+//                ScanMelding.this.finish();
             }
         });
-    }
-
-    private void gaNaarMelding() {
     }
 
     private void maakIntent(Activity destination) {
@@ -150,6 +162,19 @@ public class ScanMelding extends AppCompatActivity {
     private void saveInDB() {}
 
     private void slaMeldingOpNaarDeDB() {
+        //todo test foto api
+        Cloudinary cloudinary = new Cloudinary();
+        try {
+//            Map result = cloudinary.uploader().upload(mCurrentPhotoPath, ObjectUtils.emptyMap());
+//            Log.e("testFotoAPI", result.toString());
+
+            String requestId = MediaManager.get().upload(mCurrentPhotoPath)
+                    .unsigned("qjmws079")
+                    .dispatch();
+            Log.e("test", requestId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //todo vul in juiste data en push naar database
         //be.ap.edu.aportage.models.Melding melding = new be.ap.edu.aportage.models.Melding("MockMelding", "Blablablablabla", new String[]{"ELL","-01","005"}, "behandeling", new Date());
