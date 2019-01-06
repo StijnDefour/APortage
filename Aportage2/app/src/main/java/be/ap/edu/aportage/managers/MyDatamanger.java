@@ -75,9 +75,7 @@ public class MyDatamanger extends Application {
     }
 
     private void parseToCorrectList(JSONObject obj, MongoCollections coll,  IVolleyCallback callback) throws JSONException {
-        //todo: array meegegven ipv van obj
         switch(coll){
-
             case CAMPUSSEN :  createCampusAndAddToList(obj, callback);
                 break;
             case MELDINGEN: createMeldingAndAddToList(obj, callback);
@@ -132,29 +130,23 @@ public class MyDatamanger extends Application {
             meldingObject.put(ApiContract.LOKAAL_NR, melding.locatie[2].toString());
             meldingObject.put("status", melding.status.toString());
 
-
+            Log.d("postTest", "test json to array");
             jsonArrayR = new JsonObjectRequest(
                     Request.Method.POST,
                     ApiContract.createCollectionUrlMetApi(collection),
                     meldingObject,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.d("post req", response.toString());
+                    response -> {
+                        Log.d("post req", response.toString());
 
-                            callback.onPostSuccess(response);
-                        }
+                        callback.onPostSuccess(response);
+                    }, error -> {
+                        //throw new JSONException("er is iets misgelopen tijdens het posten van de melding");
+                        Log.e("volleyerror", error.getMessage());
+                        callback.onFailure();
 
-                    },new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    //throw new JSONException("er is iets misgelopen tijdens het posten van de melding");
-                    Log.e("volleyerror", error.getMessage());
+                    });
 
-                }
-            });
-
-
+            Log.d("postTest", "test json to array");
 
         } catch (JSONException e) {
             e.printStackTrace();

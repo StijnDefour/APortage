@@ -29,7 +29,6 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
 
     private List<Melding> meldingenList;
 
-
     public MeldingenRecyclerAdapter(Context context, List<Melding> meldingenList) {
         this.context = context;
         this.meldingenList = meldingenList;
@@ -51,6 +50,8 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
         viewHolder.meldingBeschrijving.setText(melding.omschrijving);
         viewHolder.melding_id = i;
         viewHolder.locatie = melding.locatie;
+        //todo load image from cloudinary
+        // load image code here
     }
 
     @Override
@@ -101,8 +102,6 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
             for (int i = 0; i < size; i++) {
                 meldingenList.remove(0);
             }
-
-//            this.notifyItemRangeRemoved(0, size);
         }
     }
 
