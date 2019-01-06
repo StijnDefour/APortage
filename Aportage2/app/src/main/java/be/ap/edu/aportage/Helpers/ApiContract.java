@@ -11,11 +11,17 @@ public class ApiContract {
     public static String LOKAAL_NR = "lokaalnr";
     public static String CAMPUS_NAAM = "campusnaam";
 
-    public static String createCollectionUrl(be.ap.edu.aportage.helpers.MongoCollections coll){
+    public static String createCollectionUrlMetApi(be.ap.edu.aportage.helpers.MongoCollections coll){
+
+
         //https://api.mlab.com/api/1/databases/my-db/collections/my-coll?apiKey=myAPIKey
         String collectionUrl = ApiContract.API_BASE_URL+"/databases/"+ApiContract.DATABASE+"/collections/"+coll.toString()+"?apiKey="+ ApiContract.API_KEY;
         Log.d("ApiContract createCollUrl", collectionUrl);
         return collectionUrl;
+    }
+
+    public static String createCollectionUrl(MongoCollections coll){
+        return ApiContract.API_BASE_URL+"/databases/"+ApiContract.DATABASE+"/collections/"+coll.toString()+"/";
     }
 
     public static String createMeldingenQueryUrl(String campus, String verdiep, String lok ){

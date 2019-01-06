@@ -27,6 +27,7 @@ import org.json.JSONObject;
 import be.ap.edu.aportage.R;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.managers.MyDatamanger;
+import be.ap.edu.aportage.managers.MyMailManager;
 
 public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Callback, Detector.Processor  {
 
@@ -45,7 +46,11 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
 
     private MyDatamanger datamanger;
 
+
     public boolean exist;
+
+    private MyMailManager mailManager;
+
 
     @SuppressLint("MissingPermission")
     @Override
