@@ -195,7 +195,6 @@ public class Meldingen extends AppCompatActivity {
                 Statussen.BEHANDELING,
                 "2018-09-28");
         Melder melder = new Melder();
-        melder.melderid = "testid";
         melding.melder = melder;
         JsonObjectRequest obj = this.dataManager.createPostRequest(MongoCollections.MELDINGEN, melding, new IVolleyCallback() {
             @Override
