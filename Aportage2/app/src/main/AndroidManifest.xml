@@ -13,12 +13,23 @@
         android:maxSdkVersion="18" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/ap_thema">
+        <meta-data
+            android:name="com.parse.SERVER_URL"
+            android:value="@string/back4app_server_url" />
+        <meta-data
+            android:name="com.parse.APPLICATION_ID"
+            android:value="@string/back4app_app_id" />
+        <meta-data
+            android:name="com.parse.CLIENT_KEY"
+            android:value="@string/back4app_client_key" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="be.ap.edu.aportage"
@@ -74,7 +85,8 @@
             android:value="cloudinary://366286138446152:_qUdFOAl5B7J6TAQRYPN4hhYxz4@dt6ae1zfh"/>
 
         <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.RegisterenActivity"></activity>
+        <activity android:name=".activities.RegisterenActivity" />
+        <activity android:name=".activities.UitloggenActivity"></activity>
     </application>
 
 </manifest>

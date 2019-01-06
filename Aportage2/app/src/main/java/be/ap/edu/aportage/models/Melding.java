@@ -19,9 +19,12 @@ public class Melding {
 
     public Date datum;
 
+    //todo: ipv melder melderid gebruiken dat oevreenkomt met de parseurser objectid
     public Melder melder;
+    public String melderId;
 
-    //todo_done: api call naar 26 vs 24 rechtzetten om localdatetime te kunnen gebruiken, of een andere date lib gebruiken
+
+//todo_done: api call naar 26 vs 24 rechtzetten om localdatetime te kunnen gebruiken, of een andere date lib gebruiken
 
     public Melding(String t, String omschr, String[] loc, Statussen sts, Date d) {
         this.titel = t;
@@ -66,4 +69,16 @@ public class Melding {
             e.printStackTrace();
         }
     }
+
+
+    public String getMelderId() {
+        return melderId;
+    }
+
+    public void setMelderId(String melderId) {
+        this.melderId = melderId;
+    }
+
+
+
 }
