@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.ap.edu.aportage.helpers.ApiContract;
+import be.ap.edu.aportage.interfaces.IMeldingCallBack;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.helpers.Statussen;
 import be.ap.edu.aportage.models.Campus;
@@ -307,7 +308,15 @@ public class MyDatamanger extends Application {
                     public void onResponse(JSONArray response) {
                         Log.d(TAG_DM, response.toString());
 
-                        callback.onCustomSuccess(response);
+                        for(int i = 0; i < response.length(); i++){
+                            try {
+                                JSONObject obj = response.getJSONObject(i);
+                                callback.onCustomSuccess(response);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
                     }
                 }, new Response.ErrorListener() {
 
@@ -320,5 +329,43 @@ public class MyDatamanger extends Application {
 
         return jsonArrayR;
 
+    }
+
+    public List<Melding> geefParsedMeldingen(JSONArray meldingenJSON){
+        List<Melding> meldingenList = new ArrayList<>();
+        for(int i = 0; i < meldingenJSON.length(); i++){
+            try {
+                JSONObject obj = meldingenJSON.getJSONObject(i);
+                meldingenList.add(parseMeldingJson(obj));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        return meldingenList;
+    }
+
+    private Melding parseMeldingJson(JSONObject obj) {
+        Melding melding = null;
+        try {
+           melding = new Melding(
+                    obj.get("titel").toString(),
+                    obj.get("omschrijving").toString(),
+                    new String[]{
+                            obj.get("campusafk").toString(),
+                            obj.get("verdiepnr").toString(),
+                            obj.get("lokaalnr").toString()
+                    },
+                    Statussen.getStatus(obj.get("status").toString()),
+                    obj.get("datum").toString());
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return melding;
     }
 }
