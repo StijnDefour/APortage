@@ -10,6 +10,7 @@ public class ApiContract {
     public static String VERDIEP_NR = "verdiepnr";
     public static String LOKAAL_NR = "lokaalnr";
     public static String CAMPUS_NAAM = "campusnaam";
+    public static String MELDER_ID = "melderid";
 
 
     public static String createCollectionUrlMetApi(be.ap.edu.aportage.helpers.MongoCollections coll){
@@ -50,6 +51,14 @@ public class ApiContract {
         Log.d("ApiContract query",lokalenUrl );
         return lokalenUrl;
 
+    }
+
+
+    public static String createUrlMetObjectIdQuery(String objectID){
+        //todo: melding object id query afmaken
+        String query = "?q={\""+MELDER_ID+"\":\""+objectID+"\"}";
+
+        return "";
     }
 
 

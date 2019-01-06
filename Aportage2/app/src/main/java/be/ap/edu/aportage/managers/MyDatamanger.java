@@ -296,9 +296,29 @@ public class MyDatamanger extends Application {
         return this.mCampussen;
     }
 
-    public List<Melding> getMeldingenLijstMetId(String objectId) {
+    public JsonArrayRequest getMeldingenLijstMetId(String objectId, IVolleyCallback callback) {
         //https://api.mlab.com/api/1/databases/my-db/collections/my-coll?q={"active": true}&apiKey=myAPIKey
 
+        String url = ApiContract.createCollectionUrl(MongoCollections.MELDINGEN);
+        JsonArrayRequest jsonArrayR = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d(TAG_DM, response.toString());
+
+                        callback.onCustomSuccess(response);
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // done: Handle error
+                        Log.e(TAG_DM, "something went wrong getting melding with id"+objectId);
+                    }
+                });
+
+        return jsonArrayR;
 
     }
 }
