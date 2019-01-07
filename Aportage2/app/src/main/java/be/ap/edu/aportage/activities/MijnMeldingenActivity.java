@@ -50,30 +50,9 @@ public class MijnMeldingenActivity extends AppCompatActivity {
 
             @Override
             public void onPostSuccess(JSONObject response) {
-
+                 //ignore
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
 

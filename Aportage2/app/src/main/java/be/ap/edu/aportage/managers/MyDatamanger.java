@@ -300,22 +300,14 @@ public class MyDatamanger extends Application {
     public JsonArrayRequest getMeldingenLijstMetId(String objectId, IVolleyCallback callback) {
         //https://api.mlab.com/api/1/databases/my-db/collections/my-coll?q={"active": true}&apiKey=myAPIKey
 
-        String url = ApiContract.createCollectionUrl(MongoCollections.MELDINGEN);
+        String url = ApiContract.createUrlMetObjectIdQuery(objectId);
         JsonArrayRequest jsonArrayR = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.d(TAG_DM, response.toString());
-
-                        for(int i = 0; i < response.length(); i++){
-                            try {
-                                JSONObject obj = response.getJSONObject(i);
-                                callback.onCustomSuccess(response);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
+                        callback.onCustomSuccess(response);
 
                     }
                 }, new Response.ErrorListener() {

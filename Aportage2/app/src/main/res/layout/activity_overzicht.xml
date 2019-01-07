@@ -122,7 +122,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cl-zoeken">
 
         <ImageView
-            android:id="@+id/ib-meldingen-bg"
+            android:id="@+id/iv-meldingen-bg"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:alpha="0.7"
@@ -146,10 +146,10 @@
             android:textAlignment="center"
             android:textColor="@color/wit"
             android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="@+id/ib-meldingen-bg"
-            app:layout_constraintEnd_toEndOf="@+id/ib-meldingen-bg"
-            app:layout_constraintStart_toStartOf="@+id/ib-meldingen-bg"
-            app:layout_constraintTop_toTopOf="@+id/ib-meldingen-bg"
+            app:layout_constraintBottom_toBottomOf="@+id/iv-meldingen-bg"
+            app:layout_constraintEnd_toEndOf="@+id/iv-meldingen-bg"
+            app:layout_constraintStart_toStartOf="@+id/iv-meldingen-bg"
+            app:layout_constraintTop_toTopOf="@+id/iv-meldingen-bg"
             tools:text="Mijn Meldingen" />
     </android.support.constraint.ConstraintLayout>
 

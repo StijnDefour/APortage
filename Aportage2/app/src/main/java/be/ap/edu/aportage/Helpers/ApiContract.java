@@ -57,8 +57,9 @@ public class ApiContract {
     public static String createUrlMetObjectIdQuery(String objectID){
         //todo: melding object id query afmaken
         String query = "?q={\""+MELDER_ID+"\":\""+objectID+"\"}";
-
-        return "";
+        String url = ApiContract.API_BASE_URL+"/databases/"+ApiContract.DATABASE+"/collections/"+ MongoCollections.MELDINGEN + query +"&apiKey="+ ApiContract.API_KEY;;
+        Log.d("ApiContract url", url);
+        return url;
     }
 
 
