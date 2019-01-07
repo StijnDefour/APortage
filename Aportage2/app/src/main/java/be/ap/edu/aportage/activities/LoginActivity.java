@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginBtn;
     private Button regBtn;
     private Intent uitgaandeIntent;
-    private TextView foutMeldingTextView; //todo: foutmeldingen tonen bij foute login
+    //private TextView foutMeldingTextView; //todo_done: foutmeldingen tonen bij foute login
 
 
     @Override
@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 } else {
                     ParseUser.logOut();
-                    Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "Oei, jouw e-mailadres of wachtwoord worden niet herkent. Probeer opnieuw.", Toast.LENGTH_LONG).show();
                 }
             }
         });

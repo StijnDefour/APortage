@@ -16,6 +16,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -210,6 +211,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
             this.s_lokaalNr = individueleWoorden[3];
         } catch (Error e) {
             Log.e(LOG_TAG, e.getMessage());
+            Toast.makeText(ScanLokaal.this, "Er werd geen tekst herkend, probeer opnieuw", Toast.LENGTH_LONG).show();
         }
     }
 }
