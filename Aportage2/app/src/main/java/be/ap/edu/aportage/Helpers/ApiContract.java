@@ -11,12 +11,8 @@ public class ApiContract {
     public static String LOKAAL_NR = "lokaalnr";
     public static String CAMPUS_NAAM = "campusnaam";
     public static String MELDER_ID = "melderid";
-<<<<<<< Updated upstream
 
-=======
     public static String MELDING_ID = "_id";
-    public static String createCollectionUrlMetApi(be.ap.edu.aportage.helpers.MongoCollections coll){
->>>>>>> Stashed changes
 
     public static String createCollectionUrlMetApi(be.ap.edu.aportage.helpers.MongoCollections coll){
 
