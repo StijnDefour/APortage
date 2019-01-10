@@ -10,6 +10,11 @@ public class ApiContract {
     public static String VERDIEP_NR = "verdiepnr";
     public static String LOKAAL_NR = "lokaalnr";
     public static String CAMPUS_NAAM = "campusnaam";
+    public static String MELDER_ID = "melderid";
+
+
+    public static String MELDING_ID = "_id";
+
 
     public static String createCollectionUrlMetApi(be.ap.edu.aportage.helpers.MongoCollections coll){
 
@@ -44,6 +49,18 @@ public class ApiContract {
 
     }
 
+    public static String createMeldingIDQueryUrl(String meldingid){
+        String meldingenUrl = ApiContract.API_BASE_URL+"/databases/"+ApiContract.DATABASE+"/collections/"+ MongoCollections.MELDINGEN;
+        String meldingenQueryUrl = meldingenUrl+createMeldingIdQuery(meldingid)+"&apiKey="+ ApiContract.API_KEY;
+        Log.d("ApiContract queryUrl", meldingenQueryUrl);
+        return meldingenQueryUrl;
+    }
+
+   public static String createMeldingIdQuery(String meldingid){
+
+       return  "?q={\""+MELDING_ID+"\":\""+meldingid+"\"}";
+   }
+
     public static String createLokaalQuery(String campus, String verdiep, String lok) {
         String query = createQueryUrl(campus, verdiep, lok);
         String lokalenUrl = ApiContract.API_BASE_URL+"/databases/"+ApiContract.DATABASE+"/collections/"+ MongoCollections.LOKALEN + query;
@@ -51,6 +68,18 @@ public class ApiContract {
         return lokalenUrl;
 
     }
+
+
+
+    public static String createUrlMetObjectIdQuery(String objectID){
+        //todo: melding object id query afmaken
+        String query = "?q={\""+MELDER_ID+"\":\""+objectID+"\"}";
+        String url = ApiContract.API_BASE_URL+"/databases/"+ApiContract.DATABASE+"/collections/"+ MongoCollections.MELDINGEN + query +"&apiKey="+ ApiContract.API_KEY;;
+        Log.d("ApiContract url", url);
+        return url;
+    }
+
+
 
 
 }

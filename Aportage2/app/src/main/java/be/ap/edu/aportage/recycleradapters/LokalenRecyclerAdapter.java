@@ -93,8 +93,6 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
             for (int i = 0; i < size; i++) {
                 lokalenList.remove(0);
             }
-
-//            this.notifyItemRangeRemoved(0, size);
         }
     }
 }

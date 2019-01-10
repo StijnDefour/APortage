@@ -21,9 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.ap.edu.aportage.helpers.ApiContract;
-import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.helpers.MongoCollections;
 import be.ap.edu.aportage.helpers.Statussen;
+import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.models.Campus;
 import be.ap.edu.aportage.models.Lokaal;
 import be.ap.edu.aportage.models.Melding;
@@ -75,9 +75,7 @@ public class MyDatamanger extends Application {
     }
 
     private void parseToCorrectList(JSONObject obj, MongoCollections coll,  IVolleyCallback callback) throws JSONException {
-        //todo: array meegegven ipv van obj
         switch(coll){
-
             case CAMPUSSEN :  createCampusAndAddToList(obj, callback);
                 break;
             case MELDINGEN: createMeldingAndAddToList(obj, callback);
@@ -127,34 +125,29 @@ public class MyDatamanger extends Application {
             meldingObject.put("omschrijving", melding.omschrijving);
             meldingObject.put("datum", melding.datum.toString());
             meldingObject.put("melderid", melding.melderId);
-            meldingObject.put(ApiContract.CAMPUS_AFK, melding.locatie[0].toString());
-            meldingObject.put(ApiContract.VERDIEP_NR, melding.locatie[1].toString());
-            meldingObject.put(ApiContract.LOKAAL_NR, melding.locatie[2].toString());
+            meldingObject.put(ApiContract.CAMPUS_AFK, melding.locatie[0]);
+            meldingObject.put(ApiContract.VERDIEP_NR, melding.locatie[1]);
+            meldingObject.put(ApiContract.LOKAAL_NR, melding.locatie[2]);
             meldingObject.put("status", melding.status.toString());
+            meldingObject.put("imgUrl", melding.imgUrl);
 
-
+            Log.d("postTest", "test json to array");
             jsonArrayR = new JsonObjectRequest(
                     Request.Method.POST,
                     ApiContract.createCollectionUrlMetApi(collection),
                     meldingObject,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.d("post req", response.toString());
+                    response -> {
+                        Log.d("post req", response.toString());
 
-                            callback.onPostSuccess(response);
-                        }
+                        callback.onPostSuccess(response);
+                    }, error -> {
+                        //throw new JSONException("er is iets misgelopen tijdens het posten van de melding");
+                        Log.e("volleyerror", error.getMessage());
+                        callback.onFailure();
 
-                    },new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    //throw new JSONException("er is iets misgelopen tijdens het posten van de melding");
-                    Log.e("volleyerror", error.getMessage());
+                    });
 
-                }
-            });
-
-
+            Log.d("postTest", "test json to array");
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -253,7 +246,8 @@ public class MyDatamanger extends Application {
                             obj.get("lokaalnr").toString()
                     },
                     Statussen.getStatus(obj.get("status").toString()),
-                    obj.get("datum").toString());
+                    obj.get("datum").toString(),
+                    obj.get("imgUrl").toString());
             this.mMeldingen.add(melding);
             callback.onCustomSuccess(melding);
 
@@ -320,4 +314,93 @@ public class MyDatamanger extends Application {
         return this.mCampussen;
     }
 
+    public JsonArrayRequest getMeldingenLijstMetId(String objectId, IVolleyCallback callback) {
+        //https://api.mlab.com/api/1/databases/my-db/collections/my-coll?q={"active": true}&apiKey=myAPIKey
+
+        String url = ApiContract.createUrlMetObjectIdQuery(objectId);
+        JsonArrayRequest jsonArrayR = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d(TAG_DM, response.toString());
+                        callback.onCustomSuccess(response);
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // done: Handle error
+                        Log.e(TAG_DM, "something went wrong getting melding with id"+objectId);
+                    }
+                });
+
+        return jsonArrayR;
+
+    }
+
+    public List<Melding> geefParsedMeldingen(JSONArray meldingenJSON){
+        List<Melding> meldingenList = new ArrayList<>();
+        for(int i = 0; i < meldingenJSON.length(); i++){
+            try {
+                JSONObject obj = meldingenJSON.getJSONObject(i);
+                meldingenList.add(parseMeldingJson(obj));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        return meldingenList;
+    }
+
+    public Melding parseMeldingJson(JSONObject obj) {
+        Melding melding = null;
+        try {
+           melding = new Melding(
+                    obj.get("titel").toString(),
+                    obj.get("omschrijving").toString(),
+                    new String[]{
+                            obj.get("campusafk").toString(),
+                            obj.get("verdiepnr").toString(),
+                            obj.get("lokaalnr").toString()
+                    },
+                    Statussen.getStatus(obj.get("status").toString()),
+                    obj.get("datum").toString(),
+                   obj.get("imgUrl").toString());
+          melding.setId((obj.getJSONObject("_id").get("$oid")).toString());
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return melding;
+    }
+
+    public JsonObjectRequest getMeldingMetId(String id, IVolleyCallback callback){
+        //todo : maak request
+        String url = ApiContract.createMeldingIDQueryUrl(id);
+        JsonObjectRequest req = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d(TAG_DM, response.toString());
+                        callback.onCustomSuccess(response);
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // done: Handle error
+                        Log.e(TAG_DM, "something went wrong getting melding with id"+id);
+                    }
+                });
+
+        return req;
+    }
 }

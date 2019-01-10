@@ -16,6 +16,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -219,7 +220,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
 
     public void haalCampusVerdiepLokaalDataUitGelezenString(String gelezenText){
         //todo_done: omzetten van lokaalinfo in 3 extras: afk, verdiepnr, lokaalnr
-        //todo: als er geen correct lokaal kon worden gelezen nadat user op "doorsturen" klikt -> popup tonen en naar zoeken redirecten
+        //todo_done: als er geen correct lokaal kon worden gelezen nadat user op "doorsturen" klikt -> popup tonen en naar zoeken redirecten
         Log.d(LOG_TAG + "maakAparteExtras", gelezenText );
         try {
             String[] individueleWoorden = gelezenText.split("[^\\w\\-]+|--+");
@@ -229,6 +230,14 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
             this.s_lokaalNr = individueleWoorden[3];
         } catch (Error e) {
             Log.e(LOG_TAG, e.getMessage());
+            Toast.makeText(ScanLokaal.this, "Er werd geen tekst herkend, probeer het lokaal manueel te zoeken.", Toast.LENGTH_LONG).show();
+            gaNaarCampussenActivity();
         }
+    }
+
+    private void gaNaarCampussenActivity() {
+        this.uitgaandeIntent = new Intent(ScanLokaal.this, Campussen.class);
+        this.uitgaandeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(this.uitgaandeIntent);
     }
 }

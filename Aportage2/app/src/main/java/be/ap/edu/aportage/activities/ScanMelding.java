@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.android.MediaManager;
 import com.parse.ParseUser;
@@ -65,6 +66,8 @@ public class ScanMelding extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_melding);
 
+        this.myDatamanger = MyDatamanger.getInstance(getApplicationContext());
+
         this.imageView = findViewById(R.id.imageView);
         this.button = findViewById(R.id.button);
         this.btnCampus = findViewById(R.id.btn_campus_afk);
@@ -80,7 +83,7 @@ public class ScanMelding extends AppCompatActivity {
         lokaalButtonsOpvullen();
         buttonsAddClickEvents();
 
-        this.myDatamanger = MyDatamanger.getInstance(getApplicationContext());
+
 
         if (savedInstanceState != null) {
             this.tvTitel.setText(savedInstanceState.getString("tvTitel"));
@@ -160,18 +163,11 @@ public class ScanMelding extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 slaMeldingOpNaarDeDB();
-                Intent intent = new Intent(ScanMelding.this, Meldingen.class);
-                intent.putExtra(getString(R.string.campus_intent), s_campus);
-                intent.putExtra(getString(R.string.verdieping_intent), s_verdieping);
-                intent.putExtra(getString(R.string.lokaal_intent), s_lokaal);
-                startActivity(intent);
-                ScanMelding.this.finish();
             }
         });
     }
 
     private void slaMeldingOpNaarDeDB() {
-        //todo test foto api
         Cloudinary cloudinary = new Cloudinary();
         String fotoUrl = "";
         try {
@@ -184,23 +180,23 @@ public class ScanMelding extends AppCompatActivity {
                     .option("folder", "meldingen/")
                     .option("public_id", strDate)
                     .dispatch();
-            Log.e("test", strDate);
-            fotoUrl = "https://res.cloudinary.com/dt6ae1zfh/image/upload/v1546785206/meldingen/" + strDate + ".jpg";
+            fotoUrl = strDate;
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        //todo vul in juiste data en push naar database
-        //be.ap.edu.aportage.models.Melding melding = new be.ap.edu.aportage.models.Melding("MockMelding", "Blablablablabla", new String[]{"ELL","-01","005"}, "behandeling", new Date());
+        //be.ap.edu.aportage.models.Melding melding = new be.ap.edu.aportage.models.Melding( "MockMelding", "Blablablablabla", new String[]{"ELL","-01","005"}, "behandeling", new Date());
         Melding melding = new Melding(
             this.tvTitel.getText().toString(),
             this.tvOmschrijving.getText().toString(),
-            new String[]{this.btnCampus.getText().toString(), this.btnVerdiep.getText().toString(), this.btnLokaal.getText().toString()},
+            new String[]{this.btnCampus.getText().toString().toUpperCase(), this.btnVerdiep.getText().toString(), this.btnLokaal.getText().toString()},
             Statussen.ONTVANGEN,
-            new Date()
+            new Date(),
+            fotoUrl
         );
         melding.setMelderId(ParseUser.getCurrentUser().getObjectId());
-        this.myDatamanger.createPostRequest(MongoCollections.MELDINGEN, melding, new IVolleyCallback() {
+
+        JsonObjectRequest jsonObjectRequest = this.myDatamanger.createPostRequest(MongoCollections.MELDINGEN, melding, new IVolleyCallback() {
             @Override
             public void onCustomSuccess(Object data) {
 
@@ -208,14 +204,20 @@ public class ScanMelding extends AppCompatActivity {
 
             @Override
             public void onPostSuccess(JSONObject response) {
-                Log.v("testPost", response.toString());
+                Intent intent = new Intent(ScanMelding.this, Meldingen.class);
+                intent.putExtra(getString(R.string.campus_intent), s_campus);
+                intent.putExtra(getString(R.string.verdieping_intent), s_verdieping);
+                intent.putExtra(getString(R.string.lokaal_intent), s_lokaal);
+                startActivity(intent);
+                ScanMelding.this.finish();
             }
 
             @Override
             public void onFailure() {
-
+                Log.d("testPost", "niet gelukt");
             }
         });
+        this.myDatamanger.addToRequestQueue(jsonObjectRequest);
     }
 
     private void lokaalButtonsOpvullen() {

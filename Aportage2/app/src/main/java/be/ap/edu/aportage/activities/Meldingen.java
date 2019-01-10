@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
 
@@ -20,11 +19,9 @@ import java.util.List;
 
 import be.ap.edu.aportage.R;
 import be.ap.edu.aportage.helpers.MongoCollections;
-import be.ap.edu.aportage.helpers.Statussen;
 import be.ap.edu.aportage.interfaces.CampusKleuren;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.managers.MyDatamanger;
-import be.ap.edu.aportage.models.Melder;
 import be.ap.edu.aportage.models.Melding;
 import be.ap.edu.aportage.recycleradapters.MeldingenRecyclerAdapter;
 
@@ -114,7 +111,6 @@ public class Meldingen extends AppCompatActivity {
 
 
     private void navigatieButtonsOpvullen(){
-
         try {
             this.s_campus = this.binnenkomendeIntent.getStringExtra(getString(R.string.campus_intent));
             this.s_verdieping = this.binnenkomendeIntent.getStringExtra(getString(R.string.verdieping_intent));
@@ -185,38 +181,5 @@ public class Meldingen extends AppCompatActivity {
         startActivity(this.uitgaandeIntent);
         Meldingen.this.finish();
     }
-
-
-    private void createTestMelding(){
-        Melding melding = new Melding(
-                "Test Melding voor Post",
-                "Dit is een melding om de post request met volley te testen",
-                new String[]{"MEI", "02", "203"},
-                Statussen.BEHANDELING,
-                "2018-09-28");
-        Melder melder = new Melder();
-        melding.melder = melder;
-        JsonObjectRequest obj = this.dataManager.createPostRequest(MongoCollections.MELDINGEN, melding, new IVolleyCallback() {
-            @Override
-            public void onCustomSuccess(Object data) {
-                //Log.d("post", data.toString());
-
-            }
-
-            @Override
-            public void onPostSuccess(JSONObject response) {
-
-                Log.d("post", response.toString());
-                //todo: toon confirmatie dat het posten van de melding is gelukt.
-            }
-
-            @Override
-            public void onFailure() {
-                //todo: bericht tonen dt het posten van de melding is mislukt.
-            }
-        });
-        this.dataManager.addToRequestQueue(obj);
-    }
-
 
 }
