@@ -112,7 +112,7 @@ public class Melding extends Activity {
         intent.putExtra("campus_afk", s_campus );
         intent.putExtra("verdiep_nr", s_verdieping);
         intent.putExtra("lokaal_nr", s_lokaal);
-       //intent.putExtra("meldingid", )
+
         startActivity(intent);
     }
 
