@@ -339,7 +339,7 @@ public class MyDatamanger extends Application {
         return meldingenList;
     }
 
-    private Melding parseMeldingJson(JSONObject obj) {
+    public Melding parseMeldingJson(JSONObject obj) {
         Melding melding = null;
         try {
            melding = new Melding(
@@ -361,5 +361,29 @@ public class MyDatamanger extends Application {
         }
 
         return melding;
+    }
+
+    public JsonObjectRequest getMeldingMetId(String id, IVolleyCallback callback){
+        //todo : maak request
+        String url = ApiContract.createMeldingIDQueryUrl(id);
+        JsonObjectRequest req = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d(TAG_DM, response.toString());
+                        callback.onCustomSuccess(response);
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // done: Handle error
+                        Log.e(TAG_DM, "something went wrong getting melding with id"+id);
+                    }
+                });
+
+        return req;
     }
 }
