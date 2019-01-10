@@ -368,6 +368,7 @@ public class MyDatamanger extends Application {
                     },
                     Statussen.getStatus(obj.get("status").toString()),
                     obj.get("datum").toString());
+          melding.setId((obj.getJSONObject("_id").get("$oid")).toString());
 
 
         } catch (JSONException e) {

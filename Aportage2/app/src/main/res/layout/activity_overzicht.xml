@@ -150,7 +150,7 @@
             app:layout_constraintEnd_toEndOf="@+id/iv-meldingen-bg"
             app:layout_constraintStart_toStartOf="@+id/iv-meldingen-bg"
             app:layout_constraintTop_toTopOf="@+id/iv-meldingen-bg"
-            tools:text="Mijn Meldingen" />
+            tools:text="@string/label_mijn_meldingen" />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
