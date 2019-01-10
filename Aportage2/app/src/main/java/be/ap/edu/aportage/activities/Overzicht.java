@@ -39,10 +39,8 @@ public class Overzicht extends Activity {
 
         setContentView(R.layout.activity_overzicht);
 
-        ParseInstallation.getCurrentInstallation().saveInBackground();
-
         ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-        installation.put("GCMSenderId", 373238590859L);
+        installation.put("GCMSenderId", 195430160700L);
         installation.saveInBackground();
         //this.dataManager = MyDatamanger.getInstance(this.getApplicationContext());
 

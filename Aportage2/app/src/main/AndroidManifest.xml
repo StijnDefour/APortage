@@ -91,7 +91,7 @@
             android:value="cloudinary://366286138446152:_qUdFOAl5B7J6TAQRYPN4hhYxz4@dt6ae1zfh"/>
 
         <meta-data android:name="com.parse.push.gcm_sender_id"
-            android:value="id:373238590859" />
+            android:value="id:195430160700" />
 
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.RegisterenActivity" />
