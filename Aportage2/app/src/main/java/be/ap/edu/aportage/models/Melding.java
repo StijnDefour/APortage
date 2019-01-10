@@ -9,7 +9,7 @@ import java.util.Locale;
 import be.ap.edu.aportage.helpers.Statussen;
 
 public class Melding {
-    public int _id;
+    public String _id;
     public String titel;
     public String omschrijving;
     public String[] locatie;
@@ -57,10 +57,15 @@ public class Melding {
 
 
 
-    public void setId(int id){
+    public void setId(String id){
         //todo: id setten op basis van aantal items in db
         this._id = id;
     }
+
+    public String get_id(){
+        return _id;
+    }
+
 
     public void setMelder(Melder mldr){
         this.melder = mldr;
