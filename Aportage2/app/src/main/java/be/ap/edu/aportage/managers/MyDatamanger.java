@@ -125,10 +125,11 @@ public class MyDatamanger extends Application {
             meldingObject.put("omschrijving", melding.omschrijving);
             meldingObject.put("datum", melding.datum.toString());
             meldingObject.put("melderid", melding.melderId);
-            meldingObject.put(ApiContract.CAMPUS_AFK, melding.locatie[0].toString());
-            meldingObject.put(ApiContract.VERDIEP_NR, melding.locatie[1].toString());
-            meldingObject.put(ApiContract.LOKAAL_NR, melding.locatie[2].toString());
+            meldingObject.put(ApiContract.CAMPUS_AFK, melding.locatie[0]);
+            meldingObject.put(ApiContract.VERDIEP_NR, melding.locatie[1]);
+            meldingObject.put(ApiContract.LOKAAL_NR, melding.locatie[2]);
             meldingObject.put("status", melding.status.toString());
+            meldingObject.put("imgUrl", melding.imgUrl);
 
             Log.d("postTest", "test json to array");
             jsonArrayR = new JsonObjectRequest(
@@ -245,7 +246,8 @@ public class MyDatamanger extends Application {
                             obj.get("lokaalnr").toString()
                     },
                     Statussen.getStatus(obj.get("status").toString()),
-                    obj.get("datum").toString());
+                    obj.get("datum").toString(),
+                    obj.get("imgUrl").toString());
             this.mMeldingen.add(melding);
             callback.onCustomSuccess(melding);
 

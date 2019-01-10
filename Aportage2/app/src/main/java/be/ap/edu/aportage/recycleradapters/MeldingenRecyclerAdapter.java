@@ -11,6 +11,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cloudinary.android.MediaManager;
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import be.ap.edu.aportage.R;
@@ -34,6 +37,9 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
         this.meldingenList = meldingenList;
         this.layoutInflater = LayoutInflater.from(this.context);
 
+        try {
+            MediaManager.init(context);
+        } catch (Exception e) {}
     }
 
     @NonNull
@@ -51,7 +57,8 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
         viewHolder.melding_id = i;
         viewHolder.locatie = melding.locatie;
         //todo load image from cloudinary
-        // load image code here
+        String url = "https://res.cloudinary.com/dt6ae1zfh/image/upload/c_fit,w_150/meldingen/" + melding.getImgUrl() + ".jpg";
+        Picasso.get().load(url).into(viewHolder.meldingFoto);
     }
 
     @Override

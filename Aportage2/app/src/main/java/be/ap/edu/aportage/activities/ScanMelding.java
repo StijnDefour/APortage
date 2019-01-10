@@ -180,7 +180,7 @@ public class ScanMelding extends AppCompatActivity {
                     .option("folder", "meldingen/")
                     .option("public_id", strDate)
                     .dispatch();
-            fotoUrl = "https://res.cloudinary.com/dt6ae1zfh/image/upload/v1546785206/meldingen/" + strDate + ".jpg";
+            fotoUrl = strDate;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -191,7 +191,8 @@ public class ScanMelding extends AppCompatActivity {
             this.tvOmschrijving.getText().toString(),
             new String[]{this.btnCampus.getText().toString().toUpperCase(), this.btnVerdiep.getText().toString(), this.btnLokaal.getText().toString()},
             Statussen.ONTVANGEN,
-            new Date()
+            new Date(),
+            fotoUrl
         );
         melding.setMelderId(ParseUser.getCurrentUser().getObjectId());
 
