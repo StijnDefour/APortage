@@ -17,7 +17,6 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import be.ap.edu.aportage.R;
-import be.ap.edu.aportage.activities.Meldingen;
 import be.ap.edu.aportage.models.Melding;
 
 public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecyclerAdapter.ViewHolder> {

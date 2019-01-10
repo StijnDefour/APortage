@@ -21,10 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.ap.edu.aportage.helpers.ApiContract;
-import be.ap.edu.aportage.interfaces.IMeldingCallBack;
-import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.helpers.MongoCollections;
 import be.ap.edu.aportage.helpers.Statussen;
+import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.models.Campus;
 import be.ap.edu.aportage.models.Lokaal;
 import be.ap.edu.aportage.models.Melding;
@@ -369,7 +368,8 @@ public class MyDatamanger extends Application {
                             obj.get("lokaalnr").toString()
                     },
                     Statussen.getStatus(obj.get("status").toString()),
-                    obj.get("datum").toString());
+                    obj.get("datum").toString(),
+                   obj.get("imgUrl").toString());
           melding.setId((obj.getJSONObject("_id").get("$oid")).toString());
 
 
