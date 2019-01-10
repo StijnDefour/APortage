@@ -1,5 +1,7 @@
 package be.ap.edu.aportage.models;
 
+import java.text.DateFormat;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -25,8 +27,6 @@ public class Melding {
 //todo_done: api call naar 26 vs 24 rechtzetten om localdatetime te kunnen gebruiken, of een andere date lib gebruiken
 
     public Melding(String t, String omschr, String[] loc, Statussen sts, Date d) {
-
-
         this.titel = t;
         this.omschrijving = omschr;
         this.locatie = loc;
@@ -34,16 +34,11 @@ public class Melding {
         this.datum = d;
     }
     public Melding(String t, String omschr, String[] loc, Statussen sts, String d) {
-
-
-
         this.titel = t;
         this.omschrijving = omschr;
         this.locatie = loc;
         this.status = sts;
         this.setDate(d);
-
-
     }
 
 
@@ -73,8 +68,8 @@ public class Melding {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
     }
+
 
     public String getMelderId() {
         return melderId;
@@ -83,6 +78,7 @@ public class Melding {
     public void setMelderId(String melderId) {
         this.melderId = melderId;
     }
+
 
 
 }

@@ -9,10 +9,10 @@ public class Melder {
 
 
 
-
     public String getID(){
         return this.melderid;
     }
+
 
     public String getNaam() {
         return naam;

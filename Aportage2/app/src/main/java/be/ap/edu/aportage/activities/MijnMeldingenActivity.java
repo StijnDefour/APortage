@@ -70,6 +70,11 @@ public class MijnMeldingenActivity extends AppCompatActivity {
             public void onPostSuccess(JSONObject response) {
                 //ignore
             }
+
+            @Override
+            public void onFailure() {
+                //ignore
+            }
         });
         this.myDatamanger.addToRequestQueue(req);
     }

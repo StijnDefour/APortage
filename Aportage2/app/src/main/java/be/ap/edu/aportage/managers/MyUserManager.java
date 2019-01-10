@@ -60,6 +60,13 @@ public class MyUserManager extends Application {
             @Override
             public void onResponse(JSONObject response) {
 
+
+        //https://api.mlab.com/api/1/databases/my-db/collections/my-coll?q={"active": true}&fo=true&apiKey=myAPIKey
+
+
+
+
+
                 Log.d("melder req", response.toString());
                 callback.success(response);
 
@@ -73,6 +80,7 @@ public class MyUserManager extends Application {
         });
 
         return jsonReq;
+
 
 
     }

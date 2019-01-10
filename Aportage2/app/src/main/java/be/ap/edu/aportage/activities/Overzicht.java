@@ -3,6 +3,7 @@ package be.ap.edu.aportage.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -11,7 +12,9 @@ import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
 import be.ap.edu.aportage.R;
+
 import be.ap.edu.aportage.managers.MyDatamanger;
+
 
 public class Overzicht extends Activity {
 
@@ -21,8 +24,10 @@ public class Overzicht extends Activity {
     private ImageView iv_zoeken_bg;
     private ImageView iv_mijnmeldingen_bg;
     private String TAG = Overzicht.class.toString();
+
     private MyDatamanger dataManager;
     private Intent uitgaandeIntent;
+
 
 
 
@@ -44,25 +49,59 @@ public class Overzicht extends Activity {
 
 
 
+
         setClicks();
 
     }
 
 
     void setClicks(){
-        this.iv_scannen_bg.setOnClickListener(new View.OnClickListener() {
+
+
+            createIntents();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        Overzicht.this.finish();
+    }
+
+    public void createIntents() {
+        iv_scannen_bg.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Overzicht.this, ScanLokaal.class);
+                startActivity(intent);
+                Overzicht.this.finish();
+            }
+        });
+
+
+
+        iv_scannen_bg.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
 
                 gaNaarScanLokaalActivity();
+
             }
         });
         this.iv_zoeken_bg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Intent intent = new Intent(Overzicht.this, Campussen.class);
+                startActivity(intent);
+                Overzicht.this.finish();
+
                 gaNaarCampussenActivity();
+
             }
         });
+
         this.iv_mijnmeldingen_bg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +114,9 @@ public class Overzicht extends Activity {
         this.uitgaandeIntent = new Intent(Overzicht.this, MijnMeldingenActivity.class);
         this.uitgaandeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(uitgaandeIntent);
+
     }
+
 
     private void gaNaarScanLokaalActivity() {
         this.uitgaandeIntent = new Intent(Overzicht.this, ScanLokaal.class);
@@ -99,6 +140,7 @@ public class Overzicht extends Activity {
         }
 
     }
+
 
 
 

@@ -12,8 +12,8 @@ public class ApiContract {
     public static String CAMPUS_NAAM = "campusnaam";
     public static String MELDER_ID = "melderid";
 
-
     public static String createCollectionUrlMetApi(be.ap.edu.aportage.helpers.MongoCollections coll){
+
 
         //https://api.mlab.com/api/1/databases/my-db/collections/my-coll?apiKey=myAPIKey
         String collectionUrl = ApiContract.API_BASE_URL+"/databases/"+ApiContract.DATABASE+"/collections/"+coll.toString()+"?apiKey="+ ApiContract.API_KEY;
@@ -54,6 +54,7 @@ public class ApiContract {
     }
 
 
+
     public static String createUrlMetObjectIdQuery(String objectID){
         //todo: melding object id query afmaken
         String query = "?q={\""+MELDER_ID+"\":\""+objectID+"\"}";
@@ -61,6 +62,7 @@ public class ApiContract {
         Log.d("ApiContract url", url);
         return url;
     }
+
 
 
 

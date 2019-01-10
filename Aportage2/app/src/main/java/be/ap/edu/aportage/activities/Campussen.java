@@ -23,8 +23,6 @@ public class Campussen extends AppCompatActivity {
     private LinearLayoutManager mijnLM;
     private CampussenRecyclerAdapter campussenAdapter;
     private MyDatamanger dataManager;
-    private Intent uitgaandeIntent;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +39,11 @@ public class Campussen extends AppCompatActivity {
         this.mijnLM = new LinearLayoutManager(this);
         this.mijnCampussenRV.setLayoutManager(this.mijnLM);
         this.mijnCampussenRV.setAdapter(this.campussenAdapter);
-        JsonArrayRequest req = this.dataManager.createGetRequest(ApiContract.createCollectionUrlMetApi(MongoCollections.CAMPUSSEN), MongoCollections.CAMPUSSEN, new IVolleyCallback() {
 
+        this.campussenAdapter.clearCampussen();
+        JsonArrayRequest req = this.dataManager.createGetRequest(ApiContract.createCollectionUrlMetApi(MongoCollections.CAMPUSSEN), MongoCollections.CAMPUSSEN, new IVolleyCallback() {
             @Override
             public void onCustomSuccess(Object data) {
-
                 campussenAdapter.setCampussenList(dataManager.getCampussenLijst());
                 campussenAdapter.notifyDataSetChanged();
             }
@@ -54,15 +52,20 @@ public class Campussen extends AppCompatActivity {
             public void onPostSuccess(JSONObject response) {
                 //ignore
             }
+
+            @Override
+            public void onFailure() {
+                //todo: on failure voor get van campussen
+            }
         });
         req.setShouldCache(false);
         this.dataManager.addToRequestQueue(req);
-
     }
 
-
-
-
-
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, Overzicht.class);
+        startActivity(intent);
+        Campussen.this.finish();
+    }
 }

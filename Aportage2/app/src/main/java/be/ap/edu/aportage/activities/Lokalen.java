@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import be.ap.edu.aportage.R;
 import be.ap.edu.aportage.helpers.ApiContract;
+import be.ap.edu.aportage.interfaces.CampusKleuren;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.helpers.MongoCollections;
 import be.ap.edu.aportage.managers.MyDatamanger;
@@ -27,11 +28,12 @@ public class Lokalen extends AppCompatActivity {
     private LokalenRecyclerAdapter lokalenAdapter;
     private RecyclerView lokalenRV;
     private LinearLayoutManager lokaalLM;
-    private int[] lokalenLijst;
     private Intent inkomendeIntent;
     private Intent uitgaandeIntent;
     private Button btnCampus;
     private Button btnVerdiep;
+
+    private CampusKleuren campusKleuren = new CampusKleuren();
 
     String s_campus;
     String s_verdieping;
@@ -44,47 +46,29 @@ public class Lokalen extends AppCompatActivity {
         this.datamanger = MyDatamanger.getInstance(this.getApplicationContext());
         this.inkomendeIntent = this.getIntent();
 
-        this.s_campus = this.inkomendeIntent.getStringExtra("campus_afk");
-        this.s_verdieping = this.inkomendeIntent.getStringExtra("verdiep_nr");
+        this.s_campus = this.inkomendeIntent.getStringExtra(getString(R.string.campus_intent));
+        this.s_verdieping = this.inkomendeIntent.getStringExtra(getString(R.string.verdieping_intent));
 
         this.btnCampus = findViewById(R.id.btn_campus);
 
         this.btnVerdiep = findViewById(R.id.btn_verdiep);
 
-
-        this.inkomendeIntent = this.getIntent();
-
-        this.s_campus = this.inkomendeIntent.getStringExtra("campus_afk");
-
-
         navigatieOpvullen();
-        //requestLokalenData();
-
-        //this.lokalenLijst = datamanger.getLokalenLijst(s_campus, Integer.parseInt(s_verdieping));
 
         this.lokalenRV = (RecyclerView) findViewById(R.id.rv_lokalen);
-
         this.lokaalLM = new LinearLayoutManager(this);
-
         this.lokalenRV.setLayoutManager(this.lokaalLM);
-
         this.lokalenAdapter = new LokalenRecyclerAdapter(this, this.datamanger.getLokalenLijst(s_campus, Integer.parseInt(s_verdieping)), s_campus, s_verdieping);
-
         this.lokalenRV.setAdapter(lokalenAdapter);
 
         registreerOnClicks();
-
         requestLokalenData();
-
-
-
-
-
     }
 
     private void requestLokalenData() {
-        JsonArrayRequest req = this.datamanger.createGetRequest(ApiContract.createCollectionUrlMetApi(MongoCollections.LOKALEN), MongoCollections.LOKALEN, new IVolleyCallback() {
 
+        this.lokalenAdapter.clearLokalen();
+        JsonArrayRequest req = this.datamanger.createGetRequest(ApiContract.createCollectionUrlMetApi(MongoCollections.LOKALEN), MongoCollections.LOKALEN, new IVolleyCallback() {
 
             @Override
             public void onCustomSuccess(Object data) {
@@ -97,6 +81,12 @@ public class Lokalen extends AppCompatActivity {
             public void onPostSuccess(JSONObject response) {
                 //ignore
             }
+
+            @Override
+            public void onFailure() {
+                //todo: toon bericht dat de fetch van lokalen niet is gelukt
+            }
+
         });
         req.setShouldCache(false);
         datamanger.addToRequestQueue(req);
@@ -106,6 +96,8 @@ public class Lokalen extends AppCompatActivity {
         try {
             btnCampus.setText(s_campus);
             btnVerdiep.setText(s_verdieping);
+            this.btnCampus.setBackgroundColor(campusKleuren.getCampusColor(s_campus.toLowerCase(), this));
+            this.btnVerdiep.setBackgroundColor(campusKleuren.getVerdiepingColor(s_campus.toLowerCase(), this));
         } catch (Error e){
             Log.e("navigatieOpvullen", e.getMessage());
         }
@@ -129,16 +121,22 @@ public class Lokalen extends AppCompatActivity {
     private void gaNaarCampussen(){
         this.uitgaandeIntent = new Intent(this, Campussen.class);
         this.startActivity(this.uitgaandeIntent);
+        Lokalen.this.finish();
     }
 
     private void gaNaarVerdiepen(){
         this.uitgaandeIntent = new Intent(this, Verdiepingen.class);
-        this.uitgaandeIntent.putExtra("verdiep_nr", this.btnVerdiep.getText());
-        this.uitgaandeIntent.putExtra("campus_afk", this.btnCampus.getText());
+        this.uitgaandeIntent.putExtra(getString(R.string.verdieping_intent), this.btnVerdiep.getText());
+        this.uitgaandeIntent.putExtra(getString(R.string.campus_intent), this.btnCampus.getText());
         this.startActivity(this.uitgaandeIntent);
-
+        Lokalen.this.finish();
     }
 
-
-
+    @Override
+    public void onBackPressed() {
+        this.uitgaandeIntent = new Intent(this, Verdiepingen.class);
+        this.uitgaandeIntent.putExtra(getString(R.string.campus_intent), this.s_campus);
+        startActivity(this.uitgaandeIntent);
+        Lokalen.this.finish();
+    }
 }

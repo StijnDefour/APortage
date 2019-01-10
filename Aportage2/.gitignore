@@ -10,6 +10,13 @@
 /build
 /captures
 .externalNativeBuild
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+../.DS_Store
+=======
 /.DS_Store
+>>>>>>> login-functionaliteit
 
 #indien nodig: /app/src/main/java/be/ap/edu/aportage/managers/ApiContract.java
+>>>>>>> login-functionaliteit

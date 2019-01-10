@@ -15,14 +15,14 @@
     <string name="verdiep_label">Verdieping</string>
     <string name="verdiep_nummer">00</string>
 
-    <string name="ocr_gescande_text">Gelezen tekst...</string>
+    <string name="ocr_gescande_text">Gelezen tekst…</string>
 
     <string name="label_locatie">Locatie:</string>
     <string name="scan_melding_button_label"> Foto toevoegen </string>
     <string name="label_scan_melding_titel">Titel:</string>
-    <string name="scan_melding_hint_titel">Titel voor de melding...</string>
-    <string name="scan_melding_label_omschrijving">Omschrijving: </string>
-    <string name="scan_melding_label_btn_ok">Ok</string>
+    <string name="scan_melding_hint_titel">Titel voor de melding…</string>
+    <string name="scan_melding_label_omschrijving" >Omschrijving: </string>
+    <string name="scan_melding_label_btn_ok" >OK</string>
     <string name="scan_melding_btn_label_annuleren">Annuleer</string>
     <string name="overzicht_label_scannen">Scannen [ - ]</string>
     <string name="overzicht_label_zoeken">Zoeken</string>
@@ -43,10 +43,17 @@
     <string name="label_registeren_loginlink"><![CDATA[< Ik heb al een account, ga terug naar login]]></string>
 
 
+    <!-- Intents -->
+    <string name="campus_intent">campus_afk</string>
+    <string name="verdieping_intent">verdieping_nr</string>
+    <string name="lokaal_intent">lokaal_nr</string>
+
+
     <string name="back4app_server_url">https://parseapi.back4app.com/</string>
     <!-- Change the following strings as required -->
     <string name="back4app_app_id">yWQjcw5gFEV6rv87LcC74lYDR3ImNemoYQoqzxRs</string>
     <string name="back4app_client_key">JNWCqKLCZynJ6YsqEVftXeUQo4wsUm85kgR8YuPR</string>
     <string name="tv_mijnmeldingen_titel">Mijn Melding</string>
+
 
 </resources>

@@ -14,7 +14,7 @@ public enum MongoCollections {
          * @param text
          */
         MongoCollections(final String text) {
-            this.text = text;
+                this.text = text;
         }
 
         /* (non-Javadoc)
@@ -22,7 +22,7 @@ public enum MongoCollections {
          */
         @Override
         public String toString() {
-            return text;
+                return text;
         }
 
 }

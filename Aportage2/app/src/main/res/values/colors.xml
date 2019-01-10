@@ -4,10 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff4081</color>
     <color name="wit">#ffffff</color>
-    <color name="gezondheidenwelzijn">#50a0b0</color>
-    <color name="managementencommunicatie">#de9700</color>
-    <color name="onderwijsentraining">#950074</color>
-    <color name="wetenschapentechniek">#62985b</color>
+    <color name="Noorderplaats">#50a0b0</color>
+    <color name="Meistraat">#de9700</color>
+    <color name="Ellerman">#62985b</color>
     <color name="kaska">#000000</color>
     <color name="ap">#e60005</color>
     <color name="status_behandeling">#ff7700</color>
@@ -16,5 +15,4 @@
     <color name="ap_donkerrood">#97000c</color>
     <color name="ap_grijs">#68676c</color>
     <color name="ok">#00ff00</color>
-
 </resources>

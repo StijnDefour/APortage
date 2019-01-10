@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -22,11 +23,11 @@ import java.util.List;
 import be.ap.edu.aportage.helpers.ApiContract;
 import be.ap.edu.aportage.interfaces.IMeldingCallBack;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
+import be.ap.edu.aportage.helpers.MongoCollections;
 import be.ap.edu.aportage.helpers.Statussen;
 import be.ap.edu.aportage.models.Campus;
 import be.ap.edu.aportage.models.Lokaal;
 import be.ap.edu.aportage.models.Melding;
-import be.ap.edu.aportage.helpers.MongoCollections;
 import be.ap.edu.aportage.models.Verdiep;
 
 public class MyDatamanger extends Application {
@@ -75,9 +76,7 @@ public class MyDatamanger extends Application {
     }
 
     private void parseToCorrectList(JSONObject obj, MongoCollections coll,  IVolleyCallback callback) throws JSONException {
-        //todo: array meegegven ipv van obj
         switch(coll){
-
             case CAMPUSSEN :  createCampusAndAddToList(obj, callback);
                 break;
             case MELDINGEN: createMeldingAndAddToList(obj, callback);
@@ -94,6 +93,8 @@ public class MyDatamanger extends Application {
 
 
     public JsonArrayRequest createGetRequest(String url, MongoCollections collection, IVolleyCallback volleycallback) {
+
+
         JsonArrayRequest jsonArrayR = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
@@ -124,35 +125,29 @@ public class MyDatamanger extends Application {
             meldingObject.put("titel",melding.titel);
             meldingObject.put("omschrijving", melding.omschrijving);
             meldingObject.put("datum", melding.datum.toString());
-            meldingObject.put("melderid", melding.melder.getID());
+            meldingObject.put("melderid", melding.melderId);
             meldingObject.put(ApiContract.CAMPUS_AFK, melding.locatie[0].toString());
             meldingObject.put(ApiContract.VERDIEP_NR, melding.locatie[1].toString());
             meldingObject.put(ApiContract.LOKAAL_NR, melding.locatie[2].toString());
             meldingObject.put("status", melding.status.toString());
 
-
+            Log.d("postTest", "test json to array");
             jsonArrayR = new JsonObjectRequest(
                     Request.Method.POST,
                     ApiContract.createCollectionUrlMetApi(collection),
                     meldingObject,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.d("post req", response.toString());
+                    response -> {
+                        Log.d("post req", response.toString());
 
-                            callback.onPostSuccess(response);
-                        }
-
-                    },new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
+                        callback.onPostSuccess(response);
+                    }, error -> {
                         //throw new JSONException("er is iets misgelopen tijdens het posten van de melding");
-                            Log.e("volleyerror", error.getMessage());
+                        Log.e("volleyerror", error.getMessage());
+                        callback.onFailure();
 
-                    }
-            });
+                    });
 
-
+            Log.d("postTest", "test json to array");
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -162,8 +157,31 @@ public class MyDatamanger extends Application {
         return jsonArrayR;
     }
 
-    public void checkLokaalExists(String afk, String verdiep, String lokaal){
+    public void checkLokaalExists(String afk, String verdiep, String lokaal, IVolleyCallback callback){
         String url = ApiContract.createLokaalQuery(afk, verdiep, lokaal);
+
+
+        JsonRequest jsonArrayR = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d(TAG_DM, response.toString());
+                        callback.onCustomSuccess(response);
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // done: Handle error
+                        Log.e(TAG_DM, "fetching lokaal failed");
+                        callback.onFailure();
+                    }
+                });
+
+
+
+
     }
 
 
@@ -180,7 +198,6 @@ public class MyDatamanger extends Application {
         }
     }
 
-
     private void createLokaalAndAddToList(JSONObject obj, IVolleyCallback callback) {
         //todo: obj moet array zijn en hier alles laten loopen en toevoegen aan lists
 
@@ -189,7 +206,7 @@ public class MyDatamanger extends Application {
 
                     obj.get(ApiContract.CAMPUS_AFK).toString(),
                     Integer.parseInt(obj.get(ApiContract.VERDIEP_NR).toString()),
-                    Integer.parseInt(obj.get(ApiContract.LOKAAL_NR).toString())
+                    Integer.parseInt(obj.get(ApiContract.LOKAAL_NR).toString().replaceAll("\\D", ""))
             );
             this.mLokalen.add(lokaal);
             callback.onCustomSuccess(lokaal);
@@ -202,7 +219,6 @@ public class MyDatamanger extends Application {
     }
 
     private void createCampusAndAddToList(JSONObject obj, IVolleyCallback callback) {
-
         try {
             Campus campus = new Campus(
                     obj.get(ApiContract.CAMPUS_NAAM).toString(),
@@ -230,7 +246,7 @@ public class MyDatamanger extends Application {
                             obj.get("lokaalnr").toString()
                     },
                     Statussen.getStatus(obj.get("status").toString()),
-                   obj.get("datum").toString());
+                    obj.get("datum").toString());
             this.mMeldingen.add(melding);
             callback.onCustomSuccess(melding);
 
