@@ -248,6 +248,7 @@ public class MyDatamanger extends Application {
                     Statussen.getStatus(obj.get("status").toString()),
                     obj.get("datum").toString(),
                     obj.get("imgUrl").toString());
+            melding.setId((obj.getJSONObject("_id").get("$oid")).toString());
             this.mMeldingen.add(melding);
             callback.onCustomSuccess(melding);
 

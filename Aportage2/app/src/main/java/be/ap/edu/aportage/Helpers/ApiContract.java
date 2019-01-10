@@ -50,15 +50,17 @@ public class ApiContract {
     }
 
     public static String createMeldingIDQueryUrl(String meldingid){
-        String meldingenUrl = ApiContract.API_BASE_URL+"/databases/"+ApiContract.DATABASE+"/collections/"+ MongoCollections.MELDINGEN;
-        String meldingenQueryUrl = meldingenUrl+createMeldingIdQuery(meldingid)+"&apiKey="+ ApiContract.API_KEY;
-        Log.d("ApiContract queryUrl", meldingenQueryUrl);
+        //https://api.mlab.com/api/1/databases/my-db/collections/my-coll/4e7315a65e4ce91f885b7dde?apiKey=myAPIKey
+        String meldingenUrl = ApiContract.API_BASE_URL+"/databases/"+ApiContract.DATABASE+"/collections/"+ MongoCollections.MELDINGEN+"/";
+        String meldingenQueryUrl = meldingenUrl+meldingid+"?apiKey="+ ApiContract.API_KEY;
+        Log.d("ApiContract melding id url", meldingenQueryUrl);
         return meldingenQueryUrl;
     }
 
    public static String createMeldingIdQuery(String meldingid){
+        String q = "?q={\""+MELDING_ID+"\":\""+meldingid+"\"}";
 
-       return  "?q={\""+MELDING_ID+"\":\""+meldingid+"\"}";
+       return q;
    }
 
     public static String createLokaalQuery(String campus, String verdiep, String lok) {

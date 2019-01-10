@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -103,7 +104,8 @@ public class Melding extends Activity {
 
     private void vulMeldingDetailsIn(be.ap.edu.aportage.models.Melding m) {
         this.tv_melding_titel.setText(m.titel);
-
+        String url = "https://res.cloudinary.com/dt6ae1zfh/image/upload/c_fit,w_150/meldingen/" + melding.getImgUrl() + ".jpg";
+        Picasso.get().load(url).into(this.iv_melding_foto);
     }
 
     private void registreerButtonOnClicks() {
