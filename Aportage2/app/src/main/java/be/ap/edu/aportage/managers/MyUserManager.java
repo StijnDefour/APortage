@@ -27,6 +27,7 @@ public class MyUserManager extends Application {
 
     protected static MyUserManager mInstance = null;
     private static Context mContext;
+    private static String mMelderId;
 
 
     private RequestQueue mRequestQueue;
@@ -34,6 +35,7 @@ public class MyUserManager extends Application {
     private MyUserManager(Context ctx) {
 
         this.mContext = ctx;
+
 
         this.mRequestQueue = getRequestQueue();
 
@@ -96,8 +98,11 @@ public class MyUserManager extends Application {
         this.getRequestQueue().add(req);
     }
 
-    public void meldGebruikerAan(){
-
+    public String getMelderId(){
+       return this.mMelderId;
+    }
+    public static void setMelderId(String id){
+        mMelderId = id;
     }
 
 

@@ -82,7 +82,7 @@ public class RegisterenActivity extends AppCompatActivity {
 
     void maakMelder(){
 
-        //todo: melder object maken en dit ook opslaan met de objectID van parseuser object naar mlab db
+        //todo_done: melder object maken en dit ook opslaan met de objectID van parseuser object naar mlab db
 
         Melder melder = new Melder();
         ParseUser user = new ParseUser();

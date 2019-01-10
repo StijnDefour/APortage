@@ -86,7 +86,8 @@
 
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.RegisterenActivity" />
-        <activity android:name=".activities.UitloggenActivity"></activity>
+        <activity android:name=".activities.UitloggenActivity" />
+        <activity android:name=".activities.MijnMeldingenActivity"></activity>
     </application>
 
 </manifest>

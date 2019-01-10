@@ -126,4 +126,14 @@ public class Melding extends Activity {
         startActivity(this.uitgaandeIntent);
         Melding.this.finish();
     }
+
+    private void gaNaarMelding(){
+        Intent intent = new Intent(this, Melding.class);
+        intent.putExtra("campus_afk", s_campus );
+        intent.putExtra("verdiep_nr", s_verdieping);
+        intent.putExtra("lokaal_nr", s_lokaal);
+       //intent.putExtra("meldingid", )
+        startActivity(intent);
+    }
+
 }
