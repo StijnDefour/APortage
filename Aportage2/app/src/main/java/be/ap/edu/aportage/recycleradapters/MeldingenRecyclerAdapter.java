@@ -55,7 +55,7 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
         viewHolder.meldingBeschrijving.setText(melding.omschrijving);
         viewHolder.melding_id = this.meldingenList.get(i)._id;
         viewHolder.locatie = melding.locatie;
-        //todo load image from cloudinary
+        
         String url = "https://res.cloudinary.com/dt6ae1zfh/image/upload/c_fit,w_150/meldingen/" + melding.getImgUrl() + ".jpg";
         Picasso.get().load(url).into(viewHolder.meldingFoto);
     }

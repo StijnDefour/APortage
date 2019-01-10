@@ -17,7 +17,6 @@ public class Melding {
 
     public Date datum;
 
-    //todo: ipv melder melderid gebruiken dat oevreenkomt met de parseurser objectid
     public Melder melder;
     public String melderId;
 
@@ -51,7 +50,6 @@ public class Melding {
 
 
     public void setId(String id){
-        //todo: id setten op basis van aantal items in db
         this._id = id;
     }
 

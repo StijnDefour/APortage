@@ -89,11 +89,7 @@ public class MyDatamanger extends Application {
 
     }
 
-
-
     public JsonArrayRequest createGetRequest(String url, MongoCollections collection, IVolleyCallback volleycallback) {
-
-
         JsonArrayRequest jsonArrayR = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
@@ -116,7 +112,7 @@ public class MyDatamanger extends Application {
         return jsonArrayR;
     }
 
-    public JsonObjectRequest createPostRequest(MongoCollections collection, Melding melding, IVolleyCallback callback) {
+    public JsonObjectRequest    createPostRequest(MongoCollections collection, Melding melding, IVolleyCallback callback) {
         JSONObject meldingObject = new JSONObject();
         JsonObjectRequest jsonArrayR = null;
         try {
@@ -160,7 +156,6 @@ public class MyDatamanger extends Application {
     public void checkLokaalExists(String afk, String verdiep, String lokaal, IVolleyCallback callback){
         String url = ApiContract.createLokaalQuery(afk, verdiep, lokaal);
 
-
         JsonRequest jsonArrayR = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
@@ -178,15 +173,10 @@ public class MyDatamanger extends Application {
                         callback.onFailure();
                     }
                 });
-
-
-
-
     }
 
 
     private void handleJsonResponse(JSONArray elements, MongoCollections coll,  IVolleyCallback callback){
-        //todo: herschrijven dat dit hier de volledige jSOn array meegeeft aan parseToCorrList
         for (int i = 0; i < elements.length(); i++) {
             try {
                 JSONObject obj = elements.getJSONObject(i);
@@ -199,19 +189,14 @@ public class MyDatamanger extends Application {
     }
 
     private void createLokaalAndAddToList(JSONObject obj, IVolleyCallback callback) {
-        //todo: obj moet array zijn en hier alles laten loopen en toevoegen aan lists
-
         try {
             Lokaal lokaal = new Lokaal(
-
                     obj.get(ApiContract.CAMPUS_AFK).toString(),
                     Integer.parseInt(obj.get(ApiContract.VERDIEP_NR).toString()),
                     Integer.parseInt(obj.get(ApiContract.LOKAAL_NR).toString().replaceAll("\\D", ""))
             );
             this.mLokalen.add(lokaal);
             callback.onCustomSuccess(lokaal);
-
-
         } catch (JSONException e) {
             e.printStackTrace();
 
@@ -235,7 +220,6 @@ public class MyDatamanger extends Application {
 
 
     private void createMeldingAndAddToList(JSONObject obj, IVolleyCallback callback){
-
         try {
             Melding melding = new Melding(
                     obj.get("titel").toString(),
@@ -254,7 +238,6 @@ public class MyDatamanger extends Application {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 
 
