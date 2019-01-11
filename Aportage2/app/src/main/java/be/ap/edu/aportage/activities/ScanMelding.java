@@ -170,11 +170,11 @@ public class ScanMelding extends AppCompatActivity {
     private void slaMeldingOpNaarDeDB() {
         Cloudinary cloudinary = new Cloudinary();
         String fotoUrl = "";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        Calendar c = Calendar.getInstance();
         try {
-            Calendar c = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-            String strDate = sdf.format(c.getTime());
 
+            String strDate = sdf.format(c.getTime());
             MediaManager.get().upload(mCurrentPhotoPath)
                     .unsigned("qjmws079")
                     .option("folder", "meldingen/")
@@ -190,8 +190,7 @@ public class ScanMelding extends AppCompatActivity {
             this.tvTitel.getText().toString(),
             this.tvOmschrijving.getText().toString(),
             new String[]{this.btnCampus.getText().toString().toUpperCase(), this.btnVerdiep.getText().toString(), this.btnLokaal.getText().toString()},
-            Statussen.ONTVANGEN,
-            new Date(),
+            Statussen.ONTVANGEN, sdf.format(c.getTime()),
             fotoUrl
         );
         melding.setMelderId(ParseUser.getCurrentUser().getObjectId());

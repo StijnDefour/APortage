@@ -23,6 +23,7 @@ import be.ap.edu.aportage.helpers.ApiContract;
 import be.ap.edu.aportage.helpers.MongoCollections;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.managers.MyDatamanger;
+import be.ap.edu.aportage.models.Melder;
 
 
 public class Melding extends Activity {
@@ -47,6 +48,7 @@ public class Melding extends Activity {
     private String s_melding_id;
     private MyDatamanger datamanager;
     private be.ap.edu.aportage.models.Melding melding;
+    private Melder melder;
 
 
     @Override
@@ -63,11 +65,12 @@ public class Melding extends Activity {
         this.nieuweMeldingFab = findViewById(R.id.melding_fab);
         this.iv_melding_foto = findViewById(R.id.iv_melding_foto);
         this.tv_melding_titel = findViewById(R.id.tv_melding_titel);
-        this.tv_melding_beschrijving = findViewById(R.id.tv_melding_omschrijving);
+        this.tv_melding_beschrijving = findViewById(R.id.tv_melding_beschrijving);
         this.tv_melding_melder = findViewById(R.id.tv_melding_melder);
         this.tv_melding_tijdstip = findViewById(R.id.tv_melding_tijdstip);
 
         this.datamanager = MyDatamanger.getInstance(getApplication());
+        this.tv_melding_titel.setText("Melding wordt geladen.");
         getMeldingDetails();
 
         navigatieButtonsOpvullen();
@@ -80,7 +83,7 @@ public class Melding extends Activity {
             @Override
             public void onCustomSuccess(Object data) {
                 melding = datamanager.parseMeldingJson((JSONObject)data);
-                vulMeldingDetailsIn(melding);
+                getMelderDetails();
             }
 
             @Override
@@ -102,10 +105,35 @@ public class Melding extends Activity {
 
     }
 
-    private void vulMeldingDetailsIn(be.ap.edu.aportage.models.Melding m) {
-        this.tv_melding_titel.setText(m.titel);
+    void getMelderDetails(){
+        JsonObjectRequest req = this.datamanager.getMelderMetMelderId(this.melding.get_id(), new IVolleyCallback() {
+            @Override
+            public void onCustomSuccess(Object data) {
+                melder = datamanager.parseMelderJson((JSONObject)data);
+                vulMeldingDetailsIn();
+            }
+
+            @Override
+            public void onPostSuccess(JSONObject response) {
+
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        })
+    }
+
+    private void vulMeldingDetailsIn() {
+        this.tv_melding_titel.setText(this.melding.titel);
+        this.tv_melding_beschrijving.setText(this.melding.omschrijving);
+        this.tv_melding_tijdstip.setText(this.melding.datumString);
+        this.tv_melding_melder.setText(this.melder.getNaam()); //todo_done: op basis van melderID een melder object posten en getten van de db
         String url = "https://res.cloudinary.com/dt6ae1zfh/image/upload/c_fit,w_150/meldingen/" + melding.getImgUrl() + ".jpg";
-        Picasso.get().load(url).into(this.iv_melding_foto);
+       // Picasso.get().load(url).into(this.iv_melding_foto);
+        //finish();
+        //startActivity(getIntent());
     }
 
     private void registreerButtonOnClicks() {

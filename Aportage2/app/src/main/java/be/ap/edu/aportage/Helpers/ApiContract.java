@@ -72,9 +72,16 @@ public class ApiContract {
     }
 
 
+    public static String createUrlMetMelderIdQuery(String objectID){
+        //todo_one: melding object id query afmaken
+        String query = "?q={\""+MELDER_ID+"\":\""+objectID+"\"}";
+        String url = ApiContract.API_BASE_URL+"/databases/"+ApiContract.DATABASE+"/collections/"+ MongoCollections.GEBRUIKERS + query +"&apiKey="+ ApiContract.API_KEY;;
+        Log.d("ApiContract url", url);
+        return url;
+    }
 
     public static String createUrlMetObjectIdQuery(String objectID){
-        //todo: melding object id query afmaken
+        //todo_done: melding object id query afmaken
         String query = "?q={\""+MELDER_ID+"\":\""+objectID+"\"}";
         String url = ApiContract.API_BASE_URL+"/databases/"+ApiContract.DATABASE+"/collections/"+ MongoCollections.MELDINGEN + query +"&apiKey="+ ApiContract.API_KEY;;
         Log.d("ApiContract url", url);
