@@ -122,7 +122,11 @@ public class Melding extends Activity {
             public void onFailure() {
 
             }
-        })
+        });
+
+        this.datamanager.addToRequestQueue(req);
+
+
     }
 
     private void vulMeldingDetailsIn() {
