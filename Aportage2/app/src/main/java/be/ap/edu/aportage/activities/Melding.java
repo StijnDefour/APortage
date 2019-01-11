@@ -65,7 +65,7 @@ public class Melding extends Activity {
         this.btn_verdiep_nr = findViewById(R.id.btn_verdiep_nr);
         this.btn_melding_lokaalnr = findViewById(R.id.btn_melding_lokaalnr);
         this.nieuweMeldingFab = findViewById(R.id.melding_fab);
-        this.iv_melding_foto = findViewById(R.id.iv_melding_foto);
+        this.iv_melding_foto = findViewById(R.id.iv_melding_foto_groot);
         this.tv_melding_titel = findViewById(R.id.tv_melding_titel);
         this.tv_melding_beschrijving = findViewById(R.id.tv_melding_beschrijving);
         this.tv_melding_melder = findViewById(R.id.tv_melding_melder);
@@ -136,8 +136,8 @@ public class Melding extends Activity {
         this.tv_melding_beschrijving.setText(this.melding.omschrijving);
         this.tv_melding_tijdstip.setText(this.melding.datumString);
         this.tv_melding_melder.setText(melder.getNaam()); //todo_done: op basis van melderID een melder object posten en getten van de db
-        String url = "https://res.cloudinary.com/dt6ae1zfh/image/upload/c_fit,w_150/meldingen/" + melding.getImgUrl() + ".jpg";
-       // Picasso.get().load(url).into(this.iv_melding_foto);
+        String url = "https://res.cloudinary.com/dt6ae1zfh/image/upload/c_fit,w_500/meldingen/" + melding.getImgUrl() + ".jpg";
+        Picasso.get().load(url).into(this.iv_melding_foto);
 
     }
 

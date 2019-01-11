@@ -159,7 +159,7 @@ public class MyDatamanger extends Application {
 
             meldingObject.put("titel",melding.titel);
             meldingObject.put("omschrijving", melding.omschrijving);
-            meldingObject.put("datum", melding.datumString);
+            meldingObject.put("datum", melding.datum.toLocaleString());
             meldingObject.put("melderid", melding.melderId);
             meldingObject.put(ApiContract.CAMPUS_AFK, melding.locatie[0]);
             meldingObject.put(ApiContract.VERDIEP_NR, melding.locatie[1]);

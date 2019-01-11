@@ -191,7 +191,7 @@ public class ScanMelding extends AppCompatActivity {
             this.tvTitel.getText().toString(),
             this.tvOmschrijving.getText().toString(),
             new String[]{this.btnCampus.getText().toString().toUpperCase(), this.btnVerdiep.getText().toString(), this.btnLokaal.getText().toString()},
-            Statussen.ONTVANGEN, sdf.format(c.getTime()),
+            Statussen.ONTVANGEN, new Date(),
             fotoUrl
         );
         melding.setMelderId(ParseUser.getCurrentUser().getObjectId());
