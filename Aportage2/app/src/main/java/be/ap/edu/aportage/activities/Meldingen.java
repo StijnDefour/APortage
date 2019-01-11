@@ -90,7 +90,7 @@ public class Meldingen extends AppCompatActivity {
 
             @Override
             public void onCustomSuccess(Object data) {
-                Log.d("getMeldingenLijst", data.toString());
+//                Log.d("getMeldingenLijst", data.toString());
                 meldingenAdapter.setMeldingenList(dataManager.getMeldingenLijst());
                 meldingenAdapter.notifyDataSetChanged();
             }

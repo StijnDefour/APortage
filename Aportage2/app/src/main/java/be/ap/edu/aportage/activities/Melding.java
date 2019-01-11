@@ -10,7 +10,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.parse.ParseUser;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -22,6 +25,7 @@ import be.ap.edu.aportage.helpers.ApiContract;
 import be.ap.edu.aportage.helpers.MongoCollections;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.managers.MyDatamanger;
+import be.ap.edu.aportage.models.Melder;
 
 
 public class Melding extends Activity {
@@ -45,7 +49,8 @@ public class Melding extends Activity {
     private String s_lokaal;
     private String s_melding_id;
     private MyDatamanger datamanager;
-    private be.ap.edu.aportage.models.Melding melding;
+    private be.ap.edu.aportage.models.Melding melding = new be.ap.edu.aportage.models.Melding();
+    private Melder melder = new Melder();
 
 
     @Override
@@ -60,26 +65,27 @@ public class Melding extends Activity {
         this.btn_verdiep_nr = findViewById(R.id.btn_verdiep_nr);
         this.btn_melding_lokaalnr = findViewById(R.id.btn_melding_lokaalnr);
         this.nieuweMeldingFab = findViewById(R.id.melding_fab);
-        this.iv_melding_foto = findViewById(R.id.iv_melding_foto);
+        this.iv_melding_foto = findViewById(R.id.iv_melding_foto_groot);
         this.tv_melding_titel = findViewById(R.id.tv_melding_titel);
-        this.tv_melding_beschrijving = findViewById(R.id.tv_melding_omschrijving);
+        this.tv_melding_beschrijving = findViewById(R.id.tv_melding_beschrijving);
         this.tv_melding_melder = findViewById(R.id.tv_melding_melder);
         this.tv_melding_tijdstip = findViewById(R.id.tv_melding_tijdstip);
 
-        this.datamanager = MyDatamanger.getInstance(getApplication());
-        getMeldingDetails();
+        this.datamanager = MyDatamanger.getInstance(getApplicationContext());
+        this.tv_melding_titel.setText("Melding wordt geladen.");
+        this.datamanager.addToRequestQueue(getMeldingDetails());
+        this.datamanager.addToRequestQueue(getMelderDetails());
 
         navigatieButtonsOpvullen();
         registreerButtonOnClicks();
     }
 
-    private void getMeldingDetails() {
+    JsonObjectRequest getMeldingDetails() {
 
         JsonObjectRequest req = this.datamanager.getMeldingMetId(this.s_melding_id, new IVolleyCallback() {
             @Override
             public void onCustomSuccess(Object data) {
                 melding = datamanager.parseMeldingJson((JSONObject)data);
-                vulMeldingDetailsIn(melding);
             }
 
             @Override
@@ -94,15 +100,44 @@ public class Melding extends Activity {
             }
         });
 
-        this.datamanager.addToRequestQueue(req);
+       return req;
 
 
 
 
     }
 
-    private void vulMeldingDetailsIn(be.ap.edu.aportage.models.Melding m) {
-        this.tv_melding_titel.setText(m.titel);
+    JsonArrayRequest getMelderDetails(){
+        JsonArrayRequest req = this.datamanager.getMelderMetMelderId(ParseUser.getCurrentUser().getObjectId(), new IVolleyCallback() {
+            @Override
+            public void onCustomSuccess(Object data) {
+                melder = (Melder)data;
+                vulMeldingDetailsIn(melder);
+
+            }
+
+            @Override
+            public void onPostSuccess(JSONObject response) {
+
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
+
+      return req;
+
+    }
+
+    private void vulMeldingDetailsIn(Melder melder) {
+        this.tv_melding_titel.setText(this.melding.titel);
+        this.tv_melding_beschrijving.setText(this.melding.omschrijving);
+        this.tv_melding_tijdstip.setText(this.melding.datumString);
+        this.tv_melding_melder.setText(melder.getNaam()); //todo_done: op basis van melderID een melder object posten en getten van de db
+        String url = "https://res.cloudinary.com/dt6ae1zfh/image/upload/c_fit,w_500/meldingen/" + melding.getImgUrl() + ".jpg";
+        Picasso.get().load(url).into(this.iv_melding_foto);
 
     }
 

@@ -26,6 +26,7 @@ import be.ap.edu.aportage.helpers.Statussen;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.models.Campus;
 import be.ap.edu.aportage.models.Lokaal;
+import be.ap.edu.aportage.models.Melder;
 import be.ap.edu.aportage.models.Melding;
 import be.ap.edu.aportage.models.Verdiep;
 
@@ -112,14 +113,51 @@ public class MyDatamanger extends Application {
         return jsonArrayR;
     }
 
-    public JsonObjectRequest    createPostRequest(MongoCollections collection, Melding melding, IVolleyCallback callback) {
+
+    public JsonObjectRequest postMelder(Melder melder){
+        JSONObject melderObject = new JSONObject();
+        JsonObjectRequest req = null;
+        try {
+
+
+            melderObject.put("naam", melder.getNaam());
+            melderObject.put("melderid", melder.getID());
+            melderObject.put("facilitair", melder.isFacilitair());
+            melderObject.put("gdpr", melder.isGdpr());
+
+            Log.d("postTest", "test json to array");
+            req = new JsonObjectRequest(
+                    Request.Method.POST,
+                    ApiContract.createCollectionUrlMetApi(MongoCollections.GEBRUIKERS),
+                    melderObject,
+                    response -> {
+                        Log.d("post req", response.toString());
+
+                    }, error -> {
+                //throw new JSONException("er is iets misgelopen tijdens het posten van de melder");
+                Log.e("volleyerror", error.getMessage());
+
+            });
+
+            Log.d("postTest", "test json to array");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        return req;
+    }
+
+    public JsonObjectRequest createPostRequest(MongoCollections collection, Melding melding, IVolleyCallback callback) {
+
         JSONObject meldingObject = new JSONObject();
         JsonObjectRequest jsonArrayR = null;
         try {
 
             meldingObject.put("titel",melding.titel);
             meldingObject.put("omschrijving", melding.omschrijving);
-            meldingObject.put("datum", melding.datum.toString());
+            meldingObject.put("datum", melding.datum.toLocaleString());
             meldingObject.put("melderid", melding.melderId);
             meldingObject.put(ApiContract.CAMPUS_AFK, melding.locatie[0]);
             meldingObject.put(ApiContract.VERDIEP_NR, melding.locatie[1]);
@@ -232,6 +270,7 @@ public class MyDatamanger extends Application {
                     Statussen.getStatus(obj.get("status").toString()),
                     obj.get("datum").toString(),
                     obj.get("imgUrl").toString());
+            melding.setId((obj.getJSONObject("_id").get("$oid")).toString());
             this.mMeldingen.add(melding);
             callback.onCustomSuccess(melding);
 
@@ -297,6 +336,53 @@ public class MyDatamanger extends Application {
         return this.mCampussen;
     }
 
+
+    public JsonArrayRequest getMelderMetMelderId(String objectID, IVolleyCallback callback){
+        String url = ApiContract.createUrlMetMelderIdQuery(objectID);
+        JsonArrayRequest jsonArrayR = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d(TAG_DM, response.toString());
+                        try {
+                            callback.onCustomSuccess(parseMelderJson(response.getJSONObject(0)));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // done: Handle error
+                        Log.e(TAG_DM, "something went wrong getting melder with id"+objectID);
+                    }
+                });
+
+        return jsonArrayR;
+    }
+
+    public Melder parseMelderJson(JSONObject obj) {
+
+        Melder melder = new Melder();
+
+
+        try {
+            melder.setNaam(obj.get("naam").toString());
+            melder.setMelderid(obj.get("melderid").toString());
+            melder.setGdpr(Boolean.parseBoolean(obj.get("gdpr").toString()));
+            melder.setFacilitair(Boolean.parseBoolean(obj.get("facilitair").toString()));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        return melder;
+
+    }
+
     public JsonArrayRequest getMeldingenLijstMetId(String objectId, IVolleyCallback callback) {
         //https://api.mlab.com/api/1/databases/my-db/collections/my-coll?q={"active": true}&apiKey=myAPIKey
 
@@ -351,9 +437,10 @@ public class MyDatamanger extends Application {
                             obj.get("lokaalnr").toString()
                     },
                     Statussen.getStatus(obj.get("status").toString()),
-                    obj.get("datum").toString(),
+                    obj.get("datum").toString(), //datum: "Thu Jan 10 18:05:05 GMT+01:00 2019" kan niet worden gelezen
                    obj.get("imgUrl").toString());
           melding.setId((obj.getJSONObject("_id").get("$oid")).toString());
+          melding.setMelderId((obj.get("melderid").toString()));
 
 
         } catch (JSONException e) {
@@ -364,7 +451,7 @@ public class MyDatamanger extends Application {
     }
 
     public JsonObjectRequest getMeldingMetId(String id, IVolleyCallback callback){
-        //todo : maak request
+        //todo_done : maak request
         String url = ApiContract.createMeldingIDQueryUrl(id);
         JsonObjectRequest req = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -373,7 +460,6 @@ public class MyDatamanger extends Application {
                     public void onResponse(JSONObject response) {
                         Log.d(TAG_DM, response.toString());
                         callback.onCustomSuccess(response);
-
                     }
                 }, new Response.ErrorListener() {
 

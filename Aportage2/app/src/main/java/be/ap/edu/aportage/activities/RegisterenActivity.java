@@ -16,11 +16,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.managers.MyDatamanger;
 import be.ap.edu.aportage.managers.MyUserManager;
 import be.ap.edu.aportage.models.Melder;
 
@@ -28,9 +30,13 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
+import org.json.JSONObject;
+
 public class RegisterenActivity extends AppCompatActivity {
 
-    private MyUserManager myUserManager;
+
+    private MyDatamanger myDataManager;
+    private Melder melder = new Melder();
     private Intent uitgaandeIntent;
 
     private EditText naamEditText;
@@ -46,7 +52,8 @@ public class RegisterenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registeren);
 
-        this.myUserManager = MyUserManager.getInstance(this.getApplicationContext());
+        this.myDataManager = MyDatamanger.getInstance(getApplicationContext());
+
         this.naamEditText = (EditText) findViewById(R.id.et_registeren_naam);
         this.mailEditText = (EditText) findViewById(R.id.et_registeren_email);
         this.wwEditText = (EditText) findViewById(R.id.et_registreren_wachtwoord);
@@ -84,17 +91,16 @@ public class RegisterenActivity extends AppCompatActivity {
 
         //todo_done: melder object maken en dit ook opslaan met de objectID van parseuser object naar mlab db
 
-        Melder melder = new Melder();
         ParseUser user = new ParseUser();
 // Set the user's username and password, which can be obtained by a forms
-        Log.d("USER", this.mailEditText.getText().toString());
+
         user.setUsername(this.mailEditText.getText().toString());
-
-
-        Log.d("USER", this.wwEditText.getText().toString());
         user.setPassword(this.wwEditText.getText().toString());
         user.setEmail(this.mailEditText.getText().toString());
-        Log.d("PARSEUSER", user.toString());
+
+        this.melder.setNaam(this.naamEditText.getText().toString());
+        this.melder.setFacilitair(this.facilitairCB.isChecked());
+        this.melder.setGdpr(this.gdprCB.isChecked());
 
         registreerMelder(user);
 
@@ -106,6 +112,8 @@ public class RegisterenActivity extends AppCompatActivity {
            public void done(ParseException e) {
                if (e == null) {
                    Toast.makeText(RegisterenActivity.this, "Registratie gelukt!", Toast.LENGTH_LONG).show();
+                   melder.setMelderid(ParseUser.getCurrentUser().getObjectId());
+                   slaMelderOpNaarDB(melder);
                    ParseUser.logOut();
                    gaNaarLoginActivity();
                } else {
@@ -116,11 +124,17 @@ public class RegisterenActivity extends AppCompatActivity {
                }
            }
        });
+
+
+
+
    }
 
-    void toonFoutMelding(){
-
+    private void slaMelderOpNaarDB(Melder melder) {
+        JsonObjectRequest req = this.myDataManager.postMelder(melder);
+        this.myDataManager.addToRequestQueue(req);
     }
+
 
     void wisAlleVelden(){
         finish();

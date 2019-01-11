@@ -35,6 +35,7 @@ import be.ap.edu.aportage.helpers.Statussen;
 import be.ap.edu.aportage.interfaces.CampusKleuren;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.managers.MyDatamanger;
+import be.ap.edu.aportage.models.Melder;
 import be.ap.edu.aportage.models.Melding;
 
 public class ScanMelding extends AppCompatActivity {
@@ -170,11 +171,11 @@ public class ScanMelding extends AppCompatActivity {
     private void slaMeldingOpNaarDeDB() {
         Cloudinary cloudinary = new Cloudinary();
         String fotoUrl = "";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        Calendar c = Calendar.getInstance();
         try {
-            Calendar c = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-            String strDate = sdf.format(c.getTime());
 
+            String strDate = sdf.format(c.getTime());
             MediaManager.get().upload(mCurrentPhotoPath)
                     .unsigned("qjmws079")
                     .option("folder", "meldingen/")
@@ -190,12 +191,20 @@ public class ScanMelding extends AppCompatActivity {
             this.tvTitel.getText().toString(),
             this.tvOmschrijving.getText().toString(),
             new String[]{this.btnCampus.getText().toString().toUpperCase(), this.btnVerdiep.getText().toString(), this.btnLokaal.getText().toString()},
-            Statussen.ONTVANGEN,
-            new Date(),
+            Statussen.ONTVANGEN, new Date(),
             fotoUrl
         );
         melding.setMelderId(ParseUser.getCurrentUser().getObjectId());
 
+
+
+        postMelding(melding);
+
+    }
+
+
+
+    void postMelding(Melding melding){
         JsonObjectRequest jsonObjectRequest = this.myDatamanger.createPostRequest(MongoCollections.MELDINGEN, melding, new IVolleyCallback() {
             @Override
             public void onCustomSuccess(Object data) {
