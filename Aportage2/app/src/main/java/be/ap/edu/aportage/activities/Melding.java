@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
@@ -47,8 +49,8 @@ public class Melding extends Activity {
     private String s_lokaal;
     private String s_melding_id;
     private MyDatamanger datamanager;
-    private be.ap.edu.aportage.models.Melding melding;
-    private Melder melder;
+    private be.ap.edu.aportage.models.Melding melding = new be.ap.edu.aportage.models.Melding();
+    private Melder melder = new Melder();
 
 
     @Override
@@ -69,21 +71,21 @@ public class Melding extends Activity {
         this.tv_melding_melder = findViewById(R.id.tv_melding_melder);
         this.tv_melding_tijdstip = findViewById(R.id.tv_melding_tijdstip);
 
-        this.datamanager = MyDatamanger.getInstance(getApplication());
+        this.datamanager = MyDatamanger.getInstance(getApplicationContext());
         this.tv_melding_titel.setText("Melding wordt geladen.");
-        getMeldingDetails();
+        this.datamanager.addToRequestQueue(getMeldingDetails());
+        this.datamanager.addToRequestQueue(getMelderDetails());
 
         navigatieButtonsOpvullen();
         registreerButtonOnClicks();
     }
 
-    private void getMeldingDetails() {
+    JsonObjectRequest getMeldingDetails() {
 
         JsonObjectRequest req = this.datamanager.getMeldingMetId(this.s_melding_id, new IVolleyCallback() {
             @Override
             public void onCustomSuccess(Object data) {
                 melding = datamanager.parseMeldingJson((JSONObject)data);
-                getMelderDetails();
             }
 
             @Override
@@ -98,19 +100,20 @@ public class Melding extends Activity {
             }
         });
 
-        this.datamanager.addToRequestQueue(req);
+       return req;
 
 
 
 
     }
 
-    void getMelderDetails(){
-        JsonObjectRequest req = this.datamanager.getMelderMetMelderId(this.melding.get_id(), new IVolleyCallback() {
+    JsonArrayRequest getMelderDetails(){
+        JsonArrayRequest req = this.datamanager.getMelderMetMelderId(ParseUser.getCurrentUser().getObjectId(), new IVolleyCallback() {
             @Override
             public void onCustomSuccess(Object data) {
-                melder = datamanager.parseMelderJson((JSONObject)data);
-                vulMeldingDetailsIn();
+                melder = (Melder)data;
+                vulMeldingDetailsIn(melder);
+
             }
 
             @Override
@@ -124,20 +127,18 @@ public class Melding extends Activity {
             }
         });
 
-        this.datamanager.addToRequestQueue(req);
-
+      return req;
 
     }
 
-    private void vulMeldingDetailsIn() {
+    private void vulMeldingDetailsIn(Melder melder) {
         this.tv_melding_titel.setText(this.melding.titel);
         this.tv_melding_beschrijving.setText(this.melding.omschrijving);
         this.tv_melding_tijdstip.setText(this.melding.datumString);
-        this.tv_melding_melder.setText(this.melder.getNaam()); //todo_done: op basis van melderID een melder object posten en getten van de db
+        this.tv_melding_melder.setText(melder.getNaam()); //todo_done: op basis van melderID een melder object posten en getten van de db
         String url = "https://res.cloudinary.com/dt6ae1zfh/image/upload/c_fit,w_150/meldingen/" + melding.getImgUrl() + ".jpg";
        // Picasso.get().load(url).into(this.iv_melding_foto);
-        //finish();
-        //startActivity(getIntent());
+
     }
 
     private void registreerButtonOnClicks() {

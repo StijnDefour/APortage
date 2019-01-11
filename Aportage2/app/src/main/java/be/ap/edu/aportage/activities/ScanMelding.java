@@ -35,6 +35,7 @@ import be.ap.edu.aportage.helpers.Statussen;
 import be.ap.edu.aportage.interfaces.CampusKleuren;
 import be.ap.edu.aportage.interfaces.IVolleyCallback;
 import be.ap.edu.aportage.managers.MyDatamanger;
+import be.ap.edu.aportage.models.Melder;
 import be.ap.edu.aportage.models.Melding;
 
 public class ScanMelding extends AppCompatActivity {
@@ -195,6 +196,15 @@ public class ScanMelding extends AppCompatActivity {
         );
         melding.setMelderId(ParseUser.getCurrentUser().getObjectId());
 
+
+
+        postMelding(melding);
+
+    }
+
+
+
+    void postMelding(Melding melding){
         JsonObjectRequest jsonObjectRequest = this.myDatamanger.createPostRequest(MongoCollections.MELDINGEN, melding, new IVolleyCallback() {
             @Override
             public void onCustomSuccess(Object data) {

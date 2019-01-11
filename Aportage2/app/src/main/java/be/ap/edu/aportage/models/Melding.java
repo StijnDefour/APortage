@@ -26,6 +26,9 @@ public class Melding {
 //todo_done: api call naar 26 vs 24 rechtzetten om localdatetime te kunnen gebruiken, of een andere date lib gebruiken
 
 
+    public Melding(){
+
+    }
 
     public Melding(String t, String omschr, String[] loc, Statussen sts, Date d, String img) {
         this.titel = t;
@@ -40,7 +43,7 @@ public class Melding {
         this.omschrijving = omschr;
         this.locatie = loc;
         this.status = sts;
-        this.setDate(d);
+        //this.setDate(d);
         this.datumString = d;
         this.imgUrl = img;
     }
@@ -70,6 +73,7 @@ public class Melding {
 
     public void setDate(String d){
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.FRANCE);
+
         try {
             this.datum = sdf.parse(d);
         } catch (ParseException e) {

@@ -117,7 +117,7 @@ public class MyDatamanger extends Application {
         return jsonArrayR;
     }
 
-    public JsonObjectRequest postMelder(Melder melder, IVolleyCallback callback){
+    public JsonObjectRequest postMelder(Melder melder){
         JSONObject melderObject = new JSONObject();
         JsonObjectRequest req = null;
         try {
@@ -136,11 +136,9 @@ public class MyDatamanger extends Application {
                     response -> {
                         Log.d("post req", response.toString());
 
-                        callback.onPostSuccess(response);
                     }, error -> {
                 //throw new JSONException("er is iets misgelopen tijdens het posten van de melder");
                 Log.e("volleyerror", error.getMessage());
-                callback.onFailure();
 
             });
 
@@ -161,7 +159,7 @@ public class MyDatamanger extends Application {
 
             meldingObject.put("titel",melding.titel);
             meldingObject.put("omschrijving", melding.omschrijving);
-            meldingObject.put("datum", melding.datum.toLocaleString());
+            meldingObject.put("datum", melding.datumString);
             meldingObject.put("melderid", melding.melderId);
             meldingObject.put(ApiContract.CAMPUS_AFK, melding.locatie[0]);
             meldingObject.put(ApiContract.VERDIEP_NR, melding.locatie[1]);
@@ -353,27 +351,32 @@ public class MyDatamanger extends Application {
         return this.mCampussen;
     }
 
-    public JsonObjectRequest getMelderMetMelderId(String objectID, IVolleyCallback callback){
+
+    public JsonArrayRequest getMelderMetMelderId(String objectID, IVolleyCallback callback){
         String url = ApiContract.createUrlMetMelderIdQuery(objectID);
-        JsonObjectRequest req = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                null,
-                new Response.Listener<JSONObject>() {
+        JsonArrayRequest jsonArrayR = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
                     @Override
-                    public void onResponse(JSONObject response) {
-                        callback.onCustomSuccess(response);
+                    public void onResponse(JSONArray response) {
+                        Log.d(TAG_DM, response.toString());
+                        try {
+                            callback.onCustomSuccess(parseMelderJson(response.getJSONObject(0)));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                     }
-                },
-                new Response.ErrorListener() {
+                }, new Response.ErrorListener() {
+
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        callback.onFailure();
+                        // done: Handle error
+                        Log.e(TAG_DM, "something went wrong getting melder with id"+objectID);
                     }
-                }
-        );
+                });
 
-        return req;
+        return jsonArrayR;
     }
 
     public Melder parseMelderJson(JSONObject obj) {
@@ -452,6 +455,7 @@ public class MyDatamanger extends Application {
                     obj.get("datum").toString(), //datum: "Thu Jan 10 18:05:05 GMT+01:00 2019" kan niet worden gelezen
                    obj.get("imgUrl").toString());
           melding.setId((obj.getJSONObject("_id").get("$oid")).toString());
+          melding.setMelderId((obj.get("melderid").toString()));
 
 
         } catch (JSONException e) {
@@ -471,7 +475,6 @@ public class MyDatamanger extends Application {
                     public void onResponse(JSONObject response) {
                         Log.d(TAG_DM, response.toString());
                         callback.onCustomSuccess(response);
-
                     }
                 }, new Response.ErrorListener() {
 
