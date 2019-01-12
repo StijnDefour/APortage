@@ -1,0 +1,16 @@
+.splashscreen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 5;
+}
+
+.splashscreen video {
+    height: 150px;
+    display: block;
+    margin: 15% auto 0;
+    position: relative;
+}
