@@ -11,7 +11,7 @@ const routes: Routes = [
   //{ path: '', component: AppComponent },
   { path: '', component: DashboardComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'reports', component: ReportsComponent },
+  { path: 'meldingen', component: ReportsComponent },
   { path: 'campussen', component: CampusComponent }
 ];
 

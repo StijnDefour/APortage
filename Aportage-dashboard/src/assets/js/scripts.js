@@ -1,5 +1,12 @@
 $(document).ready(function(){
     if($('.splashscreen').length > 0 ){
-        $(".splashscreen").delay(3000).fadeOut(400);
+        $(".splashscreen").delay(2300).fadeOut(250);
     }
 });
+
+function toggleMenu() {
+    $(".hamburger").toggleClass("is-active");
+    $(".sidebar").toggleClass("active");
+    $(".menu-item").toggleClass("active");
+    $(".overlay").toggleClass("active");
+};
