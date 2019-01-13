@@ -13,13 +13,21 @@ import android.widget.TextView;
 import java.util.List;
 
 import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.activities.Campussen;
 import be.ap.edu.aportage.activities.Verdiepingen;
+import be.ap.edu.aportage.interfaces.CampusKleuren;
 import be.ap.edu.aportage.models.Campus;
 
 public class CampussenRecyclerAdapter extends RecyclerView.Adapter<CampussenRecyclerAdapter.ViewHolder> {
 
     private final Context context;
-    private final List<Campus> campussenList;
+    private CampusKleuren campusKleuren = new CampusKleuren();
+
+    public void setCampussenList(List<Campus> campussenList) {
+        this.campussenList = campussenList;
+    }
+
+    private List<Campus> campussenList;
     private final LayoutInflater layoutInflater;
 
     public CampussenRecyclerAdapter(Context context, List<Campus> campussenList) {
@@ -40,7 +48,7 @@ public class CampussenRecyclerAdapter extends RecyclerView.Adapter<CampussenRecy
         Campus campus = this.campussenList.get(i);
         viewHolder.campusTitel.setText(campus.getNaam());
         viewHolder.campusAfk = campus.afkorting;
-        //viewHolder.campusFoto.setImageURI(Uri.parse("https://www.ap.be/sites/default/files/2018-10/Meistraat.jpg"));
+        viewHolder.campusFoto.setBackgroundColor(this.campusKleuren.getCampusColor(campus.afkorting, context));
     }
 
     @Override
@@ -64,11 +72,22 @@ public class CampussenRecyclerAdapter extends RecyclerView.Adapter<CampussenRecy
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, Verdiepingen.class);
-                    intent.putExtra("campus_titel", campusTitel.getText());
-                    intent.putExtra("campus_afk", campusAfk);
+                    intent.putExtra(context.getResources().getString(R.string.campus_intent), campusAfk);
                     context.startActivity(intent);
+                    ((Campussen)context).finish();
                 }
             });
+        }
+    }
+
+    public void clearCampussen() {
+        int size = this.campussenList.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                campussenList.remove(0);
+            }
+
+//            this.notifyItemRangeRemoved(0, size);
         }
     }
 }

@@ -11,12 +11,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.android.volley.toolbox.JsonArrayRequest;
+
+import org.json.JSONObject;
+
 import java.util.List;
 
 import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.helpers.MongoCollections;
+import be.ap.edu.aportage.interfaces.CampusKleuren;
+import be.ap.edu.aportage.interfaces.IVolleyCallback;
+import be.ap.edu.aportage.managers.MyDatamanger;
 import be.ap.edu.aportage.models.Melding;
 import be.ap.edu.aportage.recycleradapters.MeldingenRecyclerAdapter;
-import be.ap.edu.aportage.managers.MockDataManager;
 
 public class Meldingen extends AppCompatActivity {
 
@@ -29,9 +36,11 @@ public class Meldingen extends AppCompatActivity {
     private MeldingenRecyclerAdapter meldingenAdapter;
     private List<Melding> meldingenLijst;
     private Intent binnenkomendeIntent;
-    private MockDataManager dataManager = MockDataManager.getInstance();
+    private MyDatamanger dataManager ;
     private Intent uitgaandeIntent;
     private FloatingActionButton nieuweMeldingfab;
+
+    private CampusKleuren campusKleuren = new CampusKleuren();
 
     private String s_campus;
     private String s_verdieping;
@@ -41,6 +50,7 @@ public class Meldingen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meldingen);
+        this.dataManager = MyDatamanger.getInstance(this.getApplicationContext());
 
         this.meldingenCampusBtn = (Button) findViewById(R.id.btn_campus_afk);
         this.meldingenVerdiepBtn = (Button) findViewById(R.id.btn_verdiep_nr);
@@ -57,21 +67,60 @@ public class Meldingen extends AppCompatActivity {
         this.meldingenAdapter = new MeldingenRecyclerAdapter(this, this.meldingenLijst);
         this.meldingenRV.setAdapter(this.meldingenAdapter);
 
-
         navigatieButtonsOpvullen();
+
         registreerButtonOnClicks();
+        getMeldingenData();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, Lokalen.class);
+        intent.putExtra(getString(R.string.campus_intent), s_campus);
+        intent.putExtra(getString(R.string.verdieping_intent), s_verdieping);
+        startActivity(intent);
+        Meldingen.this.finish();
+    }
+
+    private void getMeldingenData() {
+        this.meldingenAdapter.clearMeldingen();
+        String url = be.ap.edu.aportage.helpers.ApiContract.createMeldingenQueryUrl(s_campus, s_verdieping, s_lokaal);
+        JsonArrayRequest req = dataManager.createGetRequest(url, MongoCollections.MELDINGEN, new IVolleyCallback() {
+
+            @Override
+            public void onCustomSuccess(Object data) {
+//                Log.d("getMeldingenLijst", data.toString());
+                meldingenAdapter.setMeldingenList(dataManager.getMeldingenLijst());
+                meldingenAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onPostSuccess(JSONObject response) {
+
+            }
+
+            @Override
+            public void onFailure() {
+                //todo: bericht/popup dat het tonen van de meldingen is mislukt
+            }
+        });
+        dataManager.addToRequestQueue(req);
+
     }
 
 
     private void navigatieButtonsOpvullen(){
-
         try {
-            this.s_campus = this.binnenkomendeIntent.getStringExtra("campus_afk");
-            this.s_verdieping = this.binnenkomendeIntent.getStringExtra("verdiep_nr");
-            this.s_lokaal = this.binnenkomendeIntent.getStringExtra("lokaal_nr");
+            this.s_campus = this.binnenkomendeIntent.getStringExtra(getString(R.string.campus_intent));
+            this.s_verdieping = this.binnenkomendeIntent.getStringExtra(getString(R.string.verdieping_intent));
+            this.s_lokaal = this.binnenkomendeIntent.getStringExtra(getString(R.string.lokaal_intent));
             this.meldingenCampusBtn.setText(this.s_campus);
             this.meldingenVerdiepBtn.setText(this.s_verdieping);
             this.meldingenLokaalBtn.setText(this.s_lokaal);
+            this.meldingenCampusBtn.setBackgroundColor(campusKleuren.getCampusColor(s_campus.toLowerCase(), this));
+            this.meldingenVerdiepBtn.setBackgroundColor(campusKleuren.getVerdiepingColor(s_campus.toLowerCase(), this));
+            this.meldingenLokaalBtn.setBackgroundColor(campusKleuren.getLokaalColor(s_campus.toLowerCase(), this));
         } catch (Error e) {
             Log.e("navigatieButtonsOpvullen Mislukt", e.getMessage());
         }
@@ -102,35 +151,35 @@ public class Meldingen extends AppCompatActivity {
     }
 
     private void gaNaarScanMelding(){
-        Intent intent = new Intent(this, ScanMelding.class);
-        intent.putExtra("campus_afk", s_campus);
-        intent.putExtra("verdiep_nr", s_verdieping);
-        intent.putExtra("lokaal_nr", s_lokaal);
-        startActivity(intent);
+        this.uitgaandeIntent = new Intent(this, ScanMelding.class);
+        this.uitgaandeIntent.putExtra(getString(R.string.campus_intent), s_campus);
+        this.uitgaandeIntent.putExtra(getString(R.string.verdieping_intent), s_verdieping);
+        this.uitgaandeIntent.putExtra(getString(R.string.lokaal_intent), s_lokaal);
+        this.uitgaandeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(this.uitgaandeIntent);
+        Meldingen.this.finish();
     }
 
     private void gaNaarLokalen() {
 
         this.uitgaandeIntent = new Intent(this, Lokalen.class);
-        this.uitgaandeIntent.putExtra("verdiep_nr", this.meldingenVerdiepBtn.getText());
-        this.uitgaandeIntent.putExtra("campus_afk", this.meldingenCampusBtn.getText());
+        this.uitgaandeIntent.putExtra(getString(R.string.verdieping_intent), this.meldingenVerdiepBtn.getText());
+        this.uitgaandeIntent.putExtra(getString(R.string.campus_intent), this.meldingenCampusBtn.getText());
         startActivity(this.uitgaandeIntent);
-
+        Meldingen.this.finish();
     }
 
     private void gaNaarVerdiepen(){
-
         this.uitgaandeIntent = new Intent(this, Verdiepingen.class);
-        this.uitgaandeIntent.putExtra("campus_afk", this.meldingenCampusBtn.getText());
+        this.uitgaandeIntent.putExtra(getString(R.string.campus_intent), this.meldingenCampusBtn.getText());
         startActivity(this.uitgaandeIntent);
+        Meldingen.this.finish();
     }
 
     private void gaNaarCampussen(){
-
         this.uitgaandeIntent = new Intent(this, Campussen.class);
         startActivity(this.uitgaandeIntent);
+        Meldingen.this.finish();
     }
-
-
 
 }

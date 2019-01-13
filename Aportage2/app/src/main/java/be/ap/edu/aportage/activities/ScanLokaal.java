@@ -16,13 +16,19 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
+import org.json.JSONObject;
+
 import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.interfaces.IVolleyCallback;
+import be.ap.edu.aportage.managers.MyDatamanger;
+import be.ap.edu.aportage.managers.MyMailManager;
 
 public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Callback, Detector.Processor  {
 
@@ -38,6 +44,14 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
     private String s_verdiepNr;
     private String s_lokaalNr;
     private Intent uitgaandeIntent;
+
+    private MyDatamanger datamanger;
+
+
+    public boolean exist;
+
+    private MyMailManager mailManager;
+
 
     @SuppressLint("MissingPermission")
     @Override
@@ -56,78 +70,96 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
         }
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_for_food);
-        cameraView = (SurfaceView) findViewById(R.id.surface_view);
-        txtView = (TextView) findViewById(R.id.txtview);
+        this.cameraView = (SurfaceView) findViewById(R.id.surface_view);
+        this.txtView = (TextView) findViewById(R.id.txtview);
+        this.datamanger = MyDatamanger.getInstance(this.getApplicationContext());
 
-        TextRecognizer txtRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
-        if (!txtRecognizer.isOperational()) {
-            Log.e("ScanLokaal", "Detector dependencies are not yet available");
-        } else {
-            cameraSource = new CameraSource.Builder(getApplicationContext(), txtRecognizer)
-                    .setFacing(CameraSource.CAMERA_FACING_BACK)
-                    .setRequestedPreviewSize(1280, 1024)
-                    .setRequestedFps(2.0f)
-                    .setAutoFocusEnabled(true)
-                    .build();
-            cameraView.getHolder().addCallback(this);
-            txtRecognizer.setProcessor(this);
-        }
+        initTextRecognizer();
 
-        btn_ok = findViewById(R.id.btn_ocr_ok);
-        btn_annuleren = findViewById(R.id.btn_ocr_annuleer);
+        this.btn_ok = findViewById(R.id.btn_ocr_ok);
+        this.btn_annuleren = findViewById(R.id.btn_ocr_annuleer);
         final Activity activity = this;
-        btn_ok.setOnClickListener(new View.OnClickListener() {
+        this.btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String lokaalInfo = gelezenTekst[gelezenTekst.length-1].toUpperCase();
                 haalCampusVerdiepLokaalDataUitGelezenString(gelezenTekst[gelezenTekst.length-1]);
                 Log.d("testLokaalInfo", lokaalInfo);
-                if (!lokaalInfo.equals("")) {
-                    lokaalInfo = lokaalInfo.replace("LOKAAL ", "");
-                    lokaalInfo = lokaalInfo.replace(",", ".");
 
-                    if (checkLokaal(lokaalInfo)) {
-                        Intent intent = new Intent(activity, Meldingen.class);
-                        intent.putExtra("lokaalInfo", lokaalInfo);
-                        startActivity(intent);
-                        gaNaarMeldingen();
-                    }
-                }
+               checkLokaal();
             }
         });
         btn_annuleren.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(activity, Overzicht.class);
+                Intent intent = new Intent(ScanLokaal.this, Overzicht.class);
                 startActivity(intent);
+                ScanLokaal.this.finish();
             }
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, Overzicht.class);
+        startActivity(intent);
+        ScanLokaal.this.finish();
+    }
+
+    public void initTextRecognizer() {
+        TextRecognizer txtRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
+        if (!txtRecognizer.isOperational()) {
+            Log.e("ScanLokaal", "Detector dependencies are not yet available");
+        } else {
+            this.cameraSource = new CameraSource.Builder(getApplicationContext(), txtRecognizer)
+                    .setFacing(CameraSource.CAMERA_FACING_BACK)
+                    .setRequestedPreviewSize(1280, 1024)
+                    .setRequestedFps(2.0f)
+                    .setAutoFocusEnabled(true)
+                    .build();
+            this.cameraView.getHolder().addCallback(this);
+            txtRecognizer.setProcessor(this);
+        }
+    }
+
     private void gaNaarMeldingen() {
-
         this.uitgaandeIntent = new Intent(this, Meldingen.class);
-        this.uitgaandeIntent.putExtra("campus_afk", this.s_campusAfk);
-        this.uitgaandeIntent.putExtra("verdiep_nr", this.s_verdiepNr);
-        this.uitgaandeIntent.putExtra("lokaal_nr", this.s_lokaalNr);
+        this.uitgaandeIntent.putExtra(getString(R.string.campus_intent), this.s_campusAfk);
+        this.uitgaandeIntent.putExtra(getString(R.string.verdieping_intent), this.s_verdiepNr);
+        this.uitgaandeIntent.putExtra(getString(R.string.lokaal_intent), this.s_lokaalNr);
         startActivity(this.uitgaandeIntent);
-
+        ScanLokaal.this.finish();
     }
 
 
-    private Boolean checkLokaal(String lokaal_s) {
-        //todo Check of lokaal wel in database zit
-        return true;
+    private void checkLokaal() {
+
+        this.datamanger.checkLokaalExists(s_campusAfk, s_verdiepNr, s_lokaalNr, new IVolleyCallback() {
+            @Override
+            public void onCustomSuccess(Object data) {
+                gaNaarMeldingen();
+            }
+
+            @Override
+            public void onPostSuccess(JSONObject response) {
+
+                //ignore
+            }
+
+            @Override
+            public void onFailure() {
+                //todo: maak popup/bericht zichtbaar dat het lokaal niet bestaat.
+            }
+        });
+
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-
         try {
             if (ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -142,12 +174,10 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-
         cameraSource.stop();
     }
 
@@ -182,17 +212,15 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
 
 
     public void gelezenTekstDelimiteren(String teSplittenString) {
-
         String delimiter = "/";
         this.gelezenTekst = teSplittenString.split(delimiter);
 
         Log.v("gelezen tekst", this.gelezenTekst[gelezenTekst.length-1]);
-
     }
 
     public void haalCampusVerdiepLokaalDataUitGelezenString(String gelezenText){
-        //todo: omzetten van lokaalinfo in 3 extras: afk, verdiepnr, lokaalnr
-        //todo: als er geen correct lokaal kon worden gelezen nadat user op "doorsturen" klikt -> popup tonen en naar zoeken redirecten
+        //todo_done: omzetten van lokaalinfo in 3 extras: afk, verdiepnr, lokaalnr
+        //todo_done: als er geen correct lokaal kon worden gelezen nadat user op "doorsturen" klikt -> popup tonen en naar zoeken redirecten
         Log.d(LOG_TAG + "maakAparteExtras", gelezenText );
         try {
             String[] individueleWoorden = gelezenText.split("[^\\w\\-]+|--+");
@@ -202,6 +230,14 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
             this.s_lokaalNr = individueleWoorden[3];
         } catch (Error e) {
             Log.e(LOG_TAG, e.getMessage());
+            Toast.makeText(ScanLokaal.this, "Er werd geen tekst herkend, probeer het lokaal manueel te zoeken.", Toast.LENGTH_LONG).show();
+            gaNaarCampussenActivity();
         }
+    }
+
+    private void gaNaarCampussenActivity() {
+        this.uitgaandeIntent = new Intent(ScanLokaal.this, Campussen.class);
+        this.uitgaandeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(this.uitgaandeIntent);
     }
 }

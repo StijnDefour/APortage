@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +13,14 @@ import java.util.List;
 
 import be.ap.edu.aportage.R;
 import be.ap.edu.aportage.activities.Lokalen;
+import be.ap.edu.aportage.activities.Verdiepingen;
 import be.ap.edu.aportage.models.Verdiep;
 
 public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecyclerAdapter.ViewHolder> {
 
     private final Context context;
     private final LayoutInflater layoutInflater;
-    private final List<Verdiep> verdiepenLijst;
+    private List<Verdiep> verdiepenLijst;
     private final String afkorting_campus;
 
     public VerdiepenRecyclerAdapter(Context context, List<Verdiep> verdiepenLijst, String afk) {
@@ -28,6 +28,10 @@ public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecy
         this.layoutInflater = LayoutInflater.from(this.context);
         this.verdiepenLijst = verdiepenLijst;
         this.afkorting_campus = afk;
+    }
+
+    public void setVerdiepenLijst(List<Verdiep> lijst){
+        this.verdiepenLijst = lijst;
     }
 
     @NonNull
@@ -42,7 +46,6 @@ public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecy
         Verdiep verdiep = verdiepenLijst.get(i);
         viewHolder.verdiepNummer.setText(verdiep.getVerdiepNaam());
         viewHolder.afk = this.afkorting_campus;
-
     }
 
     @Override
@@ -64,12 +67,23 @@ public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecy
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, Lokalen.class);
-                    intent.putExtra("verdiep_nr", verdiepNummer.getText());
-                    intent.putExtra("campus_afk", afk);
-                    Log.d("test", verdiepNummer.getText().toString() + " " + afk);
+                    intent.putExtra(context.getResources().getString(R.string.verdieping_intent), verdiepNummer.getText());
+                    intent.putExtra(context.getResources().getString(R.string.campus_intent), afk);
                     context.startActivity(intent);
+                    ((Verdiepingen)context).finish();
                 }
             });
+        }
+    }
+
+    public void clearVerdiepingen() {
+        int size = this.verdiepenLijst.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                verdiepenLijst.remove(0);
+            }
+
+//            this.notifyItemRangeRemoved(0, size);
         }
     }
 }

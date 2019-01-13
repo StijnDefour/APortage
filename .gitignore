@@ -11,8 +11,6 @@ Aportage2/build
 Aportage2/captures
 Aportage2/.externalNativeBuild
 
-
-
 # APORTAGE DASHBOARD IGNORE #
 
 Aportage-dashboard/.DS_STORE
@@ -50,3 +48,4 @@ Aportage-dashboard/modules/rollup-test/dist/
 
 # User specific bazel settings
 Aportage-dashboard/.bazelrc.user
+Aportage2/.idea/caches/build_file_checksums.ser

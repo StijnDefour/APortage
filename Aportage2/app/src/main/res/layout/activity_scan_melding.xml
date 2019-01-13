@@ -75,10 +75,10 @@
         android:ems="10"
         android:hint="@string/scan_melding_hint_titel"
         android:inputType="text|textShortMessage|textPersonName"
-        android:text="@string/melding_titel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv-label-titel" />
+        app:layout_constraintTop_toBottomOf="@+id/tv-label-titel"
+        android:textColor="@color/kaska"/>
 
     <TextView
         android:id="@+id/tv-melding-omschrijving"

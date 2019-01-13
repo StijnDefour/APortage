@@ -13,12 +13,23 @@
         android:maxSdkVersion="18" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/ap_thema">
+        <meta-data
+            android:name="com.parse.SERVER_URL"
+            android:value="@string/back4app_server_url" />
+        <meta-data
+            android:name="com.parse.APPLICATION_ID"
+            android:value="@string/back4app_app_id" />
+        <meta-data
+            android:name="com.parse.CLIENT_KEY"
+            android:value="@string/back4app_client_key" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="be.ap.edu.aportage"
@@ -49,27 +60,34 @@
         <activity
             android:name=".activities.Lokalen"
             android:label="@string/title_activity_lokalen"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.Overzicht"
             android:label="@string/title_activity_overzicht"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activities.ScanLokaal"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="ocr" />
+        <meta-data
+            android:name="CLOUDINARY_URL"
+            android:value="cloudinary://366286138446152:_qUdFOAl5B7J6TAQRYPN4hhYxz4@dt6ae1zfh"/>
 
-        <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="ocr"/>
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.RegisterenActivity" />
+        <activity android:name=".activities.UitloggenActivity" />
+        <activity android:name=".activities.MijnMeldingenActivity"></activity>
     </application>
 
 </manifest>

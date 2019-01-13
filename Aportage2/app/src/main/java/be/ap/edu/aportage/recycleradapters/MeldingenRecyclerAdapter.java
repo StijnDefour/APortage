@@ -11,6 +11,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cloudinary.android.MediaManager;
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import be.ap.edu.aportage.R;
@@ -21,14 +24,21 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
 
     private final Context context;
     private final LayoutInflater layoutInflater;
-    private final List<Melding> meldingenList;
 
+    public void setMeldingenList(List<Melding> meldingenList) {
+        this.meldingenList = meldingenList;
+    }
+
+    private List<Melding> meldingenList;
 
     public MeldingenRecyclerAdapter(Context context, List<Melding> meldingenList) {
         this.context = context;
         this.meldingenList = meldingenList;
         this.layoutInflater = LayoutInflater.from(this.context);
 
+        try {
+            MediaManager.init(context);
+        } catch (Exception e) {}
     }
 
     @NonNull
@@ -43,8 +53,11 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
         Melding melding = this.meldingenList.get(i);
         viewHolder.meldingTitel.setText(melding.titel);
         viewHolder.meldingBeschrijving.setText(melding.omschrijving);
-        viewHolder.melding_id = i;
+        viewHolder.melding_id = this.meldingenList.get(i).get_id();
         viewHolder.locatie = melding.locatie;
+
+        String url = "https://res.cloudinary.com/dt6ae1zfh/image/upload/c_fit,w_150/meldingen/" + melding.getImgUrl() + ".jpg";
+        Picasso.get().load(url).into(viewHolder.meldingFoto);
     }
 
     @Override
@@ -57,7 +70,7 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
         private TextView meldingTitel;
         private TextView meldingBeschrijving;
         private FrameLayout meldingStatus;
-        private int melding_id;
+        private String melding_id;
         private String[] locatie;
 
         public ViewHolder(@NonNull View itemView) {
@@ -77,16 +90,26 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
                     intent.putExtra("melding_titel", meldingTitel.getText());
                     intent.putExtra("melding_id", melding_id);
 
-                    intent.putExtra("campus_afk", locatie[0]);
-                    intent.putExtra("verdiep_nr", locatie[1]);
-                    intent.putExtra("lokaal_nr", locatie[2]);
+                    intent.putExtra(context.getResources().getString(R.string.campus_intent), locatie[0]);
+                    intent.putExtra(context.getResources().getString(R.string.verdieping_intent), locatie[1]);
+                    intent.putExtra(context.getResources().getString(R.string.lokaal_intent), locatie[2]);
+
 
                     context.startActivity(intent);
+                    //((context.getClass()).finish();
                 }
             });
         }
     };
 
 
+    public void clearMeldingen() {
+        int size = this.meldingenList.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                meldingenList.remove(0);
+            }
+        }
+    }
 
 }
