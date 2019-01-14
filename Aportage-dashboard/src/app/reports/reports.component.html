@@ -1,39 +1,16 @@
 <div class="row">
   <div class="col-lg-3 col-md-3" *ngFor="let item of Meldingen; index as i">
     <div class="card text-center">
-        <div class="card-header">{{item.status}}</div>
+        <div class="card-header">{{ item.status }}</div>
       <div class="view">
         <img src="https://res.cloudinary.com/dt6ae1zfh/image/upload/c_scale,w_auto,h_1000/meldingen/{{ item.imgUrl }}.jpg" class="card-img-top" alt="photo">
         <a href="#">
           <div class="mask rgba-white-slight"></div>
         </a>
       </div>
-      <div class="card-title">{{item.titel}}</div>
-      <div class="card-body">{{item.omschrijving}}</div>
-      <div class="card-date">{{item.datum}}</div>
+      <div class="card-title">{{ item.titel }}</div>
+      <div class="card-body">{{ item.omschrijving }}</div>
+      <div class="card-date">{{ item.datum | date}}</div>
     </div>
   </div>
 </div>
-
-<!--<div class="table-responsive text-nowrap">
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Titel</th>
-        <th scope="col">Omschrijving</th>
-        <th scope="col">Datum</th>
-        <th scope="col">Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of Meldingen; index as i">
-        <th scope="row">{{i+1}}</th>
-        <td>{{item.titel}}</td>
-        <td>{{item.omschrijving}}</td>
-        <td>{{item.datum}}</td>
-        <td>{{item.status}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>-->
