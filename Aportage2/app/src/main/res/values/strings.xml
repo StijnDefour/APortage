@@ -55,6 +55,7 @@
     <string name="back4app_client_key">JNWCqKLCZynJ6YsqEVftXeUQo4wsUm85kgR8YuPR</string>
     <string name="tv_mijnmeldingen_titel">Mijn Melding</string>
     <string name="label_mijn_meldingen">Mijn Meldingen</string>
+    <string name="label_overzicht_mijnmeldingen">Mijn Meldingen</string>
 
 
 </resources>

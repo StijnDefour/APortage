@@ -50,7 +50,6 @@
             android:id="@+id/tv-scannen"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:fontFamily="@font/montserrat"
             android:text="@string/overzicht_label_scannen"
             android:textAlignment="center"
@@ -142,7 +141,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat"
-            android:text="@string/overzicht_label_zoeken"
+            android:text="@string/label_overzicht_mijnmeldingen"
             android:textAlignment="center"
             android:textColor="@color/wit"
             android:textSize="30sp"
@@ -150,7 +149,7 @@
             app:layout_constraintEnd_toEndOf="@+id/iv-meldingen-bg"
             app:layout_constraintStart_toStartOf="@+id/iv-meldingen-bg"
             app:layout_constraintTop_toTopOf="@+id/iv-meldingen-bg"
-            tools:text="@string/label_mijn_meldingen" />
+            tools:text="@string/label_overzicht_mijnmeldingen" />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
