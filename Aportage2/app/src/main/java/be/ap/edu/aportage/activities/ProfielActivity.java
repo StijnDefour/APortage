@@ -52,6 +52,8 @@ public class ProfielActivity extends AppCompatActivity {
         this.btn_opslaan = findViewById(R.id.btn_profiel_opslaan);
         this.iv_uitloggen = findViewById(R.id.iv_profiel_loguit);
 
+        this.melder = new Melder();
+        this.myDatamanger = MyDatamanger.getInstance(getApplicationContext());
 
         haalMelderDetailsVanDB();
         setClicks();
@@ -65,6 +67,7 @@ public class ProfielActivity extends AppCompatActivity {
             public void onCustomSuccess(Object data) {
                 melder = (Melder)data;
                 vulVeldenIn();
+
             }
 
             @Override
@@ -77,6 +80,7 @@ public class ProfielActivity extends AppCompatActivity {
 
             }
         });
+
         this.myDatamanger.addToRequestQueue(req);
     }
 
