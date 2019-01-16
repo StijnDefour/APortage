@@ -152,4 +152,19 @@
             tools:text="@string/label_overzicht_mijnmeldingen" />
     </android.support.constraint.ConstraintLayout>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_profiel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:src="@drawable/ic_action_name"
+        android:tint="@color/common_google_signin_btn_text_dark_default"
+        app:backgroundTint="@color/ap_rood"
+        app:elevation="10dp"
+        app:fabSize="auto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

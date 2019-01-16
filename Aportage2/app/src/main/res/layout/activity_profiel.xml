@@ -34,7 +34,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/et_profiel_ww_oud" />
 
             <EditText
-                android:id="@+id/et_profiel_ww_oud2"
+                android:id="@+id/et_profiel_ww_nieuw"
                 style="@style/ap_input"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -75,6 +75,7 @@
             <EditText
                 android:id="@+id/et_profiel_naam"
                 style="@style/ap_input"
+                android:selectAllOnFocus="false"
                 android:text="Name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -138,7 +139,7 @@
                 android:layout_marginEnd="8dp"
                 android:text="@string/label_opslaan"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_profiel_ww_oud2" />
+                app:layout_constraintTop_toBottomOf="@+id/et_profiel_ww_nieuw" />
 
             <ImageView
                 android:id="@+id/iv_profiel_loguit"
