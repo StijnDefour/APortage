@@ -23,4 +23,15 @@
         <item name="android:textColorPrimary">@color/wit</item>
     </style>
 
+    <style name="ap_input">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:ems">10</item>
+        <item name="android:inputType">textPersonName</item>
+        <item name="android:textColor">@color/common_google_signin_btn_text_dark_focused</item>
+    </style>
+
 </resources>

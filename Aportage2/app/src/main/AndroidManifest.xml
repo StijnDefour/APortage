@@ -67,6 +67,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -82,12 +83,12 @@
             android:value="ocr" />
         <meta-data
             android:name="CLOUDINARY_URL"
-            android:value="cloudinary://366286138446152:_qUdFOAl5B7J6TAQRYPN4hhYxz4@dt6ae1zfh"/>
+            android:value="cloudinary://366286138446152:_qUdFOAl5B7J6TAQRYPN4hhYxz4@dt6ae1zfh" />
 
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.RegisterenActivity" />
-        <activity android:name=".activities.UitloggenActivity" />
-        <activity android:name=".activities.MijnMeldingenActivity"></activity>
+        <activity android:name=".activities.MijnMeldingenActivity" />
+        <activity android:name=".activities.ProfielActivity"></activity>
     </application>
 
 </manifest>

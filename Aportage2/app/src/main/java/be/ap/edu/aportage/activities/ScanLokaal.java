@@ -73,7 +73,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scan_for_food);
+        setContentView(R.layout.activity_scanlokaal);
         this.cameraView = (SurfaceView) findViewById(R.id.surface_view);
         this.txtView = (TextView) findViewById(R.id.txtview);
         this.datamanger = MyDatamanger.getInstance(this.getApplicationContext());
