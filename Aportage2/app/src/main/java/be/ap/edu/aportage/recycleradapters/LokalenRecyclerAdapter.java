@@ -88,11 +88,7 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
     }
 
     public void clearLokalen() {
-        int size = this.lokalenList.size();
-        if (size > 0) {
-            for (int i = 0; i < size; i++) {
-                this.lokalenList.remove(0);
-            }
-        }
+        this.lokalenList.clear();
+
     }
 }

@@ -97,7 +97,7 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
 
 
                     context.startActivity(intent);
-                    ((Meldingen)context).finish();
+                    //((Meldingen)context).finish();
                 }
             });
         }

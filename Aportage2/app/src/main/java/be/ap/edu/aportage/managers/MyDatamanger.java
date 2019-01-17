@@ -252,6 +252,7 @@ public class MyDatamanger extends Application {
 
 
     private void handleJsonResponse(JSONArray elements, MongoCollections coll,  IVolleyCallback callback){
+        clearAllData();
         for (int i = 0; i < elements.length(); i++) {
             try {
                 JSONObject obj = elements.getJSONObject(i);
@@ -509,5 +510,11 @@ public class MyDatamanger extends Application {
                 });
 
         return req;
+    }
+
+
+    public void clearAllData(){
+        this.mLokalen.clear();
+        this.mVerdiepen.clear();
     }
 }
