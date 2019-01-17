@@ -83,6 +83,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
         this.btn_ok = findViewById(R.id.btn_ocr_ok);
         this.btn_annuleren = findViewById(R.id.btn_ocr_annuleer);
         final Activity activity = this;
+
         this.btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,6 +94,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
                checkLokaal();
             }
         });
+
         btn_annuleren.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -161,10 +163,9 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         try {
-            if (ActivityCompat.checkSelfPermission(this,
-                    Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},1);
-                return;
+//                return;
             }
             cameraSource.start(cameraView.getHolder());
         } catch (Exception e) {

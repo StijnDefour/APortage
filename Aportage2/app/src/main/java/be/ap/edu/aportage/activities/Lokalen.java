@@ -66,7 +66,6 @@ public class Lokalen extends AppCompatActivity {
     }
 
     private void requestLokalenData() {
-
         this.lokalenAdapter.clearLokalen();
         JsonArrayRequest req = this.datamanger.createGetRequest(ApiContract.createCollectionUrlMetApi(MongoCollections.LOKALEN), MongoCollections.LOKALEN, new IVolleyCallback() {
 
