@@ -1,5 +1,6 @@
 package be.ap.edu.aportage.recycleradapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -56,6 +57,7 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
         viewHolder.meldingBeschrijving.setText(melding.omschrijving);
         viewHolder.melding_id = this.meldingenList.get(i).get_id();
         viewHolder.locatie = melding.locatie;
+        viewHolder.ctx = this.context;
 
         String url = "https://res.cloudinary.com/dt6ae1zfh/image/upload/c_fit,w_150/meldingen/" + melding.getImgUrl() + ".jpg";
         Picasso.get().load(url).into(viewHolder.meldingFoto);
@@ -73,6 +75,7 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
         private FrameLayout meldingStatus;
         private String melding_id;
         private String[] locatie;
+        private Context ctx;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -97,7 +100,7 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
 
 
                     context.startActivity(intent);
-                    //((Meldingen)context).finish();
+                    ((Activity)ctx).finish();
                 }
             });
         }

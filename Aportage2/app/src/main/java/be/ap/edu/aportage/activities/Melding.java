@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,6 +42,9 @@ public class Melding extends Activity {
     TextView tv_melding_beschrijving;
     TextView tv_melding_melder;
     TextView tv_melding_tijdstip;
+    //todo: kleur op basis van status aanpassen voor frameLayout
+    FrameLayout fl_melding_status;
+
 
     private CampusKleuren campusKleuren = new CampusKleuren();
 
@@ -51,6 +55,7 @@ public class Melding extends Activity {
     private MyDatamanger datamanager;
     private be.ap.edu.aportage.models.Melding melding = new be.ap.edu.aportage.models.Melding();
     private Melder melder = new Melder();
+
 
 
     @Override
@@ -187,7 +192,7 @@ public class Melding extends Activity {
         this.uitgaandeIntent.putExtra(getString(R.string.verdieping_intent), s_verdieping);
         this.uitgaandeIntent.putExtra(getString(R.string.campus_intent), s_campus);
         this.uitgaandeIntent.putExtra(getString(R.string.lokaal_intent), s_lokaal);
-        this.uitgaandeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        this.uitgaandeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT); //todo: is er een verschilt tussen FLAG_ACTIVITY REORDER EN Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity( this.uitgaandeIntent);
         Melding.this.finish();
     }

@@ -1,5 +1,6 @@
 package be.ap.edu.aportage.recycleradapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -81,7 +82,7 @@ public class LokalenRecyclerAdapter extends RecyclerView.Adapter<LokalenRecycler
                     intent.putExtra(context.getResources().getString(R.string.verdieping_intent), verdieping_s);
                     intent.putExtra(context.getResources().getString(R.string.lokaal_intent), lokaal_s);
                     context.startActivity(intent);
-                    ((Lokalen)context).finish();
+                    ((Activity)context).finish();
                 }
             });
         }
