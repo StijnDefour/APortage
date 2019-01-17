@@ -1,9 +1,11 @@
 package be.ap.edu.aportage.models;
 
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 
-public class Verdiep {
+public class Verdiep  implements Comparable<Verdiep>  {
 
     public String campus_afk;
     public int verdiepnr;
@@ -19,5 +21,10 @@ public class Verdiep {
 
     public String getVerdiepNaam(){
         return (this.verdiepnr<0?"-":"") + String.format("%02d", Math.abs(this.verdiepnr));
+    }
+
+    @Override
+    public int compareTo(@NonNull Verdiep o) {
+        return this.verdiepnr - o.verdiepnr;
     }
 }

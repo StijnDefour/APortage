@@ -10,6 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import be.ap.edu.aportage.R;
@@ -21,10 +26,10 @@ public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecy
 
     //todo: sorteren van verdiepenLijst op basis van verdiepnr
     /* gebruik onderstaande:
-     Arrays.sort(myarray, new Comparator<String>() {
+     Collections.sort(Database.arrayList, new Comparator<MyObject>() {
         @Override
-        public int compare(String o1, String o2) {
-            return Integer.valueOf(o1).compareTo(Integer.valueOf(o2));
+        public int compare(MyObject o1, MyObject o2) {
+        return o1.getStartDate().compareTo(o2.getStartDate());
         }
     });
      */
@@ -36,7 +41,7 @@ public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecy
     public VerdiepenRecyclerAdapter(Context context, List<Verdiep> verdiepenLijst, String afk) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(this.context);
-        this.verdiepenLijst = verdiepenLijst;
+        this.verdiepenLijst = sorteerVerdiepenLijst(verdiepenLijst);
         this.afkorting_campus = afk;
     }
 
@@ -44,6 +49,18 @@ public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecy
         this.verdiepenLijst = lijst;
     }
 
+
+    public List<Verdiep> sorteerVerdiepenLijst(List<Verdiep> lijst){
+
+        Collections.sort(lijst, new Comparator<Verdiep>() {
+            @Override
+            public int compare(Verdiep o1, Verdiep o2) {
+                return o1.compareTo(o2);
+            }
+        });
+
+        return lijst;
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -87,13 +104,6 @@ public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecy
     }
 
     public void clearVerdiepingen() {
-        int size = this.verdiepenLijst.size();
-        if (size > 0) {
-            for (int i = 0; i < size; i++) {
-                verdiepenLijst.remove(0);
-            }
-
-//            this.notifyItemRangeRemoved(0, size);
-        }
+        this.verdiepenLijst.clear();
     }
 }
