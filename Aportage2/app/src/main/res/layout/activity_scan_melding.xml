@@ -33,15 +33,27 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+            </ScrollView>
+
             <EditText
                 android:id="@+id/et-melding-omschrijving"
+                style="@style/ap_input"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_marginBottom="8dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="50dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:ems="10"
+                android:hint="@string/hint_beschrijving"
                 android:inputType="textMultiLine"
+                android:singleLine="false"
+                android:textAlignment="viewStart"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -58,8 +70,6 @@
                 android:textColor="@color/kaska"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <include layout="@layout/buttons_ok_cancel" />
 
             <include
                 android:id="@+id/include2"
@@ -101,15 +111,18 @@
 
             <TextView
                 android:id="@+id/tv-melding-omschrijving"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:text="@string/scan_melding_label_omschrijving"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et-melding-titel" />
 
             <EditText
                 android:id="@+id/et-melding-titel"
+                style="@style/ap_input"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -121,6 +134,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv-label-titel" />
+
+            <include
+                layout="@layout/buttons_ok_cancel"
+                app:layout_constraintBottom_toBottomOf="parent" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>
 

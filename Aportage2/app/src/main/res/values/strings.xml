@@ -62,6 +62,7 @@
     <string name="label_toolbar_profiel">Mijn profiel</string>
     <string name="label_opslaan">Opslaan</string>
     <string name="label_loguit">uitloggen</string>
+    <string name="hint_beschrijving">Beschrijf hier wat je wil melden...</string>
 
 
 </resources>

@@ -121,8 +121,8 @@ public class ProfielActivity extends AppCompatActivity {
     }
 
     private void slaNieuweMelderGegevensOp() {
-        //todo: update parseUser
-        //todo: doe een put request naar mlab voor de melder details
+        //todo_done: update parseUser
+        //todo_done: doe een put request naar mlab voor de melder details
 
         this.huidigeMelder.setNaam(this.et_naam.getText().toString());
         ParseUser.getCurrentUser().setUsername(this.et_mail.getText().toString());
