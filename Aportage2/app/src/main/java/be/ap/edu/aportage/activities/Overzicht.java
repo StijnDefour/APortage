@@ -59,7 +59,7 @@ public class Overzicht extends Activity {
 
     @Override
     public void onBackPressed() {
-        Overzicht.this.finish();
+//        Overzicht.this.finish();
     }
 
     public void createIntents() {
