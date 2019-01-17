@@ -1,3 +1,8 @@
-<p>
-  modaltemplate works!
-</p>
+<ngx-smart-modal #editModal identifier="editModal" customClass="medium-modal">
+  <div *ngIf="editModal.hasData()">
+    <pre>{{ editModal.getData().titel}}</pre>
+  </div>
+
+
+  <button class="button -dark" (click)="editModal.close()">Close</button>
+</ngx-smart-modal>

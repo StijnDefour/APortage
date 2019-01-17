@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,7 +26,9 @@ import { ModaltemplateComponent } from './modaltemplate/modaltemplate.component'
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NgxPaginationModule,
+    NgxSmartModalModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

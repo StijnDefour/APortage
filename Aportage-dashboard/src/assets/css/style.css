@@ -3,6 +3,14 @@
     outline: 0px;
 }
 
+a, a:hover {
+    color: #000;
+}
+
+/* SPINNER */
+.black-overlay[_ngcontent-c2] {
+    position: fixed !important;
+}
 
 /* SPLASHSCREEN */
 .splashscreen {
@@ -21,7 +29,6 @@
     margin: 15% auto 0;
     position: relative;
 }
-
 
 /* HEADER */
 .navigationbar {
@@ -64,7 +71,7 @@
     box-shadow: 2px 0px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, .12);
 }
 
-.overlay {
+.content-overlay {
     width: 0;
     height: 0;
     opacity: 0;
@@ -74,7 +81,7 @@
     background-color: rgba(0, 0, 0, 0.7);
 }
 
-.overlay.active{
+.content-overlay.active{
     opacity: 1;
     z-index: 3;
     width: 100%;
@@ -154,7 +161,6 @@ ul {
 }
 
 /* REPORTS */
-
 .card {
     margin-bottom: 1rem;
 }
@@ -167,24 +173,43 @@ ul {
     text-transform: uppercase;
 }
 
+.card-body {
+    min-height: 4rem;
+}
+
 .card-title, .card-date {
     padding: 1rem;
     text-transform: uppercase;
     box-shadow: 0 0px 0px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
 }
 
-.card-title {
-    background-color: #e1e1e1;
+.ontvangen, .card-header {
+    color: #fff;
+    background-color: rgb(229, 50, 45);
 }
 
-/* MOBILE DEVICE */
+.behandeling {
+    color: #fff;
+    background-color:rgb(255,165,0);
+}
 
-@media screen and (max-width: 600px) {
-    .card {
-        overflow: hidden;
-    }
-    .card-title, .card-date, .card-body {
-        margin: 0 0 0 40%;
-        width: 60%;
-    }
+.afgehandeld {
+    color: #000;
+    background-color:rgb(124,252,0);
+}
+
+/* Modal */
+.overlay {
+    position: fixed;
+    background: #fff;
+    left: 20%;
+}
+
+/* Pagination */
+.ngx-pagination {
+    text-align: center !important;
+}
+
+.ngx-pagination .current {
+    background: rgb(229, 50, 45) !important;
 }

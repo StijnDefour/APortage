@@ -1,5 +1,5 @@
 <div class="navigationbar">
-    <div class="overlay" onclick="toggleMenu()"></div>
+    <div class="content-overlay" onclick="toggleMenu()"></div>
     <div class="sidebar">
         <div class="hamburger hamburger--spin" tabindex="0" onclick="toggleMenu()">
             <div class="hamburger-box">
@@ -8,13 +8,10 @@
         </div>
         <ul>
             <li class="menu-item">
-                <a href="/"><i class="fas fa-tachometer-alt"></i><span class="item-text">Dashboard</span></a>
+                <a routerLink="/"><i class="fas fa-clipboard-list"></i><span class="item-text">Meldingen</span></a>
             </li>
             <li class="menu-item">
-                <a href="/meldingen"><i class="fas fa-exclamation-circle"></i><span class="item-text">Meldingen</span></a>
-            </li>
-            <li class="menu-item">
-                <a href="/campussen"><i class="fas fa-clipboard-list"></i><span class="item-text">Campussen</span></a>
+                <a routerLink="/campussen"><i class="fas fa-building"></i><span class="item-text">Campussen</span></a>
             </li>
         </ul>
     </div>

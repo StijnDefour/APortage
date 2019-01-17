@@ -8,5 +8,5 @@ function toggleMenu() {
     $(".hamburger").toggleClass("is-active");
     $(".sidebar").toggleClass("active");
     $(".menu-item").toggleClass("active");
-    $(".overlay").toggleClass("active");
+    $(".content-overlay").toggleClass("active");
 };
