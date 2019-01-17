@@ -124,7 +124,7 @@
                 android:id="@+id/toolbar2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@color/ap_donkerrood"
+                android:background="@color/ap_grijs"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -134,6 +134,7 @@
 
             <Button
                 android:id="@+id/btn_profiel_opslaan"
+                style="@style/ap_thema"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"

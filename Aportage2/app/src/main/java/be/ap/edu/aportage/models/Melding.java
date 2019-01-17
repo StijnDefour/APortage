@@ -18,7 +18,7 @@ public class Melding {
     public Date datum;
     public String datumString;
 
-    public Melder melder;
+
     public String melderId;
 
 
@@ -47,12 +47,7 @@ public class Melding {
         this.imgUrl = img;
     }
 
-    public int getKleurInt() {
-        //todo: switch om status tot kleur int
-        int kleur = 0;
 
-        return kleur;
-    }
 
 
 
@@ -65,9 +60,6 @@ public class Melding {
     }
 
 
-    public void setMelder(Melder mldr){
-        this.melder = mldr;
-    }
 
     public void setDate(String d){
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.FRANCE);
