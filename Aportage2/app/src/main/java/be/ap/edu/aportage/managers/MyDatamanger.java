@@ -149,6 +149,43 @@ public class MyDatamanger extends Application {
         return req;
     }
 
+
+    public JsonObjectRequest putNieuweMelderNaarDB(Melder melder, IVolleyCallback callback){
+        String url = ApiContract.createUrlMetMelderId(melder.getMlabId());
+        JSONObject melderObject = new JSONObject();
+        JsonObjectRequest req = null;
+        try {
+
+
+            melderObject.put("naam", melder.getNaam());
+            melderObject.put("melderid", melder.getID());
+            melderObject.put("facilitair", melder.isFacilitair());
+            melderObject.put("gdpr", melder.isGdpr());
+            melderObject.put("mlabId", melder.getMlabId());
+
+            Log.d("put Melder", melderObject.toString());
+            req = new JsonObjectRequest(
+                    Request.Method.PUT,
+                    url,
+                    melderObject,
+                    response -> {
+                        Log.d("put Melder", response.toString());
+                        callback.onCustomSuccess(parseMelderJsonToMelderObject(response));
+
+                    }, error -> {
+                //throw new JSONException("er is iets misgelopen tijdens het posten van de melder");
+                Log.e("volleyerror", error.getMessage());
+
+            });
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        return req;
+    }
+
     public JsonObjectRequest createPostRequest(MongoCollections collection, Melding melding, IVolleyCallback callback) {
 
         JSONObject meldingObject = new JSONObject();
@@ -215,6 +252,7 @@ public class MyDatamanger extends Application {
 
 
     private void handleJsonResponse(JSONArray elements, MongoCollections coll,  IVolleyCallback callback){
+        clearAllData();
         for (int i = 0; i < elements.length(); i++) {
             try {
                 JSONObject obj = elements.getJSONObject(i);
@@ -346,7 +384,7 @@ public class MyDatamanger extends Application {
                     public void onResponse(JSONArray response) {
                         Log.d(TAG_DM, response.toString());
                         try {
-                            callback.onCustomSuccess(parseMelderJson(response.getJSONObject(0)));
+                            callback.onCustomSuccess(parseMelderJsonToMelderObject(response.getJSONObject(0)));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -364,7 +402,7 @@ public class MyDatamanger extends Application {
         return jsonArrayR;
     }
 
-    public Melder parseMelderJson(JSONObject obj) {
+    public Melder parseMelderJsonToMelderObject(JSONObject obj) {
 
         Melder melder = new Melder();
 
@@ -374,6 +412,7 @@ public class MyDatamanger extends Application {
             melder.setMelderid(obj.get("melderid").toString());
             melder.setGdpr(Boolean.parseBoolean(obj.get("gdpr").toString()));
             melder.setFacilitair(Boolean.parseBoolean(obj.get("facilitair").toString()));
+            melder.setMlabId((obj.getJSONObject("_id").get("$oid")).toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -471,5 +510,11 @@ public class MyDatamanger extends Application {
                 });
 
         return req;
+    }
+
+
+    public void clearAllData(){
+        this.mLokalen.clear();
+        this.mVerdiepen.clear();
     }
 }

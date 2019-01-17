@@ -89,6 +89,13 @@ public class ApiContract {
     }
 
 
+    public static String createUrlMetMelderId(String mlabId){
+        //https://api.mlab.com/api/1/databases/my-db/collections/my-coll/4e7315a65e4ce91f885b7dde?apiKey=myAPIKey
+        String url = ApiContract.API_BASE_URL+"/databases/"+ApiContract.DATABASE+"/collections/"+ MongoCollections.GEBRUIKERS + "/"+mlabId +"?apiKey="+ ApiContract.API_KEY;
+        return url;
+    }
+
+
 
 
 }

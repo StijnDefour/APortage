@@ -9,32 +9,31 @@
     <TextView
         android:id="@+id/tv-label-email"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:text="@string/tv_login_label_email"
-        app:layout_constraintBottom_toTopOf="@+id/et-email"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/et-email"
+        style="@style/ap_input"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="@string/login_hint_email"
         android:inputType="textEmailAddress"
-        android:text="Name"
         android:textColor="@color/ap_grijs"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="77dp"
-        tools:text="@string/login_hint_email" />
+        app:layout_constraintTop_toBottomOf="@+id/tv-label-email" />
 
     <TextView
         android:id="@+id/tv-login-label-pw"
@@ -50,6 +49,7 @@
 
     <EditText
         android:id="@+id/et-login-wachtwoord"
+        style="@style/ap_input"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"

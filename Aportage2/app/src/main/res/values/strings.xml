@@ -21,8 +21,8 @@
     <string name="scan_melding_button_label"> Foto toevoegen </string>
     <string name="label_scan_melding_titel">Titel:</string>
     <string name="scan_melding_hint_titel">Titel voor de melding…</string>
-    <string name="scan_melding_label_omschrijving" >Omschrijving: </string>
-    <string name="scan_melding_label_btn_ok" >OK</string>
+    <string name="scan_melding_label_omschrijving">Omschrijving: </string>
+    <string name="scan_melding_label_btn_ok">OK</string>
     <string name="scan_melding_btn_label_annuleren">Annuleer</string>
     <string name="overzicht_label_scannen">Scannen [ - ]</string>
     <string name="overzicht_label_zoeken">Zoeken</string>
@@ -55,6 +55,13 @@
     <string name="back4app_client_key">JNWCqKLCZynJ6YsqEVftXeUQo4wsUm85kgR8YuPR</string>
     <string name="tv_mijnmeldingen_titel">Mijn Melding</string>
     <string name="label_mijn_meldingen">Mijn Meldingen</string>
+    <string name="label_overzicht_mijnmeldingen">Mijn Meldingen</string>
+    <string name="profiel_label_naam">Naam- en voornaam</string>
+    <string name="label_oudwachtwoord">Oud wachtwoord</string>
+    <string name="label_nieuwwachtwoord">Nieuw wachtwoord</string>
+    <string name="label_toolbar_profiel">Mijn profiel</string>
+    <string name="label_opslaan">Opslaan</string>
+    <string name="label_loguit">uitloggen</string>
 
 
 </resources>

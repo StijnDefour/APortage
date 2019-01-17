@@ -18,6 +18,15 @@ import be.ap.edu.aportage.models.Verdiep;
 
 public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecyclerAdapter.ViewHolder> {
 
+    //todo: sorteren van verdiepenLijst op basis van verdiepnr
+    /* gebruik onderstaande:
+     Arrays.sort(myarray, new Comparator<String>() {
+        @Override
+        public int compare(String o1, String o2) {
+            return Integer.valueOf(o1).compareTo(Integer.valueOf(o2));
+        }
+    });
+     */
     private final Context context;
     private final LayoutInflater layoutInflater;
     private List<Verdiep> verdiepenLijst;
