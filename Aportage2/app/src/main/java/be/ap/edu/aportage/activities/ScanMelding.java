@@ -1,6 +1,8 @@
 package be.ap.edu.aportage.activities;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -8,6 +10,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -60,6 +64,8 @@ public class ScanMelding extends AppCompatActivity {
     String s_lokaal;
 
     private MyDatamanger myDatamanger;
+
+    private static final int REQUEST_CODE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +126,7 @@ public class ScanMelding extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TakePhoto(view);
+                verifyPermissions();
             }
         });
 
@@ -279,5 +285,23 @@ public class ScanMelding extends AppCompatActivity {
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
+    }
+
+    //    Handle Permissions
+    private void verifyPermissions() {
+        String[] permissions = {Manifest.permission.CAMERA};
+
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(), permissions[0]) == PackageManager.PERMISSION_GRANTED) {
+
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    TakePhoto(view);
+                }
+            });
+
+        } else {
+            ActivityCompat.requestPermissions(ScanMelding.this, permissions, REQUEST_CODE);
+        }
     }
 }
