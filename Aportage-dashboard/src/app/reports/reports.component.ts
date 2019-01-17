@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 import { HttpClient, HttpParams } from '@angular/common/http';
 
@@ -11,11 +12,19 @@ export class ReportsComponent implements OnInit {
 
   Meldingen: any;
 
-  constructor(private _http: HttpClient) {
+  constructor(private _http: HttpClient, private spinner: NgxSpinnerService) {
   }
 
   ngOnInit() {
+    // show spinner
+    this.spinner.show();
+
+    // get meldingen
     this.getMeldingen();
+
+    // hide spinner
+    this.spinner.hide();
+
   }
 
   getMeldingen() {

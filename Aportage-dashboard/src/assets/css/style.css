@@ -55,8 +55,9 @@
 
 .sidebar.active{
     z-index: 4;
-    width: 400px;
     height: 100%;
+    width: 400px;
+    max-width: 75%;
     position: fixed;
     transition: all 0.3s;
     background: #b61c16;
@@ -174,4 +175,16 @@ ul {
 
 .card-title {
     background-color: #e1e1e1;
+}
+
+/* MOBILE DEVICE */
+
+@media screen and (max-width: 600px) {
+    .card {
+        overflow: hidden;
+    }
+    .card-title, .card-date, .card-body {
+        margin: 0 0 0 40%;
+        width: 60%;
+    }
 }
