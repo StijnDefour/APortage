@@ -1,5 +1,6 @@
 package be.ap.edu.aportage.recycleradapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -79,7 +80,7 @@ public class VerdiepenRecyclerAdapter extends RecyclerView.Adapter<VerdiepenRecy
                     intent.putExtra(context.getResources().getString(R.string.verdieping_intent), verdiepNummer.getText());
                     intent.putExtra(context.getResources().getString(R.string.campus_intent), afk);
                     context.startActivity(intent);
-                    ((Verdiepingen)context).finish();
+                    ((Activity)context).finish();
                 }
             });
         }

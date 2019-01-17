@@ -50,14 +50,14 @@ public class ScanMelding extends AppCompatActivity {
     Button btnLokaal;
     ImageView imageView;
     Button button;
+    EditText tvTitel;
+    EditText tvOmschrijving;
+    Button btnOk;
+    Button btnAnnuleer;
 
     private CampusKleuren campusKleuren = new CampusKleuren();
 
-    EditText tvTitel;
-    EditText tvOmschrijving;
 
-    Button btnOk;
-    Button btnAnnuleer;
 
     String s_campus;
     String s_verdieping;
@@ -66,6 +66,8 @@ public class ScanMelding extends AppCompatActivity {
     private MyDatamanger myDatamanger;
 
     private static final int REQUEST_CODE = 2;
+    private Intent binnenkomendeIntent;
+    private Intent uitgaandeIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class ScanMelding extends AppCompatActivity {
         setContentView(R.layout.activity_scan_melding);
 
         this.myDatamanger = MyDatamanger.getInstance(getApplicationContext());
+        this.binnenkomendeIntent = this.getIntent();
 
         this.imageView = findViewById(R.id.imageView);
         this.button = findViewById(R.id.button);
@@ -108,11 +111,11 @@ public class ScanMelding extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, Meldingen.class);
-        intent.putExtra(getString(R.string.campus_intent), s_campus);
-        intent.putExtra(getString(R.string.verdieping_intent), s_verdieping);
-        intent.putExtra(getString(R.string.lokaal_intent), s_lokaal);
-        startActivity(intent);
+        this.uitgaandeIntent = new Intent(this, Meldingen.class);
+        this.uitgaandeIntent.putExtra(getString(R.string.campus_intent), s_campus);
+        this.uitgaandeIntent.putExtra(getString(R.string.verdieping_intent), s_verdieping);
+        this.uitgaandeIntent.putExtra(getString(R.string.lokaal_intent), s_lokaal);
+        startActivity(this.uitgaandeIntent);
     }
 
     @Override
@@ -133,35 +136,37 @@ public class ScanMelding extends AppCompatActivity {
         btnCampus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ScanMelding.this, Campussen.class);
-                startActivity(intent);
+                uitgaandeIntent = new Intent(ScanMelding.this, Campussen.class);
+                startActivity(uitgaandeIntent);
             }
         });
         btnVerdiep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ScanMelding.this, Verdiepingen.class);
-                intent.putExtra(getString(R.string.campus_intent), s_campus);
-                startActivity(intent);
+                uitgaandeIntent = new Intent(ScanMelding.this, Verdiepingen.class);
+                uitgaandeIntent.putExtra(getString(R.string.campus_intent), s_campus);
+                startActivity(uitgaandeIntent);
             }
         });
         btnLokaal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ScanMelding.this, Lokalen.class);
-                intent.putExtra(getString(R.string.campus_intent), s_campus);
-                intent.putExtra(getString(R.string.verdieping_intent), s_verdieping);
-                startActivity(intent);
+
+                uitgaandeIntent = new Intent(ScanMelding.this, Lokalen.class);
+                uitgaandeIntent.putExtra(getString(R.string.campus_intent), s_campus);
+                uitgaandeIntent.putExtra(getString(R.string.verdieping_intent), s_verdieping);
+                startActivity(uitgaandeIntent);
             }
         });
         btnAnnuleer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ScanMelding.this, Meldingen.class);
-                intent.putExtra(getString(R.string.campus_intent), s_campus);
-                intent.putExtra(getString(R.string.verdieping_intent), s_verdieping);
-                intent.putExtra(getString(R.string.lokaal_intent), s_lokaal);
-                startActivity(intent);
+                uitgaandeIntent = new Intent(ScanMelding.this, Meldingen.class);
+                uitgaandeIntent.putExtra(getString(R.string.campus_intent), s_campus);
+                uitgaandeIntent.putExtra(getString(R.string.verdieping_intent), s_verdieping);
+                uitgaandeIntent.putExtra(getString(R.string.lokaal_intent), s_lokaal);
+                uitgaandeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(uitgaandeIntent);
                 ScanMelding.this.finish();
             }
         });
@@ -235,10 +240,10 @@ public class ScanMelding extends AppCompatActivity {
     }
 
     private void lokaalButtonsOpvullen() {
-        Intent inkomendeIntent = this.getIntent();
-        s_campus = inkomendeIntent.getStringExtra(getString(R.string.campus_intent));
-        s_verdieping = inkomendeIntent.getStringExtra(getString(R.string.verdieping_intent));
-        s_lokaal = inkomendeIntent.getStringExtra(getString(R.string.lokaal_intent));
+
+        s_campus = this.binnenkomendeIntent.getStringExtra(getString(R.string.campus_intent));
+        s_verdieping = this.binnenkomendeIntent.getStringExtra(getString(R.string.verdieping_intent));
+        s_lokaal = this.binnenkomendeIntent.getStringExtra(getString(R.string.lokaal_intent));
         btnCampus.setText(s_campus);
         btnVerdiep.setText(s_verdieping);
         btnLokaal.setText(s_lokaal);

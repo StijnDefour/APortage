@@ -32,7 +32,7 @@
     <string name="lokaal_placeholder">00.000</string>
     <string name="melding_titel">Name</string>
     <string name="tv_login_label_email">Email:</string>
-    <string name="login_hint_email">Voer hier jouw e-mailadress in</string>
+    <string name="login_hint_email">Voer hier jouw e-mailadres in...</string>
     <string name="label_login_pw">Wachtwoord:</string>
     <string name="label_login_btn">Login</string>
     <string name="label_login_registeren">Registreren</string>
@@ -62,6 +62,8 @@
     <string name="label_toolbar_profiel">Mijn profiel</string>
     <string name="label_opslaan">Opslaan</string>
     <string name="label_loguit">uitloggen</string>
+    <string name="hint_beschrijving">Beschrijf hier wat je wil melden...</string>
+    <string name="hint_naam" >Geef hier je volledige naam...</string>
 
 
 </resources>

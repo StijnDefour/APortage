@@ -65,7 +65,7 @@ public class ApiContract {
 
     public static String createLokaalQuery(String campus, String verdiep, String lok) {
         String query = createQueryUrl(campus, verdiep, lok);
-        String lokalenUrl = ApiContract.API_BASE_URL+"/databases/"+ApiContract.DATABASE+"/collections/"+ MongoCollections.LOKALEN + query;
+        String lokalenUrl = ApiContract.API_BASE_URL+"/databases/"+ApiContract.DATABASE+"/collections/"+ MongoCollections.LOKALEN + query +"&apiKey="+ ApiContract.API_KEY;
         Log.d("ApiContract query",lokalenUrl );
         return lokalenUrl;
 
@@ -75,7 +75,7 @@ public class ApiContract {
     public static String createUrlMetMelderIdQuery(String objectID){
         //todo_one: melding object id query afmaken
         String query = "?q={\""+MELDER_ID+"\":\""+objectID+"\"}";
-        String url = ApiContract.API_BASE_URL+"/databases/"+ApiContract.DATABASE+"/collections/"+ MongoCollections.GEBRUIKERS + query +"&apiKey="+ ApiContract.API_KEY;;
+        String url = ApiContract.API_BASE_URL+"/databases/"+ApiContract.DATABASE+"/collections/"+ MongoCollections.GEBRUIKERS + query +"&apiKey="+ ApiContract.API_KEY;
         Log.d("ApiContract url", url);
         return url;
     }

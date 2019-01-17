@@ -50,40 +50,6 @@ public class MyUserManager extends Application {
         return mInstance;
     }
 
-    public JsonObjectRequest checkOfMelderBestaat(Melder melder, IUserCallback callback) {
-
-        //https://api.mlab.com/api/1/databases/my-db/collections/my-coll?q={"active": true}&fo=true&apiKey=myAPIKey
-
-        //todo: query meegeven met objectid van ParseUser
-        String url = ApiContract.createCollectionUrl(MongoCollections.MELDINGEN); // ->
-        JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.GET, url ,null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-
-
-        //https://api.mlab.com/api/1/databases/my-db/collections/my-coll?q={"active": true}&fo=true&apiKey=myAPIKey
-
-
-
-
-
-                Log.d("melder req", response.toString());
-                callback.success(response);
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                callback.gefaald();
-            }
-        });
-
-        return jsonReq;
-
-
-
-    }
 
     private RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {

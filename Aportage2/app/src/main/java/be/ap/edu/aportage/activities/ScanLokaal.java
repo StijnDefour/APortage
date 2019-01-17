@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.JsonRequest;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.text.TextBlock;
@@ -88,10 +89,15 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
             @Override
             public void onClick(View view) {
                 String lokaalInfo = gelezenTekst[gelezenTekst.length-1].toUpperCase();
-                haalCampusVerdiepLokaalDataUitGelezenString(gelezenTekst[gelezenTekst.length-1]);
-                Log.d("testLokaalInfo", lokaalInfo);
 
-               checkLokaal();
+                if (lokaalInfo.equals("")) {
+                    Toast.makeText(ScanLokaal.this, "Lokaal bestaat niet", Toast.LENGTH_LONG).show();
+                } else {
+                    haalCampusVerdiepLokaalDataUitGelezenString(gelezenTekst[gelezenTekst.length - 1]);
+                    Log.d("testLokaalInfo", lokaalInfo);
+
+                    checkLokaal();
+                }
             }
         });
 
@@ -139,8 +145,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
 
 
     private void checkLokaal() {
-
-        this.datamanger.checkLokaalExists(s_campusAfk, s_verdiepNr, s_lokaalNr, new IVolleyCallback() {
+        JsonRequest jsonObjectRequest = this.datamanger.checkLokaalExists(s_campusAfk, s_verdiepNr, s_lokaalNr, new IVolleyCallback() {
             @Override
             public void onCustomSuccess(Object data) {
                 gaNaarMeldingen();
@@ -155,9 +160,10 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
             @Override
             public void onFailure() {
                 //todo: maak popup/bericht zichtbaar dat het lokaal niet bestaat.
+                Toast.makeText(ScanLokaal.this, "Lokaal bestaat niet", Toast.LENGTH_LONG).show();
             }
         });
-
+        this.datamanger.addToRequestQueue(jsonObjectRequest);
     }
 
     @Override
@@ -229,7 +235,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
             this.s_campusAfk = individueleWoorden[1];
             this.s_verdiepNr = individueleWoorden[2];
             this.s_lokaalNr = individueleWoorden[3];
-        } catch (Error e) {
+        } catch (Exception e) {
             Log.e(LOG_TAG, e.getMessage());
             Toast.makeText(ScanLokaal.this, "Er werd geen tekst herkend, probeer het lokaal manueel te zoeken.", Toast.LENGTH_LONG).show();
             gaNaarCampussenActivity();
