@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,7 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.parse.LogInCallback;
+import com.parse.LogOutCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -38,6 +41,7 @@ public class ProfielActivity extends AppCompatActivity {
     private Intent uitgaandeIntent;
 
     private Melder melder;
+    private ParseUser user;
     private MyDatamanger myDatamanger;
 
     @Override
@@ -53,6 +57,7 @@ public class ProfielActivity extends AppCompatActivity {
         this.iv_uitloggen = findViewById(R.id.iv_profiel_loguit);
 
         this.melder = new Melder();
+        this.user = ParseUser.getCurrentUser();
         this.myDatamanger = MyDatamanger.getInstance(getApplicationContext());
 
         haalMelderDetailsVanDB();
@@ -62,7 +67,7 @@ public class ProfielActivity extends AppCompatActivity {
 
 
     private void haalMelderDetailsVanDB() {
-        JsonArrayRequest req = this.myDatamanger.getMelderMetMelderId(ParseUser.getCurrentUser().getObjectId(), new IVolleyCallback() {
+        JsonArrayRequest req = this.myDatamanger.getMelderMetMelderId(this.user.getCurrentUser().getObjectId().toString(), new IVolleyCallback() {
             @Override
             public void onCustomSuccess(Object data) {
                 melder = (Melder)data;
@@ -95,9 +100,14 @@ public class ProfielActivity extends AppCompatActivity {
         this.iv_uitloggen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ParseUser.getCurrentUser().logOut();
-                toonLogUitBericht();
-                gaNaarLoginActivity();
+                ParseUser.getCurrentUser().logOutInBackground(new LogOutCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        toonBericht("Je bent uitgelogd!");
+                        gaNaarLoginActivity();
+                    }
+                });
+
             }
         });
 
@@ -112,29 +122,74 @@ public class ProfielActivity extends AppCompatActivity {
     private void slaNieuweMelderGegevensOp() {
         //todo: update parseUser
         //todo: doe een put request naar mlab voor de melder details
+
+        this.melder.setNaam(this.et_naam.getText().toString());
+        ParseUser.getCurrentUser().setUsername(this.et_mail.toString());
+        if(et_nieuw_ww.isDirty()){
+            ParseUser.getCurrentUser().setPassword(this.et_nieuw_ww.getText().toString());
+        }
+        postMelderToDB();
+    }
+
+    private void postMelderToDB() {
+        JsonObjectRequest req = this.myDatamanger.putNieuweMelderNaarDB(this.melder, new IVolleyCallback() {
+            @Override
+            public void onCustomSuccess(Object data) {
+                toonBericht("Jouw nieuwe gegevens zijn opgeslagen!");
+                melder = (Melder)data;
+                //herstartActivity();
+
+            }
+
+            @Override
+            public void onPostSuccess(JSONObject response) {
+
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
+        this.myDatamanger.addToRequestQueue(req);
+
+    }
+
+    private void toonBericht(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_LONG);
+
     }
 
     private void komtOudWachtwoordOvereen() {
-       ParseUser.logInInBackground(ParseUser.getCurrentUser().getUsername(), this.et_oud_ww.getText().toString(), new LogInCallback() {
-           @Override
-           public void done(ParseUser user, ParseException e) {
-               if(user != null){
-                   slaNieuweMelderGegevensOp();
-               } else {
-                   toonFoutbericht();
-               }
-           }
-       });
+        ParseUser.logOutInBackground(new LogOutCallback() {
+            @Override
+            public void done(ParseException e) {
+                ParseUser.logInInBackground(user.getUsername(), et_oud_ww.getText().toString(), new LogInCallback() {
+                    @Override
+                    public void done(ParseUser user, ParseException e) {
+                        if(user != null){
+                            slaNieuweMelderGegevensOp();
+                            Log.d("logInBackGround", "na call tot slaNieuweMelderGegevensOp()");
+                        } else {
+                            toonFoutbericht();
+                        }
+                    }
+                });
+            }
+        });
+
+
     }
 
     private void toonFoutbericht() {
-        Toast.makeText(ProfielActivity.this, "Je oud wachtwoord is verkeerd, probeer opnieuw!", Toast.LENGTH_LONG);
+
+        toonBericht("Je oud wachtwoord is verkeerd of niet ingevoerd, probeer opnieuw!");
         herstartActivity();
     }
 
     private void herstartActivity() {
         finish();
-        overridePendingTransition( 0, 0);
+        overridePendingTransition( 0, 5);
         startActivity(getIntent());
         overridePendingTransition( 0, 0);
     }
@@ -145,7 +200,4 @@ public class ProfielActivity extends AppCompatActivity {
         startActivity(this.uitgaandeIntent);
     }
 
-    private void toonLogUitBericht() {
-        Toast.makeText(ProfielActivity.this, "Je bent uitgelogd!", Toast.LENGTH_LONG);
-    }
 }

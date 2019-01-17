@@ -9,6 +9,10 @@ public class Melder {
 
 
 
+    private String mlabId;
+
+
+
     public String getID(){
         return this.melderid;
     }
@@ -44,5 +48,14 @@ public class Melder {
     public void setFacilitair(boolean facilitair) {
         this.facilitair = facilitair;
     }
+
+    public String getMlabId() {
+        return mlabId;
+    }
+
+    public void setMlabId(String mlabId) {
+        this.mlabId = mlabId;
+    }
+
 
 }
