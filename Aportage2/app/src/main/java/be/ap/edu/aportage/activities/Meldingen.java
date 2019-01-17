@@ -155,7 +155,6 @@ public class Meldingen extends AppCompatActivity {
         this.uitgaandeIntent.putExtra(getString(R.string.campus_intent), s_campus);
         this.uitgaandeIntent.putExtra(getString(R.string.verdieping_intent), s_verdieping);
         this.uitgaandeIntent.putExtra(getString(R.string.lokaal_intent), s_lokaal);
-        this.uitgaandeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(this.uitgaandeIntent);
         Meldingen.this.finish();
     }
