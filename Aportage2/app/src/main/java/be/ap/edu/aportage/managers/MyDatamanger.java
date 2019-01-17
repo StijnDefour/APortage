@@ -228,7 +228,7 @@ public class MyDatamanger extends Application {
         return jsonArrayR;
     }
 
-    public void checkLokaalExists(String afk, String verdiep, String lokaal, IVolleyCallback callback){
+    public JsonRequest checkLokaalExists(String afk, String verdiep, String lokaal, IVolleyCallback callback){
         String url = ApiContract.createLokaalQuery(afk, verdiep, lokaal);
 
         JsonRequest jsonArrayR = new JsonArrayRequest
@@ -248,6 +248,7 @@ public class MyDatamanger extends Application {
                         callback.onFailure();
                     }
                 });
+        return  jsonArrayR;
     }
 
 

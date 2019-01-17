@@ -10,6 +10,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.parse.ParseInstallation;
 import com.parse.ParseUser;
@@ -143,6 +144,7 @@ public class Overzicht extends Activity {
             });
 
         } else {
+            Toast.makeText(Overzicht.this, "Camera permission nodig", Toast.LENGTH_LONG).show();
             ActivityCompat.requestPermissions(Overzicht.this, permissions, REQUEST_CODE);
         }
     }
