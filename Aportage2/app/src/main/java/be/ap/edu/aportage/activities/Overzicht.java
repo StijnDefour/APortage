@@ -58,9 +58,7 @@ public class Overzicht extends Activity {
     }
 
     @Override
-    public void onBackPressed() {
-//        Overzicht.this.finish();
-    }
+    public void onBackPressed() {}
 
     public void createIntents() {
         iv_scannen_bg.setOnClickListener(new View.OnClickListener() {

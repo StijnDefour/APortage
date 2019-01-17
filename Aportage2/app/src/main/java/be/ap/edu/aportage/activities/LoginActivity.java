@@ -1,23 +1,20 @@
 package be.ap.edu.aportage.activities;
 
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import be.ap.edu.aportage.R;
-import be.ap.edu.aportage.managers.MyUserManager;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+
+import be.ap.edu.aportage.R;
+import be.ap.edu.aportage.managers.MyUserManager;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -44,10 +41,10 @@ public class LoginActivity extends AppCompatActivity {
 
 
         registreerOnClicks();
-
-
     }
 
+    @Override
+    public void onBackPressed() {}
 
     void registreerOnClicks(){
         this.regBtn.setOnClickListener(new View.OnClickListener() {
