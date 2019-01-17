@@ -67,7 +67,8 @@ public class ProfielActivity extends AppCompatActivity {
 
 
     private void haalMelderDetailsVanDB() {
-        JsonArrayRequest req = this.myDatamanger.getMelderMetMelderId(this.user.getCurrentUser().getObjectId().toString(), new IVolleyCallback() {
+        String objectID = this.user.getObjectId().toString();
+        JsonArrayRequest req = this.myDatamanger.getMelderMetMelderId(objectID, new IVolleyCallback() {
             @Override
             public void onCustomSuccess(Object data) {
                 melder = (Melder)data;

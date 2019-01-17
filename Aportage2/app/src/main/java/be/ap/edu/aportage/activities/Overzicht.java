@@ -45,6 +45,7 @@ public class Overzicht extends Activity {
         this.iv_scannen_bg = findViewById(R.id.iv_scannen_bg);
         this.iv_zoeken_bg = findViewById(R.id.iv_zoeken_bg);
         this.iv_mijnmeldingen_bg = findViewById(R.id.iv_meldingen_bg);
+        this.fab_profiel = findViewById(R.id.fab_profiel);
 
         setClicks();
 
