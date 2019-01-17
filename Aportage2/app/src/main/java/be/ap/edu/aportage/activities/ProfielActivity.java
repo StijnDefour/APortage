@@ -40,7 +40,7 @@ public class ProfielActivity extends AppCompatActivity {
     private ImageView iv_uitloggen;
     private Intent uitgaandeIntent;
 
-    private Melder melder;
+    private Melder huidigeMelder;
     private ParseUser user;
     private MyDatamanger myDatamanger;
 
@@ -56,7 +56,7 @@ public class ProfielActivity extends AppCompatActivity {
         this.btn_opslaan = findViewById(R.id.btn_profiel_opslaan);
         this.iv_uitloggen = findViewById(R.id.iv_profiel_loguit);
 
-        this.melder = new Melder();
+        this.huidigeMelder = new Melder();
         this.user = ParseUser.getCurrentUser();
         this.myDatamanger = MyDatamanger.getInstance(getApplicationContext());
 
@@ -71,7 +71,7 @@ public class ProfielActivity extends AppCompatActivity {
         JsonArrayRequest req = this.myDatamanger.getMelderMetMelderId(objectID, new IVolleyCallback() {
             @Override
             public void onCustomSuccess(Object data) {
-                melder = (Melder)data;
+                huidigeMelder = (Melder)data;
                 vulVeldenIn();
 
             }
@@ -92,7 +92,7 @@ public class ProfielActivity extends AppCompatActivity {
 
     private void vulVeldenIn() {
 
-        this.et_naam.setText(this.melder.getNaam());
+        this.et_naam.setText(this.huidigeMelder.getNaam());
         this.et_mail.setText(ParseUser.getCurrentUser().getEmail());
 
     }
@@ -124,21 +124,22 @@ public class ProfielActivity extends AppCompatActivity {
         //todo: update parseUser
         //todo: doe een put request naar mlab voor de melder details
 
-        this.melder.setNaam(this.et_naam.getText().toString());
-        ParseUser.getCurrentUser().setUsername(this.et_mail.toString());
+        this.huidigeMelder.setNaam(this.et_naam.getText().toString());
+        ParseUser.getCurrentUser().setUsername(this.et_mail.getText().toString());
         if(et_nieuw_ww.isDirty()){
             ParseUser.getCurrentUser().setPassword(this.et_nieuw_ww.getText().toString());
         }
-        postMelderToDB();
+        postMelderToDB(this.huidigeMelder);
     }
 
-    private void postMelderToDB() {
-        JsonObjectRequest req = this.myDatamanger.putNieuweMelderNaarDB(this.melder, new IVolleyCallback() {
+    private void postMelderToDB(Melder melder) {
+        
+        JsonObjectRequest req = this.myDatamanger.putNieuweMelderNaarDB(melder, new IVolleyCallback() {
             @Override
             public void onCustomSuccess(Object data) {
                 toonBericht("Jouw nieuwe gegevens zijn opgeslagen!");
-                melder = (Melder)data;
-                //herstartActivity();
+                huidigeMelder = (Melder)data;
+                herstartActivity();
 
             }
 
@@ -157,25 +158,20 @@ public class ProfielActivity extends AppCompatActivity {
     }
 
     private void toonBericht(String s) {
-        Toast.makeText(this, s, Toast.LENGTH_LONG);
+        Toast.makeText(this, s, Toast.LENGTH_LONG).show();
 
     }
 
     private void komtOudWachtwoordOvereen() {
-        ParseUser.logOutInBackground(new LogOutCallback() {
+        ParseUser.logInInBackground(user.getUsername(), et_oud_ww.getText().toString(), new LogInCallback() {
             @Override
-            public void done(ParseException e) {
-                ParseUser.logInInBackground(user.getUsername(), et_oud_ww.getText().toString(), new LogInCallback() {
-                    @Override
-                    public void done(ParseUser user, ParseException e) {
-                        if(user != null){
-                            slaNieuweMelderGegevensOp();
-                            Log.d("logInBackGround", "na call tot slaNieuweMelderGegevensOp()");
-                        } else {
-                            toonFoutbericht();
-                        }
-                    }
-                });
+            public void done(ParseUser user, ParseException e) {
+                if(user != null){
+                    slaNieuweMelderGegevensOp();
+                    Log.d("logInBackGround", "na call tot slaNieuweMelderGegevensOp()");
+                } else {
+                    toonFoutbericht();
+                }
             }
         });
 

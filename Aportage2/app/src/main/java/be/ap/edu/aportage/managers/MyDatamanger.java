@@ -161,6 +161,7 @@ public class MyDatamanger extends Application {
             melderObject.put("melderid", melder.getID());
             melderObject.put("facilitair", melder.isFacilitair());
             melderObject.put("gdpr", melder.isGdpr());
+            melderObject.put("mlabId", melder.getMlabId());
 
             Log.d("put Melder", melderObject.toString());
             req = new JsonObjectRequest(
