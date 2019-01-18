@@ -19,6 +19,7 @@ import java.util.List;
 
 import be.ap.edu.aportage.R;
 import be.ap.edu.aportage.activities.Meldingen;
+import be.ap.edu.aportage.helpers.StatusKleurBepaler;
 import be.ap.edu.aportage.models.Melding;
 
 public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecyclerAdapter.ViewHolder> {
@@ -57,6 +58,8 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
         viewHolder.meldingBeschrijving.setText(melding.omschrijving);
         viewHolder.melding_id = this.meldingenList.get(i).get_id();
         viewHolder.locatie = melding.locatie;
+        viewHolder.meldingStatusTekst.setText(melding.status.toString());
+        viewHolder.meldingStatus.setBackgroundColor(StatusKleurBepaler.getKleur(melding.status, this.context));
         viewHolder.ctx = this.context;
 
         String url = "https://res.cloudinary.com/dt6ae1zfh/image/upload/c_fit,w_150/meldingen/" + melding.getImgUrl() + ".jpg";
@@ -73,6 +76,7 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
         private TextView meldingTitel;
         private TextView meldingBeschrijving;
         private FrameLayout meldingStatus;
+        private TextView meldingStatusTekst;
         private String melding_id;
         private String[] locatie;
         private Context ctx;
@@ -83,6 +87,7 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
             meldingTitel = (TextView) itemView.findViewById(R.id.tv_melding_titel);
             meldingBeschrijving = (TextView) itemView.findViewById(R.id.tv_melding_beschrijving);
             meldingStatus = (FrameLayout) itemView.findViewById(R.id.fl_melding_status);
+            meldingStatusTekst = (TextView)itemView.findViewById(R.id.tv_melding_status_tekst);
             registreerOnClickListener(itemView);
         }
 
@@ -100,7 +105,7 @@ public class MeldingenRecyclerAdapter extends RecyclerView.Adapter<MeldingenRecy
 
 
                     context.startActivity(intent);
-                    ((Activity)ctx).finish();
+                    //((Activity)ctx).finish();
                 }
             });
         }

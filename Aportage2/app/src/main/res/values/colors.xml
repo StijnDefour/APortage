@@ -9,10 +9,12 @@
     <color name="Ellerman">#62985b</color>
     <color name="kaska">#000000</color>
     <color name="ap">#e60005</color>
-    <color name="status_behandeling">#ff7700</color>
+    <color name="status_behandeling">#ffc800</color>
     <color name="status_inbehandeling">#ffc800</color>
+    <color name="status_afgehandeld">#00ff00</color>
     <color name="ap_rood">#c40009</color>
     <color name="ap_donkerrood">#97000c</color>
     <color name="ap_grijs">#68676c</color>
     <color name="ok">#00ff00</color>
+    <color name="status_ontvangen">#ff1a00</color>
 </resources>

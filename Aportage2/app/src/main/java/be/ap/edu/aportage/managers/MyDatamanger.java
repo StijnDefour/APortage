@@ -357,6 +357,8 @@ public class MyDatamanger extends Application {
             if(afk.toUpperCase().equals(v.campus_afk.toUpperCase()))
                 temp.add(v);
         }
+
+
         return temp;
     }
 
@@ -367,6 +369,8 @@ public class MyDatamanger extends Application {
             if(afk.toUpperCase().equals(l.mAfk.toUpperCase()) && verdiep == l.mVerdiep)
                 temp.add(l);
         }
+
+
         return temp;
     }
 

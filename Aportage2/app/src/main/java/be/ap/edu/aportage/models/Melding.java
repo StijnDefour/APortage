@@ -33,7 +33,7 @@ public class Melding {
         this.titel = t;
         this.omschrijving = omschr;
         this.locatie = loc;
-        this.status = sts;
+        this.status = Statussen.ONTVANGEN;
         this.datum = d;
         this.imgUrl = img;
     }
@@ -41,7 +41,7 @@ public class Melding {
         this.titel = t;
         this.omschrijving = omschr;
         this.locatie = loc;
-        this.status = sts;
+        this.status = Statussen.ONTVANGEN;
         //this.setDate(d);
         this.datumString = d;
         this.imgUrl = img;

@@ -64,6 +64,7 @@
     <string name="label_loguit">uitloggen</string>
     <string name="hint_beschrijving">Beschrijf hier wat je wil melden...</string>
     <string name="hint_naam" >Geef hier je volledige naam...</string>
+    <string name="label_status">Status...</string>
 
 
 </resources>
