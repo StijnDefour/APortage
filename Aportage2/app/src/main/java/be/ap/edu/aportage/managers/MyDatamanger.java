@@ -18,6 +18,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import be.ap.edu.aportage.helpers.ApiContract;
@@ -359,6 +361,12 @@ public class MyDatamanger extends Application {
         }
 
 
+        Collections.sort(temp, new Comparator<Verdiep>() {
+            @Override
+            public int compare(Verdiep o1, Verdiep o2) {
+               return o1.compareTo(o2);
+            }
+        });
         return temp;
     }
 
