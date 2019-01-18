@@ -65,6 +65,7 @@
     <string name="hint_beschrijving">Beschrijf hier wat je wil melden...</string>
     <string name="hint_naam" >Geef hier je volledige naam...</string>
     <string name="label_status">Status...</string>
+    <string name="label_placeholder_meldingen">Geen meldingen onder dit lokaal</string>
 
 
 </resources>

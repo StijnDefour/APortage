@@ -21,4 +21,12 @@
         app:backgroundTint="@color/ap"
         app:srcCompat="@android:drawable/ic_input_add" />
 
+    <TextView
+        android:id="@+id/tv-placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:text="@string/label_placeholder_meldingen"
+        android:textAlignment="center" />
+
 </android.support.design.widget.CoordinatorLayout>

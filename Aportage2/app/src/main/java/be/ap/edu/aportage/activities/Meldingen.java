@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.android.volley.toolbox.JsonArrayRequest;
 
@@ -39,6 +40,7 @@ public class Meldingen extends AppCompatActivity {
     private MyDatamanger dataManager ;
     private Intent uitgaandeIntent;
     private FloatingActionButton nieuweMeldingfab;
+    private TextView placeholder;
 
     private CampusKleuren campusKleuren = new CampusKleuren();
 
@@ -60,6 +62,7 @@ public class Meldingen extends AppCompatActivity {
         this.nieuweMeldingfab = (FloatingActionButton) findViewById(R.id.meldingen_fab);
         this.meldingenLijst = dataManager.getMeldingenLijst();
         this.binnenkomendeIntent = getIntent();
+        this.placeholder = findViewById(R.id.tv_placeholder);
 
         this.meldingenLM = new LinearLayoutManager(this);
         this.meldingenRV.setLayoutManager(this.meldingenLM);
@@ -93,6 +96,8 @@ public class Meldingen extends AppCompatActivity {
 //                Log.d("getMeldingenLijst", data.toString());
                 meldingenAdapter.setMeldingenList(dataManager.getMeldingenLijst());
                 meldingenAdapter.notifyDataSetChanged();
+                placeholder.setText("");
+
             }
 
             @Override
