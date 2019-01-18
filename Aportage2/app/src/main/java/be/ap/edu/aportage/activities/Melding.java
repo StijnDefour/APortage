@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import be.ap.edu.aportage.R;
 
+import be.ap.edu.aportage.helpers.StatusKleurBepaler;
 import be.ap.edu.aportage.interfaces.CampusKleuren;
 
 import be.ap.edu.aportage.helpers.ApiContract;
@@ -42,6 +43,7 @@ public class Melding extends Activity {
     TextView tv_melding_beschrijving;
     TextView tv_melding_melder;
     TextView tv_melding_tijdstip;
+
     //todo: kleur op basis van status aanpassen voor frameLayout
     FrameLayout fl_melding_status;
 
@@ -75,6 +77,7 @@ public class Melding extends Activity {
         this.tv_melding_beschrijving = findViewById(R.id.tv_melding_beschrijving);
         this.tv_melding_melder = findViewById(R.id.tv_melding_melder);
         this.tv_melding_tijdstip = findViewById(R.id.tv_melding_tijdstip);
+        this.fl_melding_status = findViewById(R.id.fl_melding_status);
 
         this.datamanager = MyDatamanger.getInstance(getApplicationContext());
         this.tv_melding_titel.setText("Melding wordt geladen.");
@@ -140,7 +143,8 @@ public class Melding extends Activity {
         this.tv_melding_titel.setText(this.melding.titel);
         this.tv_melding_beschrijving.setText(this.melding.omschrijving);
         this.tv_melding_tijdstip.setText(this.melding.datumString);
-        this.tv_melding_melder.setText(melder.getNaam()); //todo_done: op basis van melderID een melder object posten en getten van de db
+        this.tv_melding_melder.setText(melder.getNaam());
+        this.fl_melding_status.setBackgroundColor(StatusKleurBepaler.getKleur(this.melding.status, this.getApplicationContext()));//todo_done: op basis van melderID een melder object posten en getten van de db
         String url = "https://res.cloudinary.com/dt6ae1zfh/image/upload/c_fit,w_500/meldingen/" + melding.getImgUrl() + ".jpg";
         Picasso.get().load(url).into(this.iv_melding_foto);
 
