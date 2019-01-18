@@ -238,7 +238,7 @@ public class ScanLokaal extends AppCompatActivity  implements SurfaceHolder.Call
         } catch (Exception e) {
             Log.e(LOG_TAG, e.getMessage());
             Toast.makeText(ScanLokaal.this, "Er werd geen tekst herkend, probeer het lokaal manueel te zoeken.", Toast.LENGTH_LONG).show();
-            gaNaarCampussenActivity();
+//            gaNaarCampussenActivity();
         }
     }
 
